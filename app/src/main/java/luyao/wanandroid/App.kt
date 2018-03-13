@@ -1,7 +1,9 @@
 package luyao.wanandroid
 
 import android.app.Application
+import android.content.Context
 import com.squareup.leakcanary.LeakCanary
+import kotlin.properties.Delegates
 
 /**
  * Created by luyao
@@ -9,9 +11,14 @@ import com.squareup.leakcanary.LeakCanary
  */
 class App : Application() {
 
+    companion object {
+        var CONTEXT: Context by Delegates.notNull()
+    }
+
     override fun onCreate() {
         super.onCreate()
-        if (LeakCanary.isInAnalyzerProcess(this))return
+        CONTEXT = applicationContext
+        if (LeakCanary.isInAnalyzerProcess(this)) return
         LeakCanary.install(this)
     }
 }
