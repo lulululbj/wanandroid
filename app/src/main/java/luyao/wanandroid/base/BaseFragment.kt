@@ -17,10 +17,13 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        attachPresenter()
         initView()
         initData()
         super.onViewCreated(view, savedInstanceState)
     }
+
+    open fun attachPresenter(){}
 
     abstract fun getLayoutResId(): Int
 

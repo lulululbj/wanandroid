@@ -13,11 +13,10 @@ abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), I
 
     protected abstract var mPresenter: P
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun attachPresenter() {
+        super.attachPresenter()
         mPresenter.onAttach(this as V)
-        initView()
-        initData()
-        super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun showProgress() {

@@ -32,6 +32,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 this, drawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        switchFragment(homeFragment)
     }
 
     private fun switchFragment(targetFragment: Fragment) {
