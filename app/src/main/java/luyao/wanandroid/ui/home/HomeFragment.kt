@@ -1,8 +1,6 @@
 package luyao.wanandroid.ui.home
 
 import android.support.v7.widget.LinearLayoutManager
-import android.util.LayoutDirection
-import android.util.Log
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
@@ -22,7 +20,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
 
     override fun initView() {
         homeRecycleView.layoutManager = LinearLayoutManager(activity)
-        homeRecycleView.adapter=homeArticleAdapter
+        homeRecycleView.adapter = homeArticleAdapter
     }
 
     override fun initData() {
