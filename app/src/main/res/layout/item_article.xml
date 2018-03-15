@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:gravity="center_vertical">
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -11,47 +16,66 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/home_hot" />
+
+            <TextView
+                android:id="@+id/articleAuthor"
+                style="@style/Article_text"
+                tools:text="luyao" />
+
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/home_hot" />
+
+            <TextView
+                android:id="@+id/articleTag"
+                style="@style/Article_text"
+                tools:text="Android" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/articleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textColor="#1c1c1e"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_time" />
 
             <TextView
-                android:id="@+id/articleAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#8e9dac"
-                android:text="luyao"
-                android:textSize="@dimen/sp_14"/>
+                android:id="@+id/articleTime"
+                style="@style/Article_text"
+                tools:text="1小时前" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Android"
-                android:layout_marginLeft="10dp"
-                android:textSize="@dimen/sp_14"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1小时前"
-                android:textColor="#8e9dac"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:textSize="@dimen/sp_14"/>
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/timeline_like_normal"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/ic_launcher_round" />
 
 </LinearLayout>
