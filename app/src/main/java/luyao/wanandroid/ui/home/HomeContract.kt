@@ -3,6 +3,7 @@ package luyao.wanandroid.ui.home
 import luyao.gayhub.base.mvp.IPresenter
 import luyao.gayhub.base.mvp.IView
 import luyao.wanandroid.bean.ArticleList
+import luyao.wanandroid.bean.Banner
 
 /**
  * Created by luyao
@@ -10,11 +11,13 @@ import luyao.wanandroid.bean.ArticleList
  */
 interface HomeContract {
 
-    interface View : IView{
+    interface View : IView {
         fun getArticles(articleList: ArticleList)
+        fun getBanner(bannerList: List<Banner>)
     }
 
-    interface Presenter : IPresenter<View>{
-        fun getArticles(page:Int)
+    interface Presenter : IPresenter<View> {
+        fun getArticles(page: Int)
+        fun getBanners()
     }
 }
