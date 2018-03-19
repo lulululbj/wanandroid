@@ -1,5 +1,7 @@
 package luyao.wanandroid.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
 import com.youth.banner.BannerConfig
@@ -10,6 +12,7 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -24,6 +27,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
     private val bannerTitles = mutableListOf<String>()
+    private val bannerUrls = mutableListOf<String>()
     override var mPresenter = HomePresenter()
 
     override fun getLayoutResId() = R.layout.fragment_home
@@ -37,6 +41,21 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
         homeRecycleView.addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10f)))
         homeRecycleView.adapter = homeArticleAdapter
         banner.setImageLoader(GlideImageLoader())
+
+        homeArticleAdapter.setOnItemClickListener { _, _, position ->
+            val intent=Intent(activity,BrowserActivity::class.java)
+            intent.putExtra("url",homeArticleAdapter.data[position].link)
+            startActivity(intent)
+
+        }
+
+        banner.setOnBannerListener { position ->
+            run {
+                val intent = Intent(activity, BrowserActivity::class.java)
+                intent.putExtra("url",bannerUrls[position] )
+                startActivity(intent)
+            }
+        }
     }
 
     override fun initData() {
@@ -52,6 +71,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
         for (banner in bannerList) {
             bannerImages.add(banner.imagePath)
             bannerTitles.add(banner.title)
+            bannerUrls.add(banner.url)
         }
         banner.setImages(bannerImages)
                 .setBannerTitles(bannerTitles)
