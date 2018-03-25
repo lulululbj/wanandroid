@@ -3,19 +3,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/title_layout" />
+
     <ProgressBar
-        android:id="@+id/progressBar1"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp" />
 
-
-    <FrameLayout
-        android:id="@+id/webView1"
+    <luyao.wanandroid.view.X5WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </FrameLayout>
+    </luyao.wanandroid.view.X5WebView>
 
 
 </LinearLayout>

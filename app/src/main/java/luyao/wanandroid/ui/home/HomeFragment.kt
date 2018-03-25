@@ -47,14 +47,16 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
     }
 
     private fun initAdapter() {
-        homeArticleAdapter.setOnItemClickListener { _, _, position ->
-            val intent = Intent(activity, BrowserActivity::class.java)
-            intent.putExtra("url", homeArticleAdapter.data[position].link)
-            startActivity(intent)
+        homeArticleAdapter.run {
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(activity, BrowserActivity::class.java)
+                intent.putExtra(BrowserActivity.URL, homeArticleAdapter.data[position].link)
+                startActivity(intent)
+            }
+            addHeaderView(banner)
+            setLoadMoreView(CustomLoadMoreView())
+            setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
-        homeArticleAdapter.setLoadMoreView(CustomLoadMoreView())
-        homeArticleAdapter.setOnLoadMoreListener({ loadMore() }, homeRecycleView)
-
         homeRecycleView.adapter = homeArticleAdapter
     }
 
@@ -63,20 +65,19 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
     }
 
     private fun initBanner() {
-        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200f))
-        banner.layoutParams = params
-        homeArticleAdapter.setLoadMoreView(CustomLoadMoreView())
-        banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
-        banner.setImageLoader(GlideImageLoader())
-        banner.setOnBannerListener { position ->
-            run {
-                val intent = Intent(activity, BrowserActivity::class.java)
-                intent.putExtra("url", bannerUrls[position])
-                startActivity(intent)
+
+        banner.run {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200f))
+            setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
+            setImageLoader(GlideImageLoader())
+            setOnBannerListener { position ->
+                run {
+                    val intent = Intent(activity, BrowserActivity::class.java)
+                    intent.putExtra(BrowserActivity.URL, bannerUrls[position])
+                    startActivity(intent)
+                }
             }
         }
-
-        homeArticleAdapter.addHeaderView(banner)
     }
 
     private fun refresh() {
