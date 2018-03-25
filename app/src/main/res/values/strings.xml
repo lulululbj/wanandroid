@@ -8,4 +8,8 @@
     <string name="navigation">导航</string>
     <string name="project">项目</string>
     <string name="tool">工具</string>
+
+    <string name="brvah_loading">正在加载中...</string>
+    <string name="brvah_load_failed">加载失败，请点我重试</string>
+    <string name="brvah_load_end">没有更多数据</string>
 </resources>
