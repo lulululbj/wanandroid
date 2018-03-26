@@ -10,12 +10,13 @@ import kotlinx.android.synthetic.main.title_layout.*
 import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.home.HomeFragment
+import luyao.wanandroid.ui.system.SystemFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var currentFragment: Fragment? = null
     private val homeFragment by lazy { HomeFragment() }
-    private val systemFragment by lazy { HomeFragment() }
+    private val systemFragment by lazy { SystemFragment() }
     private val navigationFragment by lazy { HomeFragment() }
     private val projectFragment by lazy { HomeFragment() }
     private val toolFragment by lazy { HomeFragment() }

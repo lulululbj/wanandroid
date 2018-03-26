@@ -3,6 +3,7 @@ package luyao.wanandroid.api
 import io.reactivex.Observable
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
+import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.bean.WanResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,7 @@ interface WanService {
 
     @GET("/banner/json")
     fun getBanner(): Observable<WanResponse<List<Banner>>>
+
+    @GET("/tree/json")
+    fun getSystemType():Observable<WanResponse<List<SystemParent>>>
 }

@@ -25,7 +25,7 @@ class BrowserActivity : BaseActivity() {
 
     override fun initView() {
         mToolbar.title = getString(R.string.is_loading)
-        mToolbar.setNavigationIcon(R.drawable.md_nav_back)
+        mToolbar.setNavigationIcon(R.drawable.arrow_back)
         initWebView()
     }
 
