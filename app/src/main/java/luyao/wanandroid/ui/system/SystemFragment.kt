@@ -1,13 +1,14 @@
 package luyao.wanandroid.ui.system
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
+import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -42,13 +43,19 @@ class SystemFragment : BaseMvpFragment<SystemContract.View, SystemPresenter>(), 
     }
 
     override fun initData() {
-        systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
-
+        systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
+            Intent(activity, SystemTypeActivity::class.java).run {
+                putExtra(SystemTypeActivity.ARTICLE_LIST, systemAdapter.data[position])
+                startActivity(this)
+            }
         }
     }
 
     override fun getSystemTypes(systemList: List<SystemParent>) {
         systemRefreshLayout.isRefreshing = false
         systemAdapter.setNewData(systemList)
+    }
+
+    override fun getSystemTypeDetail(articleList: ArticleList) {
     }
 }

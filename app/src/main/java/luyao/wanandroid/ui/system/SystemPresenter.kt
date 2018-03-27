@@ -10,6 +10,14 @@ import luyao.wanandroid.api.WanRetrofitClient
  */
 class SystemPresenter : BasePresenter<SystemContract.View>(), SystemContract.Presenter {
 
+    override fun getSystemTypeDetail(id: Int, page: Int) {
+        val d = WanRetrofitClient.service
+                .getSystemTypeDetail(page, id)
+                .compose(UIScheduler())
+                .subscribe({ getView()?.getSystemTypeDetail(it.data) })
+        addSubscription(d)
+    }
+
     override fun getSystemTypes() {
         val d = WanRetrofitClient.service
                 .getSystemType()

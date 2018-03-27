@@ -1,5 +1,7 @@
 package luyao.wanandroid.bean
 
+import java.io.Serializable
+
 /**
  * Created by luyao
  * on 2018/3/13 14:51
@@ -23,4 +25,6 @@ data class Article( val id: Int,
                     val apkLink:String,
                     val projectLink:String,
                     val superChapterId:Int,
-                    val superChapterName:String)
+                    val superChapterName:String,
+                    val type:Int,
+                    val fresh:Boolean):Serializable

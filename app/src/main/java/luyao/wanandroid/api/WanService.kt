@@ -7,6 +7,7 @@ import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.bean.WanResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 /**
@@ -26,5 +27,8 @@ interface WanService {
     fun getBanner(): Observable<WanResponse<List<Banner>>>
 
     @GET("/tree/json")
-    fun getSystemType():Observable<WanResponse<List<SystemParent>>>
+    fun getSystemType(): Observable<WanResponse<List<SystemParent>>>
+
+    @GET("/article/list/{page}/json")
+    fun getSystemTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Observable<WanResponse<ArticleList>>
 }
