@@ -16,7 +16,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
     override fun getBanners() {
         val d = WanRetrofitClient.service.getBanner()
                 .compose(UIScheduler())
-                .subscribe({ getView()?.getBanner(it.data) })
+                .subscribe{ getView()?.getBanner(it.data) }
         addSubscription(d)
     }
 

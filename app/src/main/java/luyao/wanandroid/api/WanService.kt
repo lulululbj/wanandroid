@@ -1,10 +1,7 @@
 package luyao.wanandroid.api
 
 import io.reactivex.Observable
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.Banner
-import luyao.wanandroid.bean.SystemParent
-import luyao.wanandroid.bean.WanResponse
+import luyao.wanandroid.bean.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -31,4 +28,7 @@ interface WanService {
 
     @GET("/article/list/{page}/json")
     fun getSystemTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Observable<WanResponse<ArticleList>>
+
+    @GET("/navi/json")
+    fun getNavigation(): Observable<WanResponse<List<Navigation>>>
 }
