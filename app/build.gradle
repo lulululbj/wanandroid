@@ -48,4 +48,6 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar')
     implementation 'com.android.support:cardview-v7:27.1.0'
     compile 'q.rorbin:VerticalTabLayout:1.2.5'
+    compile 'com.hyman:flowlayout-lib:1.1.2'
+
 }

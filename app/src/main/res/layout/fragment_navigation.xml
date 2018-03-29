@@ -9,7 +9,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:background="#369DE3"
+        android:background="@color/white"
         android:visibility="visible"
         app:indicator_color="#FFFFFF"
         app:indicator_corners="5dp"
@@ -20,7 +20,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navigationRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
     </android.support.v7.widget.RecyclerView>
 
