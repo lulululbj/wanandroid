@@ -1,5 +1,7 @@
 package luyao.wanandroid.ui
 
+import TOOL_URL
+import android.content.Intent
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -11,6 +13,7 @@ import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.navigation.NavigationFragment
+import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.system.SystemFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -19,8 +22,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val homeFragment by lazy { HomeFragment() }
     private val systemFragment by lazy { SystemFragment() }
     private val navigationFragment by lazy { NavigationFragment() }
-    private val projectFragment by lazy { HomeFragment() }
-    private val toolFragment by lazy { HomeFragment() }
+    private val projectFragment by lazy { ProjectFragment() }
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -56,11 +58,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_system -> switchFragment(systemFragment)
             R.id.nav_navigation -> switchFragment(navigationFragment)
             R.id.nav_project -> switchFragment(projectFragment)
-            R.id.nav_tool -> switchFragment(toolFragment)
+            R.id.nav_tool -> switchToTool()
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun switchToTool() {
+        Intent(this, BrowserActivity::class.java).run {
+            putExtra(BrowserActivity.URL, TOOL_URL)
+            startActivity(this)
+        }
     }
 
     override fun onBackPressed() {

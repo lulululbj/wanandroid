@@ -31,4 +31,10 @@ interface WanService {
 
     @GET("/navi/json")
     fun getNavigation(): Observable<WanResponse<List<Navigation>>>
+
+    @GET("/project/tree/json")
+    fun getProjectType(): Observable<WanResponse<List<SystemParent>>>
+
+    @GET("/project/list/{page}/json")
+    fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Observable<WanResponse<ArticleList>>
 }

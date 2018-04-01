@@ -9,6 +9,8 @@ import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
 import luyao.wanandroid.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
+import q.rorbin.verticaltablayout.VerticalTabLayout
+import q.rorbin.verticaltablayout.widget.TabView
 
 /**
  * Created by Lu
@@ -19,15 +21,40 @@ class NavigationFragment : BaseMvpFragment<NavigationContract.View, NavigationPr
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }
     private val navigationAdapter by lazy { NavigationAdapter() }
+    private val mLayoutManager by lazy { LinearLayoutManager(activity) }
     override var mPresenter = NavigationPresenter()
 
     override fun getLayoutResId() = R.layout.fragment_navigation
 
     override fun initView() {
         navigationRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = mLayoutManager
             addItemDecoration(SpaceItemDecoration(this.dp2px(10f)))
             adapter = navigationAdapter
+        }
+
+        initTabLayout()
+    }
+
+    private fun initTabLayout() {
+        tabLayout.addOnTabSelectedListener(object : VerticalTabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabView?, position: Int) {
+            }
+
+            override fun onTabSelected(tab: TabView?, position: Int) {
+                scrollToPosition(position)
+            }
+        })
+    }
+
+    private fun scrollToPosition(position: Int) {
+        val firstPotion = mLayoutManager.findFirstVisibleItemPosition()
+        val lastPosition = mLayoutManager.findLastVisibleItemPosition()
+        when {
+            position <= firstPotion || position >= lastPosition -> navigationRecycleView.smoothScrollToPosition(position)
+            else -> navigationRecycleView.run {
+                smoothScrollBy(0, this.getChildAt(position - firstPotion).top-this.dp2px(8f))
+            }
         }
     }
 
