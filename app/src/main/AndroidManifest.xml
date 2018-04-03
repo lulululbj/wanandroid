@@ -26,6 +26,7 @@
         <activity android:name=".ui.SplashActivity" />
         <activity android:name=".ui.BrowserActivity" />
         <activity android:name=".ui.system.SystemTypeActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.title_layout.*
@@ -14,6 +15,7 @@ import luyao.wanandroid.R
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectFragment
+import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -77,5 +79,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             drawerLayout.closeDrawer(GravityCompat.START)
         else
             super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        startActivity(SearchActivity::class.java)
+        return true
     }
 }

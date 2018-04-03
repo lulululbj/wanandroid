@@ -2,9 +2,7 @@ package luyao.wanandroid.api
 
 import io.reactivex.Observable
 import luyao.wanandroid.bean.*
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 /**
@@ -37,4 +35,14 @@ interface WanService {
 
     @GET("/project/list/{page}/json")
     fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Observable<WanResponse<ArticleList>>
+
+    @GET("/friend/json")
+    fun getWebsites(): Observable<WanResponse<List<Hot>>>
+
+    @GET("/hotkey/json")
+    fun getHot(): Observable<WanResponse<List<Hot>>>
+
+    @FormUrlEncoded
+    @POST("/article/query/{page}/json")
+    fun searchHot(@Path("page") page: Int, @Field("k") key: String): Observable<WanResponse<ArticleList>>
 }
