@@ -27,6 +27,7 @@
         <activity android:name=".ui.BrowserActivity" />
         <activity android:name=".ui.system.SystemTypeActivity" />
         <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
     </application>
 
 </manifest>

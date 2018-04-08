@@ -1,9 +1,8 @@
 package luyao.gayhub.base
 
-import android.os.Bundle
-import android.view.View
 import luyao.gayhub.base.mvp.IPresenter
 import luyao.gayhub.base.mvp.IView
+import toast
 
 /**
  * Created by Lu
@@ -31,4 +30,9 @@ abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), I
         super.onDestroy()
         mPresenter.onDetach()
     }
+
+    override fun showError(message: String?) {
+
+    }
+
 }

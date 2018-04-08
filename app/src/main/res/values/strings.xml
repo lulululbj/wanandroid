@@ -14,4 +14,14 @@
     <string name="brvah_load_end">没有更多数据</string>
     <string name="is_loading">正在加载...</string>
     <string name="search">搜索</string>
+    <string name="try_another_key">换个关键词试试！</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="please_input_username">请输入用户名</string>
+    <string name="please_input_psw">请输入密码</string>
+    <string name="is_logining">正在登录</string>
+    <string name="or">Or</string>
+    <string name="register">注册</string>
+    <string name="is_registering">正在注册</string>
 </resources>

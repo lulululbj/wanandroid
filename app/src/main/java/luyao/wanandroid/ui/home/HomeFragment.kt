@@ -3,6 +3,7 @@ package luyao.wanandroid.ui.home
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import dp2px
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -12,7 +13,9 @@ import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
 import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.GlideImageLoader
+import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -23,7 +26,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeContract.View {
 
-
+    private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
     private val bannerTitles = mutableListOf<String>()
@@ -35,29 +38,48 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
     override fun getLayoutResId() = R.layout.fragment_home
 
     override fun initView() {
-        homeRecycleView.layoutManager = LinearLayoutManager(activity)
-        homeRecycleView.addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10f)))
+        homeRecycleView.run {
+            layoutManager = LinearLayoutManager(activity)
+            addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10f)))
+        }
 
         initBanner()
         initAdapter()
 
-        homeRefreshLayout.setOnRefreshListener { refresh() }
-        homeRefreshLayout.isRefreshing = true
+        homeRefreshLayout.run {
+            setOnRefreshListener { refresh() }
+            isRefreshing = true
+        }
         refresh()
     }
 
     private fun initAdapter() {
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val intent = Intent(activity, BrowserActivity::class.java)
-                intent.putExtra(BrowserActivity.URL, homeArticleAdapter.data[position].link)
-                startActivity(intent)
+                Intent(activity, BrowserActivity::class.java).run {
+                    putExtra(BrowserActivity.URL, homeArticleAdapter.data[position].link)
+                    startActivity(this)
+                }
+
             }
+            onItemChildClickListener = this@HomeFragment.onItemChildClickListener
             addHeaderView(banner)
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
         homeRecycleView.adapter = homeArticleAdapter
+    }
+
+    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+        when (view.id) {
+            R.id.articleStar -> {
+                if (isLogin) {
+
+                } else {
+                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                }
+            }
+        }
     }
 
     private fun loadMore() {
@@ -124,5 +146,4 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
         super.onStop()
         banner.stopAutoPlay()
     }
-
 }

@@ -66,4 +66,8 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     }
 
+    override fun showError(message: String?) {
+
+    }
+
 }

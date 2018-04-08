@@ -6,6 +6,8 @@ package luyao.gayhub.base.mvp
  */
 interface IView {
 
+    fun showError(message: String?)
+
     fun showProgress()
 
     fun hideProgress()

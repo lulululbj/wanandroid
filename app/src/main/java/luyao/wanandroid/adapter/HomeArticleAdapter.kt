@@ -15,6 +15,8 @@ class HomeArticleAdapter(layoutResId: Int = R.layout.item_article) : BaseQuickAd
         helper.setText(R.id.articleTitle, item.title)
                 .setText(R.id.articleAuthor, item.author)
                 .setText(R.id.articleTag, "${item.superChapterName} ${item.chapterName}")
-                .setText(R.id.articleTime,item.niceDate)
+                .setText(R.id.articleTime, item.niceDate)
+                .setImageResource(R.id.articleStar, if (item.collect) R.drawable.timeline_like_pressed else R.drawable.timeline_like_normal)
+                .addOnClickListener(R.id.articleStar)
     }
 }

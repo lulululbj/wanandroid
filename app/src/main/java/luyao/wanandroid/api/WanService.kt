@@ -45,4 +45,12 @@ interface WanService {
     @FormUrlEncoded
     @POST("/article/query/{page}/json")
     fun searchHot(@Path("page") page: Int, @Field("k") key: String): Observable<WanResponse<ArticleList>>
+
+    @FormUrlEncoded
+    @POST("/user/login")
+    fun login(@Field("username") userName: String, @Field("password") passWord: String): Observable<WanResponse<User>>
+
+    @FormUrlEncoded
+    @POST("/user/register")
+    fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Observable<WanResponse<User>>
 }

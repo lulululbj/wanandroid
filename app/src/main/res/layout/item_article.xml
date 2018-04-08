@@ -70,6 +70,7 @@
                 tools:text="1小时前" />
 
             <ImageView
+                android:id="@+id/articleStar"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:src="@drawable/timeline_like_normal"

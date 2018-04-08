@@ -6,6 +6,7 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -47,6 +48,7 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
         searchRecycleView.run {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10f)))
+
         }
         initAdapter()
         searchRefreshLayout.setOnRefreshListener { refresh() }
@@ -70,6 +72,10 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
         searchRecycleView.adapter = searchAdapter
+        val emptyView = layoutInflater.inflate(R.layout.empty_view, searchRecycleView.parent as ViewGroup, false)
+        val emptyTv = emptyView.findViewById<TextView>(R.id.emptyTv)
+        emptyTv.text = getString(R.string.try_another_key)
+        searchAdapter.emptyView = emptyView
     }
 
     private fun loadMore() {
@@ -127,6 +133,8 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
 
     private fun startSearch(key: String) {
         searchView.clearFocus()
+        searchRefreshLayout.isRefreshing = true
+        currentPage = 0
         mPresenter.searchHot(0, key)
         hotContent.visibility = View.GONE
         searchRecycleView.visibility = View.VISIBLE
@@ -146,6 +154,12 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
 
     override fun searchHot(articleList: ArticleList) {
         searchAdapter.run {
+
+            searchRefreshLayout.isRefreshing = false
+            if (articleList.datas.isEmpty()) {
+                replaceData(articleList.datas)
+                return
+            }
             if (articleList.offset >= articleList.total) {
                 loadMoreEnd()
                 return
@@ -156,7 +170,6 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
             setEnableLoadMore(true)
             loadMoreComplete()
         }
-        searchRefreshLayout.isRefreshing = false
         currentPage++
     }
 
@@ -166,8 +179,22 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
         searchView.run {
             isIconified = false
             onActionViewExpanded()
+            setOnQueryTextListener(onQueryTextListener)
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private val onQueryTextListener = object : SearchView.OnQueryTextListener {
+
+        override fun onQueryTextChange(newText: String?) = false
+
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            query?.let {
+                key = query
+                startSearch(key)
+            }
+            return true
+        }
     }
 
     override fun onBackPressed() {
