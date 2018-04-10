@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectFragment
@@ -61,6 +62,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_navigation -> switchFragment(navigationFragment)
             R.id.nav_project -> switchFragment(projectFragment)
             R.id.nav_tool -> switchToTool()
+            R.id.nav_collect -> Intent(this, MyCollectActivity::class.java).run { startActivity(this) }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)

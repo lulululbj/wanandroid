@@ -24,4 +24,6 @@
     <string name="or">Or</string>
     <string name="register">注册</string>
     <string name="is_registering">正在注册</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="collect">收藏</string>
 </resources>

@@ -32,9 +32,9 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_collect"
                 android:icon="@drawable/email"
-                android:title="Share" />
+                android:title="@string/collect" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/email"

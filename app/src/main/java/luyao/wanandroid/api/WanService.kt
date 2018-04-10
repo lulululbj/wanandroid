@@ -53,4 +53,7 @@ interface WanService {
     @FormUrlEncoded
     @POST("/user/register")
     fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Observable<WanResponse<User>>
+
+    @GET("/lg/collect/list/{page}/json")
+    fun getCollectArticles(@Path("page")page: Int):Observable<WanResponse<ArticleList>>
 }
