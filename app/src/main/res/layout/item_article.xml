@@ -32,14 +32,15 @@
                 tools:text="luyao" />
 
 
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/home_hot" />
+            <!--<ImageView-->
+                <!--android:layout_width="14dp"-->
+                <!--android:layout_height="14dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:src="@drawable/home_hot" />-->
 
             <TextView
                 android:id="@+id/articleTag"
+                android:layout_marginLeft="15dp"
                 style="@style/Article_text"
                 tools:text="Android" />
 
@@ -71,8 +72,10 @@
 
             <ImageView
                 android:id="@+id/articleStar"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:src="@drawable/timeline_like_normal"
                 android:layout_marginLeft="20dp"/>
         </LinearLayout>

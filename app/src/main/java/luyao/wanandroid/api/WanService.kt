@@ -55,5 +55,11 @@ interface WanService {
     fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Observable<WanResponse<User>>
 
     @GET("/lg/collect/list/{page}/json")
-    fun getCollectArticles(@Path("page")page: Int):Observable<WanResponse<ArticleList>>
+    fun getCollectArticles(@Path("page") page: Int): Observable<WanResponse<ArticleList>>
+
+    @POST("/lg/collect/{id}/json")
+    fun collectArticle(@Path("id") id: Int): Observable<WanResponse<ArticleList>>
+
+    @POST("/lg/uncollect_originId/{id}/json")
+    fun cancelCollectArticle(@Path("id") id: Int): Observable<WanResponse<ArticleList>>
 }

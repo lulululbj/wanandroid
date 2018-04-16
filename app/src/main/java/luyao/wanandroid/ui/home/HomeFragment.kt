@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.bean.Article
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
 import luyao.wanandroid.ui.BrowserActivity
@@ -70,11 +71,18 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
         homeRecycleView.adapter = homeArticleAdapter
     }
 
-    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
         when (view.id) {
             R.id.articleStar -> {
                 if (isLogin) {
-
+                    homeArticleAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            if (collect) mPresenter.collectArticle(this)
+                            else mPresenter.cancelCollectArticle(this)
+                        }
+                        notifyDataSetChanged()
+                    }
                 } else {
                     Intent(activity, LoginActivity::class.java).run { startActivity(this) }
                 }
@@ -135,6 +143,14 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
                 .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                 .setDelayTime(3000)
         banner.start()
+    }
+
+    override fun collectArticle(article: Article) {
+
+    }
+
+    override fun cancleCollectArticle(article: Article) {
+
     }
 
     override fun onStart() {

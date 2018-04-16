@@ -64,7 +64,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_tool -> switchToTool()
             R.id.nav_collect -> Intent(this, MyCollectActivity::class.java).run { startActivity(this) }
         }
-
+        mToolbar.title = item.title
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }

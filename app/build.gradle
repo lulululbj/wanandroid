@@ -51,5 +51,4 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
-
 }

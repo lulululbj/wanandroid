@@ -155,9 +155,8 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
     override fun searchHot(articleList: ArticleList) {
         searchAdapter.run {
 
-            searchRefreshLayout.isRefreshing = false
             if (articleList.datas.isEmpty()) {
-                replaceData(articleList.datas)
+                loadMoreEnd()
                 return
             }
             if (articleList.offset >= articleList.total) {
@@ -170,6 +169,7 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
             setEnableLoadMore(true)
             loadMoreComplete()
         }
+        searchRefreshLayout.isRefreshing = false
         currentPage++
     }
 
@@ -201,6 +201,7 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
         if (hotContent.visibility == View.GONE) {
             hotContent.visibility = View.VISIBLE
             searchRecycleView.visibility = View.GONE
+            searchAdapter.setNewData(null)
         } else
             finish()
     }

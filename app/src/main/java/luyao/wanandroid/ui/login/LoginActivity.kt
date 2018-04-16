@@ -6,6 +6,8 @@ import kotlinx.android.synthetic.main.title_layout.*
 import luyao.gayhub.base.BaseMvpActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.bean.User
+import luyao.wanandroid.ui.MainActivity
+import luyao.wanandroid.util.Preference
 import toast
 
 /**
@@ -17,6 +19,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.View, LoginPresenter>(), Log
 
     private lateinit var userName: String
     private lateinit var passWord: String
+    private var isLogin by Preference(Preference.IS_LOGIN, false)
     override var mPresenter = LoginPresenter()
 
     override fun getLayoutResId() = R.layout.activity_login
@@ -33,11 +36,14 @@ class LoginActivity : BaseMvpActivity<LoginContract.View, LoginPresenter>(), Log
     }
 
     override fun login(user: User) {
+        isLogin = true
         dismissProgressDialog()
+        startActivity(MainActivity::class.java)
+        finish()
     }
 
     override fun register(user: User) {
-        dismissProgressDialog()
+        mPresenter.login(user.username,user.password)
     }
 
     private val onClickListener = View.OnClickListener {
