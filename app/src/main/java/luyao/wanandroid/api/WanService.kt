@@ -1,7 +1,9 @@
 package luyao.wanandroid.api
 
 import io.reactivex.Observable
+import kotlinx.coroutines.experimental.Deferred
 import luyao.wanandroid.bean.*
+import retrofit2.Call
 import retrofit2.http.*
 
 
@@ -16,10 +18,10 @@ interface WanService {
     }
 
     @GET("/article/list/{page}/json")
-    fun getHomeArticles(@Path("page") page: Int): Observable<WanResponse<ArticleList>>
+    fun getHomeArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
 
     @GET("/banner/json")
-    fun getBanner(): Observable<WanResponse<List<Banner>>>
+    fun getBanner(): Deferred<WanResponse<List<Banner>>>
 
     @GET("/tree/json")
     fun getSystemType(): Observable<WanResponse<List<SystemParent>>>
@@ -58,8 +60,8 @@ interface WanService {
     fun getCollectArticles(@Path("page") page: Int): Observable<WanResponse<ArticleList>>
 
     @POST("/lg/collect/{id}/json")
-    fun collectArticle(@Path("id") id: Int): Observable<WanResponse<ArticleList>>
+    fun collectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
 
     @POST("/lg/uncollect_originId/{id}/json")
-    fun cancelCollectArticle(@Path("id") id: Int): Observable<WanResponse<ArticleList>>
+    fun cancelCollectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
 }

@@ -14,6 +14,7 @@ import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
+import luyao.wanandroid.ui.home.HomePresenter
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.search.SearchActivity
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        HomePresenter(homeFragment)
         switchFragment(homeFragment)
     }
 

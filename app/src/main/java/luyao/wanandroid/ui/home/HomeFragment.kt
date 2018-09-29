@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import dp2px
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.base.BaseFragment2
 import luyao.wanandroid.bean.Article
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
@@ -25,7 +25,9 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeContract.View {
+class HomeFragment : BaseFragment2(), HomeContract.View {
+
+    override lateinit var mPresenter: HomeContract.Presenter
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
@@ -34,7 +36,6 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomePresenter>(), HomeCo
     private val bannerUrls = mutableListOf<String>()
     private var currentPage = 0
     private val banner by lazy { com.youth.banner.Banner(activity) }
-    override var mPresenter = HomePresenter()
 
     override fun getLayoutResId() = R.layout.fragment_home
 
