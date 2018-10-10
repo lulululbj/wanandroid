@@ -14,9 +14,9 @@ import dp2px
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.gayhub.base.BaseMvpActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
@@ -28,13 +28,13 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), SearchContract.View {
+class SearchActivity : BaseActivity(), SearchContract.View {
 
     private lateinit var searchView: SearchView
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
     private var key = ""
-    override var mPresenter = SearchPresenter()
+    override var mPresenter: SearchContract.Presenter = SearchPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_search
 
@@ -103,11 +103,11 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
                 }
             }
 
-            setOnTagClickListener({ _, position, _ ->
+            setOnTagClickListener { _, position, _ ->
                 key = hotList[position].name
                 startSearch(key)
                 true
-            })
+            }
         }
 
         webTagLayout.run {
@@ -122,12 +122,12 @@ class SearchActivity : BaseMvpActivity<SearchContract.View, SearchPresenter>(), 
                 }
             }
 
-            setOnTagClickListener({ _, position, parent ->
+            setOnTagClickListener { _, position, parent ->
                 val intent = Intent(parent.context, BrowserActivity::class.java)
                 intent.putExtra(BrowserActivity.URL, webSitesList[position].link)
                 parent.context.startActivity(intent)
                 true
-            })
+            }
         }
     }
 

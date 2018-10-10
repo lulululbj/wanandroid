@@ -10,15 +10,18 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.home.HomePresenter
 import luyao.wanandroid.ui.navigation.NavigationFragment
+import luyao.wanandroid.ui.navigation.NavigationPresenter
 import luyao.wanandroid.ui.project.ProjectFragment
+import luyao.wanandroid.ui.project.ProjectPresenter
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
+import luyao.wanandroid.ui.system.SystemPresenter
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +30,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val systemFragment by lazy { SystemFragment() }
     private val navigationFragment by lazy { NavigationFragment() }
     private val projectFragment by lazy { ProjectFragment() }
+
+    private lateinit var homePresenter: HomePresenter
+    private lateinit var systemPresenter: SystemPresenter
+    private lateinit var navigationPresenter: NavigationPresenter
+    private lateinit var projectPresenter: ProjectPresenter
+
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -41,7 +50,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        HomePresenter(homeFragment)
+        homePresenter=HomePresenter(homeFragment)
+        systemPresenter=SystemPresenter(systemFragment)
+        navigationPresenter=NavigationPresenter(navigationFragment)
+        projectPresenter=ProjectPresenter(projectFragment)
         switchFragment(homeFragment)
     }
 

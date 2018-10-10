@@ -1,27 +1,39 @@
 package luyao.wanandroid.ui.project
 
-import luyao.gayhub.base.mvp.BasePresenter
-import luyao.gayhub.base.rx.UIScheduler
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import luyao.wanandroid.api.WanRetrofitClient
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * Created by Lu
  * on 2018/4/1 16:46
  */
-class ProjectPresenter : BasePresenter<ProjectContract.View>(), ProjectContract.Presenter {
+class ProjectPresenter(
+        private val mView: ProjectContract.View,
+        private val uiContext: CoroutineContext = UI
+) : ProjectContract.Presenter {
+
+
+    override fun start() {
+
+    }
+
+    init {
+        mView.mPresenter = this
+    }
+
     override fun getProjectTypeDetailList(page: Int, cid: Int) {
-        val d=WanRetrofitClient.service
-                .getProjectTypeDetail(page, cid)
-                .compose(UIScheduler())
-                .subscribe({getView()?.getProjectTypeDetailList(it.data)})
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getProjectTypeDetail(page, cid).await()
+            mView.getProjectTypeDetailList(result.data)
+        }
     }
 
     override fun getProjectTypeList() {
-        val d = WanRetrofitClient.service
-                .getProjectType()
-                .compose(UIScheduler())
-                .subscribe { getView()?.getProjectTypeList(it.data) }
-        addSubscription(d)
+        launch(uiContext){
+            val result=WanRetrofitClient.service.getProjectType().await()
+            mView.getProjectTypeList(result.data)
+        }
     }
 }

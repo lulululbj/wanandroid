@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.collect
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.ArticleList
 
 /**
@@ -10,11 +10,12 @@ import luyao.wanandroid.bean.ArticleList
  */
 class CollectContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun getCollectArticles(articleList: ArticleList)
+        fun getCollectArticlesError(message: String)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun getCollectArticles(page: Int)
     }
 }

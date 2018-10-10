@@ -3,8 +3,8 @@ package luyao.wanandroid.ui.login
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.gayhub.base.BaseMvpActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.User
 import luyao.wanandroid.ui.MainActivity
 import luyao.wanandroid.util.Preference
@@ -14,13 +14,12 @@ import toast
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : BaseMvpActivity<LoginContract.View, LoginPresenter>(), LoginContract.View {
-
+class LoginActivity : BaseActivity(), LoginContract.View {
 
     private lateinit var userName: String
     private lateinit var passWord: String
     private var isLogin by Preference(Preference.IS_LOGIN, false)
-    override var mPresenter = LoginPresenter()
+    override var mPresenter: LoginContract.Presenter = LoginPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -43,7 +42,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.View, LoginPresenter>(), Log
     }
 
     override fun register(user: User) {
-        mPresenter.login(user.username,user.password)
+        mPresenter.login(user.username, user.password)
     }
 
     private val onClickListener = View.OnClickListener {
@@ -81,8 +80,15 @@ class LoginActivity : BaseMvpActivity<LoginContract.View, LoginPresenter>(), Log
         return true
     }
 
-    override fun showError(message: String?) {
+    override fun registerError(message: String) {
         dismissProgressDialog()
-        message?.let { toast(it) }
+        message.let { toast(it) }
     }
+
+    override fun loginError(message: String) {
+        dismissProgressDialog()
+        message.let { toast(it) }
+    }
+
+
 }

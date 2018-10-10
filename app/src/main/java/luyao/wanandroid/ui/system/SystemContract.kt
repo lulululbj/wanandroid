@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.system
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 
@@ -11,12 +11,12 @@ import luyao.wanandroid.bean.SystemParent
  */
 interface SystemContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun getSystemTypes(systemList: List<SystemParent>)
         fun getSystemTypeDetail(articleList: ArticleList)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun getSystemTypes()
         fun getSystemTypeDetail(id: Int, page: Int)
     }

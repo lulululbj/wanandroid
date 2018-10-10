@@ -3,10 +3,10 @@ package luyao.wanandroid.ui.navigation
 import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_navigation.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
 import q.rorbin.verticaltablayout.VerticalTabLayout
@@ -16,13 +16,13 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by Lu
  * on 2018/3/28 21:26
  */
-class NavigationFragment : BaseMvpFragment<NavigationContract.View, NavigationPresenter>(), NavigationContract.View {
+class NavigationFragment : BaseFragment(), NavigationContract.View {
 
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }
     private val navigationAdapter by lazy { NavigationAdapter() }
     private val mLayoutManager by lazy { LinearLayoutManager(activity) }
-    override var mPresenter = NavigationPresenter()
+    override lateinit var mPresenter: NavigationContract.Presenter
 
     override fun getLayoutResId() = R.layout.fragment_navigation
 

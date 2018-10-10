@@ -1,36 +1,45 @@
 package luyao.wanandroid.ui.search
 
-import luyao.gayhub.base.mvp.BasePresenter
-import luyao.gayhub.base.rx.UIScheduler
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import luyao.wanandroid.api.WanRetrofitClient
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * Created by Lu
  * on 2018/4/2 21:57
  */
-class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Presenter {
+class SearchPresenter(
+        private val mView: SearchContract.View,
+        private val uiContext: CoroutineContext = UI
+) : SearchContract.Presenter {
+
+    override fun start() {
+
+    }
+
+    init {
+        mView.mPresenter = this
+    }
+
     override fun searchHot(page: Int, key: String) {
-        val d = WanRetrofitClient.service
-                .searchHot(page, key)
-                .compose(UIScheduler())
-                .subscribe({ getView()?.searchHot(it.data) })
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.searchHot(page, key).await()
+            mView.searchHot(result.data)
+        }
     }
 
     override fun getWebsites() {
-        val d = WanRetrofitClient.service
-                .getWebsites()
-                .compose(UIScheduler())
-                .subscribe({ getView()?.getWebsites(it.data) })
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getWebsites().await()
+            mView.getWebsites(result.data)
+        }
     }
 
     override fun getHotSearch() {
-        val d = WanRetrofitClient.service
-                .getHot()
-                .compose(UIScheduler())
-                .subscribe({ getView()?.getHotSearch(it.data) })
-        addSubscription(d)
-
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getHot().await()
+            mView.getHotSearch(result.data)
+        }
     }
 }

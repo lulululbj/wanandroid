@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.navigation
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.Navigation
 
 /**
@@ -10,11 +10,11 @@ import luyao.wanandroid.bean.Navigation
  */
 interface NavigationContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun getNavigation(navigationList: List<Navigation>)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun getNavigation()
     }
 }

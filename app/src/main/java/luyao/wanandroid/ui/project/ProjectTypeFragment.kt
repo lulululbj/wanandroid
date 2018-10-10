@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.ui.BrowserActivity
@@ -19,12 +19,12 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : BaseMvpFragment<ProjectContract.View, ProjectPresenter>(), ProjectContract.View {
+class ProjectTypeFragment : BaseFragment(), ProjectContract.View {
 
     private val cid by lazy { arguments?.getInt(ProjectTypeFragment.CID) }
     private var currentPage = 1
     private val projectAdapter by lazy { ProjectAdapter() }
-    override var mPresenter = ProjectPresenter()
+    override var mPresenter: ProjectContract.Presenter = ProjectPresenter(this)
 
     override fun getLayoutResId() = R.layout.fragment_projecttype
 

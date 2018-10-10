@@ -1,28 +1,38 @@
 package luyao.wanandroid.ui.system
 
-import luyao.gayhub.base.mvp.BasePresenter
-import luyao.gayhub.base.rx.UIScheduler
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import luyao.wanandroid.api.WanRetrofitClient
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * Created by Lu
  * on 2018/3/26 21:39
  */
-class SystemPresenter : BasePresenter<SystemContract.View>(), SystemContract.Presenter {
+class SystemPresenter(
+        private val mView: SystemContract.View,
+        private val uiContext: CoroutineContext = UI
+) : SystemContract.Presenter {
+
+    init {
+        mView.mPresenter = this
+    }
+
+    override fun start() {
+
+    }
 
     override fun getSystemTypeDetail(id: Int, page: Int) {
-        val d = WanRetrofitClient.service
-                .getSystemTypeDetail(page, id)
-                .compose(UIScheduler())
-                .subscribe({ getView()?.getSystemTypeDetail(it.data) })
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getSystemTypeDetail(page, id).await()
+            mView.getSystemTypeDetail(result.data)
+        }
     }
 
     override fun getSystemTypes() {
-        val d = WanRetrofitClient.service
-                .getSystemType()
-                .compose(UIScheduler())
-                .subscribe({ getView()?.getSystemTypes(it.data) })
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getSystemType().await()
+            mView.getSystemTypes(result.data)
+        }
     }
 }

@@ -8,8 +8,8 @@ import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 import kotlinx.android.synthetic.main.activity_browser.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseActivity
 
 /**
  * Created by Lu

@@ -2,8 +2,8 @@ package luyao.wanandroid.ui.system
 
 import android.support.v4.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.activity_system_detail.*
-import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.SystemParent
 
 /**

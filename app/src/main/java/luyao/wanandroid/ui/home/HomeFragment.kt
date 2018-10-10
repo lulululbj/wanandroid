@@ -9,7 +9,7 @@ import dp2px
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.base.BaseFragment2
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.Article
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
@@ -25,7 +25,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseFragment2(), HomeContract.View {
+class HomeFragment : BaseFragment(), HomeContract.View {
 
     override lateinit var mPresenter: HomeContract.Presenter
 

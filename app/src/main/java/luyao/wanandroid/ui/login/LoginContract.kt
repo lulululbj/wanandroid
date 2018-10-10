@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.login
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.User
 
 /**
@@ -10,12 +10,14 @@ import luyao.wanandroid.bean.User
  */
 interface LoginContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun login(user: User)
         fun register(user: User)
+        fun registerError(message:String)
+        fun loginError(message:String)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun login(userName: String, passWord: String)
         fun register(userName: String, passWord: String)
     }

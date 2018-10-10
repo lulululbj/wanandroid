@@ -1,4 +1,4 @@
-package luyao.gayhub.base
+package luyao.wanandroid.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 /**
  * Created by luyao
- * on 2018/1/19 10:47
+ * on 2018/9/29 16:17
  */
 abstract class BaseFragment : Fragment() {
 
@@ -17,13 +17,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        attachPresenter()
         initView()
         initData()
         super.onViewCreated(view, savedInstanceState)
     }
-
-    open fun attachPresenter(){}
 
     abstract fun getLayoutResId(): Int
 

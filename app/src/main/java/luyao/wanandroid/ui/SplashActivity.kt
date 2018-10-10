@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui
 
-import luyao.gayhub.base.BaseActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseActivity
 
 /**
  * Created by luyao

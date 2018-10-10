@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.project
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 
@@ -11,12 +11,12 @@ import luyao.wanandroid.bean.SystemParent
  */
 interface ProjectContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun getProjectTypeList(projectTypeList: List<SystemParent>)
         fun getProjectTypeDetailList(articleList: ArticleList)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun getProjectTypeList()
         fun getProjectTypeDetailList(page: Int, cid: Int)
     }

@@ -1,24 +1,33 @@
 package luyao.wanandroid.ui.collect
 
-import luyao.gayhub.base.mvp.BasePresenter
-import luyao.gayhub.base.rx.UIScheduler
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import luyao.wanandroid.api.WanRetrofitClient
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * Created by Lu
  * on 2018/4/10 22:12
  */
-class CollectPresenter : BasePresenter<CollectContract.View>(), CollectContract.Presenter {
+class CollectPresenter(
+        private val mView: CollectContract.View,
+        private val uiContext: CoroutineContext = UI
+) : CollectContract.Presenter {
+
+    override fun start() {
+
+    }
+
+    init {
+        mView.mPresenter = this
+    }
+
     override fun getCollectArticles(page: Int) {
-        val d = WanRetrofitClient.service
-                .getCollectArticles(page)
-                .compose(UIScheduler())
-                .subscribe({
-                    if (it.errorCode == -1)
-                        getView()?.showError(it.errorMsg)
-                    else
-                        getView()?.getCollectArticles(it.data)
-                })
-        addSubscription(d)
+        launch(uiContext) {
+            val result = WanRetrofitClient.service.getCollectArticles(page).await()
+            with(result) {
+                if (errorCode == -1) mView.getCollectArticlesError(errorMsg) else mView.getCollectArticles(result.data)
+            }
+        }
     }
 }

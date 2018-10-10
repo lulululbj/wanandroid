@@ -5,9 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_system.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.view.SpaceItemDecoration
@@ -16,10 +16,10 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/26 21:11
  */
-class SystemFragment : BaseMvpFragment<SystemContract.View, SystemPresenter>(), SystemContract.View {
+class SystemFragment : BaseFragment(), SystemContract.View {
 
     private val systemAdapter by lazy { SystemAdapter() }
-    override var mPresenter = SystemPresenter()
+    override lateinit var mPresenter: SystemContract.Presenter
 
     override fun getLayoutResId() = R.layout.fragment_system
 

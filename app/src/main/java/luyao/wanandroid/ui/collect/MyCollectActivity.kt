@@ -5,9 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.gayhub.base.BaseMvpActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
@@ -19,12 +19,12 @@ import toast
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : BaseMvpActivity<CollectContract.View, CollectPresenter>(), CollectContract.View {
+class MyCollectActivity : BaseActivity(), CollectContract.View {
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
 
-    override var mPresenter = CollectPresenter()
+    override var mPresenter: CollectContract.Presenter = CollectPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_collect
 
@@ -79,7 +79,7 @@ class MyCollectActivity : BaseMvpActivity<CollectContract.View, CollectPresenter
     override fun getCollectArticles(articleList: ArticleList) {
         articleAdapter.run {
 
-//            if (articleList.datas.isEmpty()) {
+            //            if (articleList.datas.isEmpty()) {
 //                replaceData(articleList.datas)
 //                return
 //            }
@@ -97,10 +97,9 @@ class MyCollectActivity : BaseMvpActivity<CollectContract.View, CollectPresenter
         currentPage++
     }
 
-    override fun showError(message: String?) {
-        super.showError(message)
+    override fun getCollectArticlesError(message: String) {
         collectRefreshLayout.isRefreshing = false
-        message?.let { toast(it) }
+        toast(message)
         startActivity(LoginActivity::class.java)
         finish()
     }

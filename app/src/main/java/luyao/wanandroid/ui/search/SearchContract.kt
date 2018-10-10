@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.search
 
-import luyao.gayhub.base.mvp.IPresenter
-import luyao.gayhub.base.mvp.IView
+import luyao.wanandroid.BasePresenter
+import luyao.wanandroid.BaseView
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Hot
 
@@ -11,13 +11,13 @@ import luyao.wanandroid.bean.Hot
  */
 interface SearchContract {
 
-    interface View : IView {
+    interface View : BaseView<Presenter> {
         fun getWebsites(webSites: List<Hot>)
         fun getHotSearch(hotWords: List<Hot>)
         fun searchHot(articleList: ArticleList)
     }
 
-    interface Presenter : IPresenter<View> {
+    interface Presenter : BasePresenter {
         fun getWebsites()
         fun getHotSearch()
         fun searchHot(page:Int,key:String)

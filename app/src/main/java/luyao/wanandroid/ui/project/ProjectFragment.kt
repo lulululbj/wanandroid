@@ -2,8 +2,8 @@ package luyao.wanandroid.ui.project
 
 import android.support.v4.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.fragment_project.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 
@@ -11,11 +11,11 @@ import luyao.wanandroid.bean.SystemParent
  * Created by Lu
  * on 2018/4/1 16:52
  */
-class ProjectFragment : BaseMvpFragment<ProjectContract.View, ProjectPresenter>(), ProjectContract.View {
+class ProjectFragment : BaseFragment(), ProjectContract.View {
 
 
     private val mProjectTypeList = mutableListOf<SystemParent>()
-    override var mPresenter = ProjectPresenter()
+    override lateinit var mPresenter: ProjectContract.Presenter
 
     override fun getLayoutResId() = R.layout.fragment_project
 

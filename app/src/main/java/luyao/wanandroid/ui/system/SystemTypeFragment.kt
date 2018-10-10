@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.gayhub.base.BaseMvpFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.ui.BrowserActivity
@@ -18,12 +18,12 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseMvpFragment<SystemContract.View, SystemPresenter>(), SystemContract.View {
+class SystemTypeFragment : BaseFragment(), SystemContract.View {
 
     private val cid by lazy { arguments?.getInt(CID) }
     private val systemTypeAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
-    override var mPresenter = SystemPresenter()
+    override var mPresenter: SystemContract.Presenter = SystemPresenter(this)
 
     companion object {
 
