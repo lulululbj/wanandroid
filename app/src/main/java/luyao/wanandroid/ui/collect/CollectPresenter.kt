@@ -1,17 +1,18 @@
 package luyao.wanandroid.ui.collect
 
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import luyao.wanandroid.api.WanRetrofitClient
-import kotlin.coroutines.experimental.CoroutineContext
+import luyao.wanandroid.ext.launchOnUI
+import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by Lu
  * on 2018/4/10 22:12
  */
 class CollectPresenter(
-        private val mView: CollectContract.View,
-        private val uiContext: CoroutineContext = UI
+        private val mView: CollectContract.View
 ) : CollectContract.Presenter {
 
     override fun start() {
@@ -23,11 +24,11 @@ class CollectPresenter(
     }
 
     override fun getCollectArticles(page: Int) {
-        launch(uiContext) {
+        CoroutineScope(Dispatchers.Main).launch {
             val result = WanRetrofitClient.service.getCollectArticles(page).await()
-            with(result) {
-                if (errorCode == -1) mView.getCollectArticlesError(errorMsg) else mView.getCollectArticles(result.data)
-            }
+            if (result.errorCode == -1) mView.getCollectArticlesError(result.errorMsg) else mView.getCollectArticles(result.data)
         }
+
     }
+
 }

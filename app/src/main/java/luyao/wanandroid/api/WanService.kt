@@ -1,6 +1,6 @@
 package luyao.wanandroid.api
 
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import luyao.wanandroid.bean.*
 import retrofit2.http.*
 
@@ -55,7 +55,7 @@ interface WanService {
     fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Deferred<WanResponse<User>>
 
     @GET("/lg/collect/list/{page}/json")
-    fun getCollectArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+     fun getCollectArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
 
     @POST("/lg/collect/{id}/json")
     fun collectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
