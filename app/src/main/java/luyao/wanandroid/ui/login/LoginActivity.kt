@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.login
 
+import android.arch.lifecycle.Observer
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
@@ -7,6 +8,7 @@ import luyao.wanandroid.R
 import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.User
 import luyao.wanandroid.ui.MainActivity
+import luyao.wanandroid.ui.home.HomeViewModel
 import luyao.wanandroid.util.Preference
 import toast
 
@@ -14,12 +16,14 @@ import toast
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : BaseActivity(), LoginContract.View {
+class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
+
+    override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
 
     private lateinit var userName: String
     private lateinit var passWord: String
     private var isLogin by Preference(Preference.IS_LOGIN, false)
-    override var mPresenter: LoginContract.Presenter = LoginPresenter(this)
+//    override var mPresenter: LoginContract.Presenter = LoginPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -34,16 +38,39 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         register.setOnClickListener(onClickListener)
     }
 
-    override fun login(user: User) {
-        isLogin = true
-        dismissProgressDialog()
-        startActivity(MainActivity::class.java)
-        finish()
+    override fun startObserve() {
+        mViewModel.apply {
+            mLoginUser.observe(this@LoginActivity, Observer {
+                isLogin = true
+                dismissProgressDialog()
+                startActivity(MainActivity::class.java)
+                finish()
+            })
+
+            mRegisterUser.observe(this@LoginActivity, Observer {
+                it?.run {
+                    mViewModel.login(username, password)
+                }
+            })
+
+            errMsg.observe(this@LoginActivity, Observer {
+                dismissProgressDialog()
+                it?.run { toast(it) }
+            })
+        }
     }
 
-    override fun register(user: User) {
-        mPresenter.login(user.username, user.password)
-    }
+
+//    override fun login(user: User) {
+//        isLogin = true
+//        dismissProgressDialog()
+//        startActivity(MainActivity::class.java)
+//        finish()
+//    }
+
+//    override fun register(user: User) {
+//        mViewModel.login(user.username, user.password)
+//    }
 
     private val onClickListener = View.OnClickListener {
         when (it.id) {
@@ -55,14 +82,14 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     private fun login() {
         if (checkInput()) {
             showProgressDialog(getString(R.string.is_logining))
-            mPresenter.login(userName, passWord)
+            mViewModel.login(userName, passWord)
         }
     }
 
     private fun register() {
         if (checkInput()) {
             showProgressDialog(getString(R.string.is_registering))
-            mPresenter.register(userName, passWord)
+            mViewModel.register(userName, passWord)
         }
     }
 
@@ -80,15 +107,15 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         return true
     }
 
-    override fun registerError(message: String) {
-        dismissProgressDialog()
-        message.let { toast(it) }
-    }
-
-    override fun loginError(message: String) {
-        dismissProgressDialog()
-        message.let { toast(it) }
-    }
+//    override fun registerError(message: String) {
+//        dismissProgressDialog()
+//        message.let { toast(it) }
+//    }
+//
+//    override fun loginError(message: String) {
+//        dismissProgressDialog()
+//        message.let { toast(it) }
+//    }
 
 
 }

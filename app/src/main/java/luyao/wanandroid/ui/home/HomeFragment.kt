@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.home
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
@@ -7,9 +8,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import dp2px
 import kotlinx.android.synthetic.main.fragment_home.*
+import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.Article
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
@@ -25,10 +26,9 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseFragment(), HomeContract.View {
+class HomeFragment : BaseFragment<HomeViewModel>() {
 
-    override lateinit var mPresenter: HomeContract.Presenter
-
+    override fun providerVMClass(): Class<HomeViewModel>? = HomeViewModel::class.java
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
@@ -79,8 +79,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                     homeArticleAdapter.run {
                         data[position].run {
                             collect = !collect
-                            if (collect) mPresenter.collectArticle(this)
-                            else mPresenter.cancelCollectArticle(this)
+//                            if (collect) mPresenter.collectArticle(this)
+//                            else mPresenter.cancelCollectArticle(this)
                         }
                         notifyDataSetChanged()
                     }
@@ -92,7 +92,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     private fun loadMore() {
-        mPresenter.getArticles(currentPage)
+        mViewModel.getArticleList(currentPage)
     }
 
     private fun initBanner() {
@@ -115,14 +115,25 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         homeArticleAdapter.setEnableLoadMore(false)
         homeRefreshLayout.isRefreshing = true
         currentPage = 0
-        mPresenter.getArticles(currentPage)
+        mViewModel.getArticleList(currentPage)
     }
 
     override fun initData() {
-        mPresenter.getBanners()
+        mViewModel.getBanners()
     }
 
-    override fun getArticles(articleList: ArticleList) {
+    override fun startObserve() {
+        mViewModel.apply {
+            mBanners.observe(this@HomeFragment, Observer { it ->
+                it?.let { setBanner(it) }
+            })
+            mArticleList.observe(this@HomeFragment, Observer { it ->
+                it?.let { setArticles(it) }
+            })
+        }
+    }
+
+    private fun setArticles(articleList: ArticleList) {
         homeArticleAdapter.run {
             if (homeRefreshLayout.isRefreshing) replaceData(articleList.datas)
             else addData(articleList.datas)
@@ -133,7 +144,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         currentPage++
     }
 
-    override fun getBanner(bannerList: List<Banner>) {
+    private fun setBanner(bannerList: List<Banner>) {
         for (banner in bannerList) {
             bannerImages.add(banner.imagePath)
             bannerTitles.add(banner.title)
@@ -144,14 +155,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                 .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                 .setDelayTime(3000)
         banner.start()
-    }
-
-    override fun collectArticle(article: Article) {
-
-    }
-
-    override fun cancleCollectArticle(article: Article) {
-
     }
 
     override fun onStart() {

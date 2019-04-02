@@ -14,7 +14,6 @@ import luyao.wanandroid.R
 import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
-import luyao.wanandroid.ui.home.HomePresenter
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.navigation.NavigationPresenter
 import luyao.wanandroid.ui.project.ProjectFragment
@@ -31,7 +30,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val navigationFragment by lazy { NavigationFragment() }
     private val projectFragment by lazy { ProjectFragment() }
 
-    private lateinit var homePresenter: HomePresenter
+//    private lateinit var homePresenter: HomePresenter
     private lateinit var systemPresenter: SystemPresenter
     private lateinit var navigationPresenter: NavigationPresenter
     private lateinit var projectPresenter: ProjectPresenter
@@ -50,7 +49,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        homePresenter=HomePresenter(homeFragment)
+//        homePresenter=HomePresenter(homeFragment)
         systemPresenter=SystemPresenter(systemFragment)
         navigationPresenter=NavigationPresenter(navigationFragment)
         projectPresenter=ProjectPresenter(projectFragment)
@@ -60,10 +59,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun switchFragment(targetFragment: Fragment) {
         val transition = supportFragmentManager.beginTransaction()
         if (!targetFragment.isAdded) {
-            if (currentFragment != null) transition.hide(currentFragment)
+            if (currentFragment != null) transition.hide(currentFragment!!)
             transition.add(R.id.mainLayout, targetFragment, targetFragment.javaClass.name)
         } else {
-            transition.hide(currentFragment).show(targetFragment)
+            transition.hide(currentFragment!!).show(targetFragment)
         }
         transition.commit()
         currentFragment = targetFragment
