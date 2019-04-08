@@ -1,25 +1,24 @@
 package luyao.wanandroid.ui.system
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_system.*
+import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
-import luyao.wanandroid.base.BaseFragment
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.view.SpaceItemDecoration
 
 /**
  * Created by Lu
  * on 2018/3/26 21:11
  */
-class SystemFragment : BaseFragment(), SystemContract.View {
+class SystemFragment : BaseFragment<SystemViewModel>() {
 
+    override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
     private val systemAdapter by lazy { SystemAdapter() }
-    override lateinit var mPresenter: SystemContract.Presenter
 
     override fun getLayoutResId() = R.layout.fragment_system
 
@@ -39,7 +38,7 @@ class SystemFragment : BaseFragment(), SystemContract.View {
     }
 
     private fun refresh() {
-        mPresenter.getSystemTypes()
+        mViewModel.getSystemTypes()
     }
 
     override fun initData() {
@@ -51,11 +50,14 @@ class SystemFragment : BaseFragment(), SystemContract.View {
         }
     }
 
-    override fun getSystemTypes(systemList: List<SystemParent>) {
-        systemRefreshLayout.isRefreshing = false
-        systemAdapter.setNewData(systemList)
-    }
-
-    override fun getSystemTypeDetail(articleList: ArticleList) {
+    override fun startObserve() {
+        mViewModel.run {
+            mSystemParentList.observe(this@SystemFragment, Observer {
+                it?.run {
+                    systemRefreshLayout.isRefreshing = false
+                    systemAdapter.setNewData(it)
+                }
+            })
+        }
     }
 }

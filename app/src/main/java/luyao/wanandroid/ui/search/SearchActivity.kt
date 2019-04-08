@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.search
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
@@ -16,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
@@ -28,13 +28,14 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseActivity(), SearchContract.View {
+class SearchActivity : luyao.base.BaseActivity<SearchViewModel>() {
+
+    override fun providerVMClass(): Class<SearchViewModel>? = SearchViewModel::class.java
 
     private lateinit var searchView: SearchView
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
     private var key = ""
-    override var mPresenter: SearchContract.Presenter = SearchPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_search
 
@@ -58,7 +59,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         searchAdapter.setEnableLoadMore(false)
         searchRefreshLayout.isRefreshing = true
         currentPage = 0
-        mPresenter.searchHot(currentPage, key)
+        mViewModel.searchHot(currentPage, key)
     }
 
     private fun initAdapter() {
@@ -79,14 +80,13 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     private fun loadMore() {
-        mPresenter.searchHot(currentPage, key)
-
+        mViewModel.searchHot(currentPage, key)
     }
 
     override fun initData() {
         mToolbar.setNavigationOnClickListener { onBackPressed() }
-        mPresenter.getHotSearch()
-        mPresenter.getWebsites()
+        mViewModel.getHotSearch()
+        mViewModel.getWebSites()
     }
 
 
@@ -135,24 +135,12 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         searchView.clearFocus()
         searchRefreshLayout.isRefreshing = true
         currentPage = 0
-        mPresenter.searchHot(0, key)
+        mViewModel.searchHot(0, key)
         hotContent.visibility = View.GONE
         searchRecycleView.visibility = View.VISIBLE
     }
 
-    override fun getWebsites(webSites: List<Hot>) {
-        webSitesList.clear()
-        webSitesList.addAll(webSites)
-        webTagLayout.adapter.notifyDataChanged()
-    }
-
-    override fun getHotSearch(hotWords: List<Hot>) {
-        hotList.clear()
-        hotList.addAll(hotWords)
-        hotTagLayout.adapter.notifyDataChanged()
-    }
-
-    override fun searchHot(articleList: ArticleList) {
+    private fun searchHot(articleList: ArticleList) {
         searchAdapter.run {
 
             if (articleList.datas.isEmpty()) {
@@ -204,5 +192,29 @@ class SearchActivity : BaseActivity(), SearchContract.View {
             searchAdapter.setNewData(null)
         } else
             finish()
+    }
+
+    override fun startObserve() {
+        mViewModel.apply {
+            mArticleList.observe(this@SearchActivity, Observer {
+                it?.run { searchHot(it) }
+            })
+
+            mWebSiteHot.observe(this@SearchActivity, Observer {
+                it?.run {
+                    webSitesList.clear()
+                    webSitesList.addAll(it)
+                    webTagLayout.adapter.notifyDataChanged()
+                }
+            })
+
+            mHotSearch.observe(this@SearchActivity, Observer {
+                it?.run {
+                    hotList.clear()
+                    hotList.addAll(it)
+                    hotTagLayout.adapter.notifyDataChanged()
+                }
+            })
+        }
     }
 }

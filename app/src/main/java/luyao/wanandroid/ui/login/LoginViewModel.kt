@@ -17,9 +17,10 @@ class LoginViewModel : BaseViewModel() {
     val errMsg: MutableLiveData<String> = MutableLiveData()
 
     fun login(userName: String, passWord: String) {
+
         launchOnUITryCatch({
             val result = WanRetrofitClient.service.login(userName, passWord).await()
-            with(result) {
+            result.run {
                 if (errorCode == -1) errMsg.value = errorMsg
                 else mLoginUser.value = result.data
             }
@@ -29,7 +30,7 @@ class LoginViewModel : BaseViewModel() {
     fun register(userName: String, passWord: String) {
         launchOnUITryCatch({
             val result = WanRetrofitClient.service.register(userName, passWord, passWord).await()
-            with(result) {
+            result.run {
                 if (errorCode == -1) errMsg.value = errorMsg
                 else mRegisterUser.value = result.data
             }

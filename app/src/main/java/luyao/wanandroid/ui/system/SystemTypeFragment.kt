@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.system
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,7 +8,7 @@ import dp2px
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.base.BaseFragment
+import luyao.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.ui.BrowserActivity
@@ -18,12 +19,13 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseFragment(), SystemContract.View {
+class SystemTypeFragment : BaseFragment<SystemViewModel>(){
+
+    override fun providerVMClass(): Class<SystemViewModel>? =SystemViewModel::class.java
 
     private val cid by lazy { arguments?.getInt(CID) }
     private val systemTypeAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
-    override var mPresenter: SystemContract.Presenter = SystemPresenter(this)
 
     companion object {
 
@@ -72,7 +74,7 @@ class SystemTypeFragment : BaseFragment(), SystemContract.View {
 
     private fun loadMore() {
         cid?.let {
-            mPresenter.getSystemTypeDetail(it, currentPage)
+            mViewModel.getSystemTypeDetail(it, currentPage)
         }
     }
 
@@ -81,14 +83,14 @@ class SystemTypeFragment : BaseFragment(), SystemContract.View {
         typeRefreshLayout.isRefreshing = true
         currentPage = 0
         cid?.let {
-            mPresenter.getSystemTypeDetail(it, currentPage)
+            mViewModel.getSystemTypeDetail(it, currentPage)
         }
     }
 
     override fun initData() {
     }
 
-    override fun getSystemTypeDetail(articleList: ArticleList) {
+     fun getSystemTypeDetail(articleList: ArticleList) {
         systemTypeAdapter.run {
             if (articleList.offset >= articleList.total) {
                 loadMoreEnd()
@@ -104,6 +106,11 @@ class SystemTypeFragment : BaseFragment(), SystemContract.View {
         currentPage++
     }
 
-    override fun getSystemTypes(systemList: List<SystemParent>) {
+    override fun startObserve() {
+        mViewModel.run {
+            mArticleList.observe(this@SystemTypeFragment, Observer {
+                it?.run { getSystemTypeDetail(it) }
+            })
+        }
     }
 }

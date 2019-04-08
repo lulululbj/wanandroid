@@ -1,13 +1,14 @@
 package luyao.wanandroid.ui.collect
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
@@ -19,12 +20,12 @@ import toast
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : BaseActivity(), CollectContract.View {
+class MyCollectActivity : BaseActivity<CollectViewModel>() {
+
+    override fun providerVMClass(): Class<CollectViewModel>? = CollectViewModel::class.java
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
-
-    override var mPresenter: CollectContract.Presenter = CollectPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_collect
 
@@ -50,7 +51,7 @@ class MyCollectActivity : BaseActivity(), CollectContract.View {
         articleAdapter.setEnableLoadMore(false)
         collectRefreshLayout.isRefreshing = true
         currentPage = 0
-        mPresenter.getCollectArticles(currentPage)
+        mViewModel.getCollectArticles(currentPage)
     }
 
     private fun initAdapter() {
@@ -69,14 +70,14 @@ class MyCollectActivity : BaseActivity(), CollectContract.View {
     }
 
     private fun loadMore() {
-        mPresenter.getCollectArticles(currentPage)
+        mViewModel.getCollectArticles(currentPage)
     }
 
     override fun initData() {
         mToolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
-    override fun getCollectArticles(articleList: ArticleList) {
+    private fun getCollectArticles(articleList: ArticleList) {
         articleAdapter.run {
 
             //            if (articleList.datas.isEmpty()) {
@@ -97,10 +98,23 @@ class MyCollectActivity : BaseActivity(), CollectContract.View {
         currentPage++
     }
 
-    override fun getCollectArticlesError(message: String) {
-        collectRefreshLayout.isRefreshing = false
-        toast(message)
-        startActivity(LoginActivity::class.java)
-        finish()
+    override fun startObserve() {
+        mViewModel.run {
+            mArticleList.observe(this@MyCollectActivity, Observer {
+                it?.run {
+                    getCollectArticles(it)
+                }
+            })
+
+            mErrorMsg.observe(this@MyCollectActivity, Observer {
+                it?.run {
+                    collectRefreshLayout.isRefreshing = false
+                    toast(it)
+                    startActivity(LoginActivity::class.java)
+                    finish()
+                }
+            })
+        }
     }
+
 }

@@ -5,10 +5,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.wanandroid.R
-import luyao.wanandroid.base.BaseActivity
-import luyao.wanandroid.bean.User
 import luyao.wanandroid.ui.MainActivity
-import luyao.wanandroid.ui.home.HomeViewModel
 import luyao.wanandroid.util.Preference
 import toast
 
@@ -23,7 +20,6 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
     private lateinit var userName: String
     private lateinit var passWord: String
     private var isLogin by Preference(Preference.IS_LOGIN, false)
-//    override var mPresenter: LoginContract.Presenter = LoginPresenter(this)
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -60,18 +56,6 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
         }
     }
 
-
-//    override fun login(user: User) {
-//        isLogin = true
-//        dismissProgressDialog()
-//        startActivity(MainActivity::class.java)
-//        finish()
-//    }
-
-//    override fun register(user: User) {
-//        mViewModel.login(user.username, user.password)
-//    }
-
     private val onClickListener = View.OnClickListener {
         when (it.id) {
             R.id.login -> login()
@@ -106,16 +90,5 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
         }
         return true
     }
-
-//    override fun registerError(message: String) {
-//        dismissProgressDialog()
-//        message.let { toast(it) }
-//    }
-//
-//    override fun loginError(message: String) {
-//        dismissProgressDialog()
-//        message.let { toast(it) }
-//    }
-
 
 }

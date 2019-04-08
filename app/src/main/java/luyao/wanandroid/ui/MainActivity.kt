@@ -14,15 +14,16 @@ import luyao.wanandroid.R
 import luyao.wanandroid.base.BaseActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
+import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.navigation.NavigationFragment
-import luyao.wanandroid.ui.navigation.NavigationPresenter
 import luyao.wanandroid.ui.project.ProjectFragment
-import luyao.wanandroid.ui.project.ProjectPresenter
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
-import luyao.wanandroid.ui.system.SystemPresenter
+import luyao.wanandroid.util.Preference
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private val isLogin by Preference(Preference.IS_LOGIN, false)
 
     private var currentFragment: Fragment? = null
     private val homeFragment by lazy { HomeFragment() }
@@ -30,10 +31,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val navigationFragment by lazy { NavigationFragment() }
     private val projectFragment by lazy { ProjectFragment() }
 
-//    private lateinit var homePresenter: HomePresenter
-    private lateinit var systemPresenter: SystemPresenter
-    private lateinit var navigationPresenter: NavigationPresenter
-    private lateinit var projectPresenter: ProjectPresenter
+    //    private lateinit var homePresenter: HomePresenter
+//    private lateinit var systemPresenter: SystemPresenter
+//    private lateinit var navigationPresenter: NavigationPresenter
+//    private lateinit var projectPresenter: ProjectPresenter
 
 
     override fun getLayoutResId() = R.layout.activity_main
@@ -50,9 +51,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
 //        homePresenter=HomePresenter(homeFragment)
-        systemPresenter=SystemPresenter(systemFragment)
-        navigationPresenter=NavigationPresenter(navigationFragment)
-        projectPresenter=ProjectPresenter(projectFragment)
+//        systemPresenter = SystemPresenter(systemFragment)
+//        navigationPresenter = NavigationPresenter(navigationFragment)
+//        projectPresenter = ProjectPresenter(projectFragment)
         switchFragment(homeFragment)
     }
 
@@ -75,11 +76,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_navigation -> switchFragment(navigationFragment)
             R.id.nav_project -> switchFragment(projectFragment)
             R.id.nav_tool -> switchToTool()
-            R.id.nav_collect -> Intent(this, MyCollectActivity::class.java).run { startActivity(this) }
+            R.id.nav_collect -> switchCollect()
         }
         mToolbar.title = item.title
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun switchCollect() {
+        if (isLogin) {
+            Intent(this, MyCollectActivity::class.java).run { startActivity(this) }
+        } else {
+            Intent(this, LoginActivity::class.java).run { startActivity(this) }
+        }
     }
 
     private fun switchToTool() {

@@ -1,12 +1,13 @@
 package luyao.wanandroid.ui.navigation
 
+import android.arch.lifecycle.Observer
 import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_navigation.*
+import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
-import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
 import q.rorbin.verticaltablayout.VerticalTabLayout
@@ -16,13 +17,14 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by Lu
  * on 2018/3/28 21:26
  */
-class NavigationFragment : BaseFragment(), NavigationContract.View {
+class NavigationFragment : BaseFragment<NavigationViewModel>() {
+
+    override fun providerVMClass(): Class<NavigationViewModel>? = NavigationViewModel::class.java
 
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }
     private val navigationAdapter by lazy { NavigationAdapter() }
     private val mLayoutManager by lazy { LinearLayoutManager(activity) }
-    override lateinit var mPresenter: NavigationContract.Presenter
 
     override fun getLayoutResId() = R.layout.fragment_navigation
 
@@ -53,21 +55,29 @@ class NavigationFragment : BaseFragment(), NavigationContract.View {
         when {
             position <= firstPotion || position >= lastPosition -> navigationRecycleView.smoothScrollToPosition(position)
             else -> navigationRecycleView.run {
-                smoothScrollBy(0, this.getChildAt(position - firstPotion).top-this.dp2px(8f))
+                smoothScrollBy(0, this.getChildAt(position - firstPotion).top - this.dp2px(8f))
             }
         }
     }
 
     override fun initData() {
-        mPresenter.getNavigation()
+        mViewModel.getNavigation()
     }
 
-    override fun getNavigation(navigationList: List<Navigation>) {
+    private fun getNavigation(navigationList: List<Navigation>) {
         this.navigationList.clear()
         this.navigationList.addAll(navigationList)
         tabLayout.setTabAdapter(tabAdapter)
 
         navigationAdapter.setNewData(navigationList)
+    }
+
+    override fun startObserve() {
+        mViewModel.run {
+            mNavigationList.observe(this@NavigationFragment, Observer {
+                it?.run { getNavigation(it) }
+            })
+        }
     }
 
 }

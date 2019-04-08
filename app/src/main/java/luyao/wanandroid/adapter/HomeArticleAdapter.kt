@@ -1,5 +1,6 @@
 package luyao.wanandroid.adapter
 
+import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import luyao.wanandroid.R
@@ -12,7 +13,7 @@ import luyao.wanandroid.bean.Article
 class HomeArticleAdapter(layoutResId: Int = R.layout.item_article) : BaseQuickAdapter<Article, BaseViewHolder>(layoutResId) {
 
     override fun convert(helper: BaseViewHolder, item: Article) {
-        helper.setText(R.id.articleTitle, item.title)
+        helper.setText(R.id.articleTitle, Html.fromHtml(item.title))
                 .setText(R.id.articleAuthor, item.author)
                 .setText(R.id.articleTag, "${item.superChapterName} ${item.chapterName}")
                 .setText(R.id.articleTime, item.niceDate)

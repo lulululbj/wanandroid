@@ -1,16 +1,16 @@
 package luyao.wanandroid.ui.project
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
+import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
-import luyao.wanandroid.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
@@ -19,12 +19,13 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : BaseFragment(), ProjectContract.View {
+class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
+
+    override fun providerVMClass(): Class<ProjectViewModel>? =ProjectViewModel::class.java
 
     private val cid by lazy { arguments?.getInt(ProjectTypeFragment.CID) }
     private var currentPage = 1
     private val projectAdapter by lazy { ProjectAdapter() }
-    override var mPresenter: ProjectContract.Presenter = ProjectPresenter(this)
 
     override fun getLayoutResId() = R.layout.fragment_projecttype
 
@@ -56,7 +57,7 @@ class ProjectTypeFragment : BaseFragment(), ProjectContract.View {
         projectRefreshLayout.isRefreshing = true
         currentPage = 1
         cid?.let {
-            mPresenter.getProjectTypeDetailList(currentPage, it)
+            mViewModel.getProjectTypeDetailList(currentPage, it)
         }
     }
 
@@ -79,18 +80,15 @@ class ProjectTypeFragment : BaseFragment(), ProjectContract.View {
 
     private fun loadMore() {
         cid?.let {
-            mPresenter.getProjectTypeDetailList(currentPage, it)
+            mViewModel.getProjectTypeDetailList(currentPage, it)
         }
     }
 
     override fun initData() {
     }
 
-    override fun getProjectTypeList(projectTypeList: List<SystemParent>) {
 
-    }
-
-    override fun getProjectTypeDetailList(articleList: ArticleList) {
+    private fun getProjectTypeDetailList(articleList: ArticleList) {
         projectAdapter.run {
             if (articleList.offset >= articleList.total) {
                 loadMoreEnd()
@@ -104,5 +102,14 @@ class ProjectTypeFragment : BaseFragment(), ProjectContract.View {
         }
         projectRefreshLayout.isRefreshing = false
         currentPage++
+    }
+
+    override fun startObserve() {
+        mViewModel.run {
+
+            mArticleList.observe(this@ProjectTypeFragment, Observer {
+                it?.run { getProjectTypeDetailList(it) }
+            })
+        }
     }
 }
