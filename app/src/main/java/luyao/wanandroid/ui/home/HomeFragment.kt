@@ -1,8 +1,8 @@
 package luyao.wanandroid.ui.home
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
@@ -79,8 +79,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                     homeArticleAdapter.run {
                         data[position].run {
                             collect = !collect
-//                            if (collect) mPresenter.collectArticle(this)
-//                            else mPresenter.cancelCollectArticle(this)
+                            mViewModel.collectArticle(id,collect)
                         }
                         notifyDataSetChanged()
                     }

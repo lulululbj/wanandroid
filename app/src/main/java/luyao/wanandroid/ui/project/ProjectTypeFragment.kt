@@ -1,9 +1,10 @@
 package luyao.wanandroid.ui.project
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
@@ -12,6 +13,8 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -21,8 +24,8 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
 
+    private val isLogin by Preference(Preference.IS_LOGIN, false)
     override fun providerVMClass(): Class<ProjectViewModel>? =ProjectViewModel::class.java
-
     private val cid by lazy { arguments?.getInt(ProjectTypeFragment.CID) }
     private var currentPage = 1
     private val projectAdapter by lazy { ProjectAdapter() }
@@ -94,6 +97,7 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
                 loadMoreEnd()
                 return
             }
+            onItemChildClickListener = this@ProjectTypeFragment.onItemChildClickListener
 
             if (projectRefreshLayout.isRefreshing) replaceData(articleList.datas)
             else addData(articleList.datas)
@@ -102,6 +106,24 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
         }
         projectRefreshLayout.isRefreshing = false
         currentPage++
+    }
+
+    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+        when (view.id) {
+            R.id.articleStar -> {
+                if (isLogin) {
+                    projectAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            mViewModel.collectArticle(id,collect)
+                        }
+                        notifyDataSetChanged()
+                    }
+                } else {
+                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                }
+            }
+        }
     }
 
     override fun startObserve() {

@@ -16,9 +16,11 @@ class ProjectAdapter(layoutResId: Int = R.layout.item_project) : BaseQuickAdapte
 
     override fun convert(helper: BaseViewHolder, item: Article) {
         helper.setText(R.id.projectName, Html.fromHtml(item.title))
-        helper.setText(R.id.projectDesc, item.desc)
-        helper.setText(R.id.projectAuthor, item.author)
-        helper.setText(R.id.projectTime, item.niceDate)
+                .setText(R.id.projectDesc, item.desc)
+                .setText(R.id.projectAuthor, item.author)
+                .setText(R.id.projectTime, item.niceDate)
+                .setImageResource(R.id.articleStar, if (item.collect) R.drawable.timeline_like_pressed else R.drawable.timeline_like_normal)
+                .addOnClickListener(R.id.articleStar)
         Glide.with(App.CONTEXT).load(item.envelopePic).into(helper.getView(R.id.projectImg))
     }
 }

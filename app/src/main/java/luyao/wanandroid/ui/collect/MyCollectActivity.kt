@@ -1,8 +1,8 @@
 package luyao.wanandroid.ui.collect
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*

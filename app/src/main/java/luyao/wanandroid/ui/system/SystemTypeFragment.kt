@@ -1,9 +1,10 @@
 package luyao.wanandroid.ui.system
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.wanandroid.R
@@ -12,6 +13,8 @@ import luyao.base.BaseFragment
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
 import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -20,6 +23,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * on 2018/3/27 21:36
  */
 class SystemTypeFragment : BaseFragment<SystemViewModel>(){
+    private val isLogin by Preference(Preference.IS_LOGIN, false)
 
     override fun providerVMClass(): Class<SystemViewModel>? =SystemViewModel::class.java
 
@@ -62,6 +66,8 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
                 intent.putExtra(BrowserActivity.URL, systemTypeAdapter.data[position].link)
                 startActivity(intent)
             }
+            onItemChildClickListener = this@SystemTypeFragment.onItemChildClickListener
+
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
         }
@@ -69,6 +75,24 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(SpaceItemDecoration(typeRecycleView.dp2px(10f)))
             adapter = systemTypeAdapter
+        }
+    }
+
+    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+        when (view.id) {
+            R.id.articleStar -> {
+                if (isLogin) {
+                    systemTypeAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            mViewModel.collectArticle(id,collect)
+                        }
+                        notifyDataSetChanged()
+                    }
+                } else {
+                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                }
+            }
         }
     }
 

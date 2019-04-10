@@ -16,6 +16,7 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
 
     companion object {
         const val IS_LOGIN = "is_login"
+        const val USER_GSON = "user_gson"
     }
 
     private val prefs: SharedPreferences by lazy {

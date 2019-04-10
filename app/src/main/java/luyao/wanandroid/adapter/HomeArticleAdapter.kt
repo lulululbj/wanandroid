@@ -15,7 +15,7 @@ class HomeArticleAdapter(layoutResId: Int = R.layout.item_article) : BaseQuickAd
     override fun convert(helper: BaseViewHolder, item: Article) {
         helper.setText(R.id.articleTitle, Html.fromHtml(item.title))
                 .setText(R.id.articleAuthor, item.author)
-                .setText(R.id.articleTag, "${item.superChapterName} ${item.chapterName}")
+                .setText(R.id.articleTag, "${item.superChapterName ?: ""} ${item.chapterName}")
                 .setText(R.id.articleTime, item.niceDate)
                 .setImageResource(R.id.articleStar, if (item.collect) R.drawable.timeline_like_pressed else R.drawable.timeline_like_normal)
                 .addOnClickListener(R.id.articleStar)

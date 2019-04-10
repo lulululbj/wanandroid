@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.navigation
 
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import dp2px
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import luyao.base.BaseFragment

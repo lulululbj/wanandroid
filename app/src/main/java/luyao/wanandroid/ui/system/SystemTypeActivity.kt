@@ -1,6 +1,6 @@
 package luyao.wanandroid.ui.system
 
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.wanandroid.R
 import luyao.wanandroid.base.BaseActivity
@@ -35,7 +35,7 @@ class SystemTypeActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int) = SystemTypeFragment.newInstance(systemParent.children[position].id)
 
             override fun getCount() = systemParent.children.size

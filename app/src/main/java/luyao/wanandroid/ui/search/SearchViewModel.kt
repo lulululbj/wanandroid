@@ -1,11 +1,13 @@
 package luyao.wanandroid.ui.search
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.SearchRepository
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Hot
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -13,28 +15,39 @@ import luyao.wanandroid.ext.launchOnUITryCatch
  */
 class SearchViewModel : BaseViewModel() {
 
+    private val repository by lazy { SearchRepository() }
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mWebSiteHot: MutableLiveData<List<Hot>> = MutableLiveData()
     val mHotSearch: MutableLiveData<List<Hot>> = MutableLiveData()
 
     fun searchHot(page: Int, key: String) {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.searchHot(page, key).await()
-            mArticleList.value = result.data
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO){repository.searchHot(page, key)}
+            executeResponse(result,{mArticleList.value = result.data},{})
+        }
     }
 
     fun getWebSites() {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getWebsites().await()
-            mWebSiteHot.value = result.data
-        }, {}, {}, true)
+       launch{
+            val result =  withContext(Dispatchers.IO){repository.getWebSites()}
+            executeResponse(result,{mWebSiteHot.value = result.data},{})
+        }
     }
 
     fun getHotSearch() {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getHot().await()
-            mHotSearch.value = result.data
-        }, {}, {}, true)
+        launch{
+            val result =  withContext(Dispatchers.IO){repository.getHotSearch()}
+            executeResponse(result,{mHotSearch.value = result.data},{})
+        }
     }
+
+    fun collectArticle(articleId: Int, boolean: Boolean) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
+            }
+        }
+    }
+
 }

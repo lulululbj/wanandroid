@@ -1,11 +1,12 @@
 package luyao.wanandroid.ui.system
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.SystemRepository
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -13,24 +14,31 @@ import luyao.wanandroid.ext.launchOnUITryCatch
  */
 class SystemViewModel : BaseViewModel() {
 
+    private val repository by lazy { SystemRepository() }
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
 
     fun getSystemTypeDetail(id: Int, page: Int) {
-
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getSystemTypeDetail(page, id).await()
-            mArticleList.value = result.data
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getSystemTypeDetail(id, page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
+        }
     }
 
     fun getSystemTypes() {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getSystemType().await()
-            mSystemParentList.value = result.data
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getSystemTypes() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
+        }
+    }
 
-
+    fun collectArticle(articleId: Int, boolean: Boolean) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
+            }
+        }
     }
 }

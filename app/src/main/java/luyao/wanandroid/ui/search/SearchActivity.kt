@@ -1,25 +1,29 @@
 package luyao.wanandroid.ui.search
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import dp2px
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -28,10 +32,11 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : luyao.base.BaseActivity<SearchViewModel>() {
+class SearchActivity : BaseActivity<SearchViewModel>() {
 
     override fun providerVMClass(): Class<SearchViewModel>? = SearchViewModel::class.java
 
+    private val isLogin by Preference(Preference.IS_LOGIN, false)
     private lateinit var searchView: SearchView
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
@@ -69,6 +74,7 @@ class SearchActivity : luyao.base.BaseActivity<SearchViewModel>() {
                 intent.putExtra(BrowserActivity.URL, searchAdapter.data[position].link)
                 startActivity(intent)
             }
+            onItemChildClickListener = this@SearchActivity.onItemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
@@ -87,6 +93,24 @@ class SearchActivity : luyao.base.BaseActivity<SearchViewModel>() {
         mToolbar.setNavigationOnClickListener { onBackPressed() }
         mViewModel.getHotSearch()
         mViewModel.getWebSites()
+    }
+
+    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+        when (view.id) {
+            R.id.articleStar -> {
+                if (isLogin) {
+                    searchAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            mViewModel.collectArticle(id,collect)
+                        }
+                        notifyDataSetChanged()
+                    }
+                } else {
+                    Intent(this, LoginActivity::class.java).run { startActivity(this) }
+                }
+            }
+        }
     }
 
 

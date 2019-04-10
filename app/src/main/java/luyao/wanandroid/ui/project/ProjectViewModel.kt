@@ -1,11 +1,13 @@
 package luyao.wanandroid.ui.project
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.ProjectRepository
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.SystemParent
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -13,22 +15,30 @@ import luyao.wanandroid.ext.launchOnUITryCatch
  */
 class ProjectViewModel : BaseViewModel() {
 
+    private val repository by lazy { ProjectRepository() }
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
     fun getProjectTypeDetailList(page: Int, cid: Int) {
-
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getProjectTypeDetail(page, cid).await()
-            mArticleList.value = result.data
-        }, {}, {}, true)
-
+        launch{
+            val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
+        }
     }
 
     fun getProjectTypeList() {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getProjectType().await()
-            mSystemParentList.value = result.data
-        }, {}, {}, true)
+        launch{
+            val result = withContext(Dispatchers.IO) { repository.getProjectTypeList() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
+        }
+    }
+
+    fun collectArticle(articleId: Int, boolean: Boolean) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
+            }
+        }
     }
 }

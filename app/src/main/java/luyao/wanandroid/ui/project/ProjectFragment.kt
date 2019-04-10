@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.project
 
-import android.arch.lifecycle.Observer
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.fragment.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.fragment_project.*
 import luyao.base.BaseFragment
 import luyao.wanandroid.R
@@ -29,7 +29,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel>() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : FragmentPagerAdapter(activity?.supportFragmentManager) {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(activity!!.supportFragmentManager) {
             override fun getItem(position: Int) = ProjectTypeFragment.newInstance(mProjectTypeList[position].id)
 
             override fun getCount() = mProjectTypeList.size

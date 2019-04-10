@@ -1,10 +1,11 @@
 package luyao.wanandroid.ui.login
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.LoginRepository
 import luyao.wanandroid.bean.User
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -15,25 +16,21 @@ class LoginViewModel : BaseViewModel() {
     val mLoginUser: MutableLiveData<User> = MutableLiveData()
     val mRegisterUser: MutableLiveData<User> = MutableLiveData()
     val errMsg: MutableLiveData<String> = MutableLiveData()
+    private val repository by lazy { LoginRepository() }
 
     fun login(userName: String, passWord: String) {
-
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.login(userName, passWord).await()
-            result.run {
-                if (errorCode == -1) errMsg.value = errorMsg
-                else mLoginUser.value = result.data
-            }
-        }, {}, {}, true)
+        launch {
+            val response = withContext(Dispatchers.IO) { repository.login(userName, passWord) }
+            executeResponse(response, { mLoginUser.value = response.data }, { errMsg.value = response.errorMsg })
+        }
     }
 
     fun register(userName: String, passWord: String) {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.register(userName, passWord, passWord).await()
-            result.run {
-                if (errorCode == -1) errMsg.value = errorMsg
-                else mRegisterUser.value = result.data
-            }
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.register(userName, passWord) }
+            executeResponse(result, { mRegisterUser.value = result.data }, { errMsg.value = result.errorMsg })
+        }
     }
+
+
 }

@@ -1,10 +1,11 @@
 package luyao.wanandroid.ui.navigation
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.NavigationRepository
 import luyao.wanandroid.bean.Navigation
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -12,13 +13,13 @@ import luyao.wanandroid.ext.launchOnUITryCatch
  */
 class NavigationViewModel : BaseViewModel() {
 
+    private val repository by lazy { NavigationRepository() }
     val mNavigationList: MutableLiveData<List<Navigation>> = MutableLiveData()
 
     fun getNavigation() {
-
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getNavigation().await()
-            mNavigationList.value = result.data
-        }, {}, {}, true)
+        launch{
+            val result = withContext(Dispatchers.IO) { repository.getNavigation() }
+            executeResponse(result, { mNavigationList.value = result.data }, {})
+        }
     }
 }

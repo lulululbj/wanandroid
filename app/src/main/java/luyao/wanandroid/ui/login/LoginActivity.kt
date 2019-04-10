@@ -1,9 +1,11 @@
 package luyao.wanandroid.ui.login
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.view.View
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.wanandroid.App
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.MainActivity
 import luyao.wanandroid.util.Preference
@@ -20,6 +22,7 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
     private lateinit var userName: String
     private lateinit var passWord: String
     private var isLogin by Preference(Preference.IS_LOGIN, false)
+    private var userJson by Preference(Preference.USER_GSON, "")
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -38,6 +41,8 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
         mViewModel.apply {
             mLoginUser.observe(this@LoginActivity, Observer {
                 isLogin = true
+                App.CURRENT_USER=it
+                userJson=Gson().toJson(it)
                 dismissProgressDialog()
                 startActivity(MainActivity::class.java)
                 finish()

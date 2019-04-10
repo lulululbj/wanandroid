@@ -1,5 +1,6 @@
 package luyao.wanandroid.bean
 
+
 /**
  * Created by Lu
  * on 2018/4/5 08:02

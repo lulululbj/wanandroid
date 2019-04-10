@@ -1,18 +1,18 @@
 package luyao.wanandroid.view
 
 import android.graphics.Rect
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 
 /**
  * Created by Lu
  * on 2018/3/15 21:45
  */
-class SpaceItemDecoration(space: Int) : RecyclerView.ItemDecoration() {
+class SpaceItemDecoration(space: Int) : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
 
     private val mSpace = space
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.top = 0
         outRect.bottom = mSpace

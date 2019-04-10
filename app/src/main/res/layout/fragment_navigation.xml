@@ -17,12 +17,12 @@
         app:tab_height="50dp"
         app:tab_mode="scrollable" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/navigationRecycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

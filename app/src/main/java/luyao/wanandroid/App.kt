@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.squareup.leakcanary.LeakCanary
 import com.tencent.smtt.sdk.QbSdk
+import luyao.wanandroid.bean.User
 import kotlin.properties.Delegates
 
 /**
@@ -15,6 +16,7 @@ class App : Application() {
 
     companion object {
         var CONTEXT: Context by Delegates.notNull()
+        lateinit var CURRENT_USER: User
     }
 
     override fun onCreate() {

@@ -2,16 +2,24 @@ package luyao.wanandroid.ui
 
 import TOOL_URL
 import android.content.Intent
-import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.wanandroid.App
 import luyao.wanandroid.R
 import luyao.wanandroid.base.BaseActivity
+import luyao.wanandroid.bean.User
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.login.LoginActivity
@@ -24,18 +32,12 @@ import luyao.wanandroid.util.Preference
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-
-    private var currentFragment: Fragment? = null
+    private var userJson by Preference(Preference.USER_GSON, "")
+    private var currentFragment: androidx.fragment.app.Fragment? = null
     private val homeFragment by lazy { HomeFragment() }
     private val systemFragment by lazy { SystemFragment() }
     private val navigationFragment by lazy { NavigationFragment() }
     private val projectFragment by lazy { ProjectFragment() }
-
-    //    private lateinit var homePresenter: HomePresenter
-//    private lateinit var systemPresenter: SystemPresenter
-//    private lateinit var navigationPresenter: NavigationPresenter
-//    private lateinit var projectPresenter: ProjectPresenter
-
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -50,14 +52,27 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-//        homePresenter=HomePresenter(homeFragment)
-//        systemPresenter = SystemPresenter(systemFragment)
-//        navigationPresenter = NavigationPresenter(navigationFragment)
-//        projectPresenter = ProjectPresenter(projectFragment)
         switchFragment(homeFragment)
+
+        if (isLogin && userJson != "") {
+            App.CURRENT_USER = Gson().fromJson(userJson, User::class.java)
+            val user=App.CURRENT_USER
+            initUser(user)
+        }
     }
 
-    private fun switchFragment(targetFragment: Fragment) {
+    private fun initUser(user: User) {
+       val navUserName: TextView= navigationView.getHeaderView(0).findViewById(R.id.navUserName)
+        val navAvatar:ImageView = navigationView.getHeaderView(0).findViewById(R.id.navAvatar)
+        navUserName.text = user.username
+        Glide.with(this).load(user.icon).apply(
+                RequestOptions().error(R.mipmap.ic_launcher)
+                        .placeholder(R.mipmap.ic_launcher)
+                        .fallback(R.mipmap.ic_launcher)
+        ).into(navAvatar)
+    }
+
+    private fun switchFragment(targetFragment: androidx.fragment.app.Fragment) {
         val transition = supportFragmentManager.beginTransaction()
         if (!targetFragment.isAdded) {
             if (currentFragment != null) transition.hide(currentFragment!!)

@@ -1,11 +1,12 @@
 package luyao.wanandroid.ui.home
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.api.repository.HomeRepository
 import luyao.wanandroid.bean.ArticleList
 import luyao.wanandroid.bean.Banner
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by luyao
@@ -13,29 +14,31 @@ import luyao.wanandroid.ext.launchOnUITryCatch
  */
 class HomeViewModel : BaseViewModel() {
 
-
+    private val repository by lazy { HomeRepository() }
     val mBanners: MutableLiveData<List<Banner>> = MutableLiveData()
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
 
     fun getBanners() {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getBanner()
-            mBanners.value = result.await().data
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getBanners() }
+            executeResponse(result, { mBanners.value = result.data }, {})
+        }
     }
 
     fun getArticleList(page: Int) {
-        launchOnUITryCatch({
-            val result = WanRetrofitClient.service.getHomeArticles(page)
-            mArticleList.value = result.await().data
-        }, {}, {}, true)
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getArticleList(page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
+        }
     }
 
-    fun collectArticle(articleId: Int) {
-        launchOnUITryCatch({
-            val result=WanRetrofitClient.service.collectArticle(articleId)
-            result.await()
-        }, {}, {}, true)
+    fun collectArticle(articleId: Int, boolean: Boolean) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
+            }
+        }
     }
 
 }

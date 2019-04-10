@@ -1,8 +1,8 @@
 package luyao.wanandroid.ui.system
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_system.*
