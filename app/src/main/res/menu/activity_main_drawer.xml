@@ -27,19 +27,21 @@
             android:id="@+id/nav_tool"
             android:icon="@drawable/email"
             android:title="@string/tool" />
+
+        <item
+            android:id="@+id/nav_collect"
+            android:icon="@drawable/email"
+            android:title="@string/collect" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/email"
+            android:title="@string/about" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/email"
+            android:title="退出登录" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_collect"
-                android:icon="@drawable/email"
-                android:title="@string/collect" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/email"
-                android:title="Send" />
-        </menu>
-    </item>
 
 </menu>

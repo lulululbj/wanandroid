@@ -3,8 +3,8 @@ package luyao.wanandroid.api.repository
 import luyao.base.BaseRepository
 import luyao.base.WanResponse
 import luyao.wanandroid.api.WanRetrofitClient
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.SystemParent
 
 /**
  * Created by luyao

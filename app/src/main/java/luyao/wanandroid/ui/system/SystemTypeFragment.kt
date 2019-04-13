@@ -10,9 +10,8 @@ import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.base.BaseFragment
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
-import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
@@ -62,8 +61,8 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
 
         systemTypeAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val intent = Intent(activity, BrowserActivity::class.java)
-                intent.putExtra(BrowserActivity.URL, systemTypeAdapter.data[position].link)
+                val intent = Intent(activity, BrowserNormalActivity::class.java)
+                intent.putExtra(BrowserNormalActivity.URL, systemTypeAdapter.data[position].link)
                 startActivity(intent)
             }
             onItemChildClickListener = this@SystemTypeFragment.onItemChildClickListener

@@ -5,7 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.squareup.leakcanary.LeakCanary
 import com.tencent.smtt.sdk.QbSdk
-import luyao.wanandroid.bean.User
+import luyao.wanandroid.model.bean.User
 import kotlin.properties.Delegates
 
 /**

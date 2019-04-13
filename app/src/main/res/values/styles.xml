@@ -22,4 +22,21 @@
         <item name="android:textColor">@color/red</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="About_Tv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/touch_bg</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/light_gray</item>
+    </style>
 </resources>

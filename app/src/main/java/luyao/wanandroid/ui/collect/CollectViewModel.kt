@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.repository.CollectRepository
-import luyao.wanandroid.bean.ArticleList
+import luyao.wanandroid.model.bean.ArticleList
 
 /**
  * Created by luyao
@@ -21,6 +21,15 @@ class CollectViewModel : BaseViewModel() {
         launch {
             val result = withContext(Dispatchers.IO) { repository.getCollectArticles(page) }
             executeResponse(result, { mArticleList.value = result.data }, { mErrorMsg.value = result.errorMsg })
+        }
+    }
+
+    fun collectArticle(articleId: Int, boolean: Boolean) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
+            }
         }
     }
 }

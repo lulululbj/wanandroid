@@ -1,4 +1,4 @@
-package luyao.wanandroid.bean
+package luyao.wanandroid.model.bean
 
 /**
  * Created by Lu

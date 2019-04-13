@@ -2,24 +2,24 @@ package luyao.wanandroid.ui
 
 import TOOL_URL
 import android.content.Intent
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.wanandroid.App
 import luyao.wanandroid.R
-import luyao.wanandroid.base.BaseActivity
-import luyao.wanandroid.bean.User
+import luyao.base.BaseNormalActivity
+import luyao.wanandroid.model.bean.User
+import luyao.wanandroid.ui.about.AboutActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.login.LoginActivity
@@ -28,10 +28,11 @@ import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
+import toast
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val isLogin by Preference(Preference.IS_LOGIN, false)
+    private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
     private var currentFragment: androidx.fragment.app.Fragment? = null
     private val homeFragment by lazy { HomeFragment() }
@@ -44,6 +45,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun initView() {
         navigationView.setNavigationItemSelectedListener(this)
 
+        navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
     }
 
     override fun initData() {
@@ -92,10 +94,31 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_project -> switchFragment(projectFragment)
             R.id.nav_tool -> switchToTool()
             R.id.nav_collect -> switchCollect()
+            R.id.nav_about -> switchAbout()
+            R.id.nav_exit -> exit()
+
         }
         mToolbar.title = item.title
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun exit(){
+        MaterialDialog.Builder(this)
+                .title("退出")
+                .content("是否确认退出登录？")
+                .positiveText("确认")
+                .negativeText("取消")
+                .onPositive { dialog, which ->
+                    isLogin=false
+                    userJson=""
+                    navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
+                }.show()
+
+    }
+
+    private fun switchAbout(){
+        Intent(this, AboutActivity::class.java).run { startActivity(this) }
     }
 
     private fun switchCollect() {
@@ -107,8 +130,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun switchToTool() {
-        Intent(this, BrowserActivity::class.java).run {
-            putExtra(BrowserActivity.URL, TOOL_URL)
+        Intent(this, BrowserNormalActivity::class.java).run {
+            putExtra(BrowserNormalActivity.URL, TOOL_URL)
             startActivity(this)
         }
     }

@@ -10,9 +10,9 @@ import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import com.zhy.view.flowlayout.TagFlowLayout
 import luyao.wanandroid.R
-import luyao.wanandroid.bean.Article
-import luyao.wanandroid.bean.Navigation
-import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.model.bean.Article
+import luyao.wanandroid.model.bean.Navigation
+import luyao.wanandroid.ui.BrowserNormalActivity
 
 
 /**
@@ -39,8 +39,8 @@ class NavigationAdapter(layoutResId: Int = R.layout.item_navigation) : BaseQuick
             }
 
             setOnTagClickListener({ _, position, parent ->
-                val intent = Intent(parent.context, BrowserActivity::class.java)
-                intent.putExtra(BrowserActivity.URL, item.articles[position].link)
+                val intent = Intent(parent.context, BrowserNormalActivity::class.java)
+                intent.putExtra(BrowserNormalActivity.URL, item.articles[position].link)
                 parent.context.startActivity(intent)
                 true
             })

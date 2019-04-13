@@ -16,19 +16,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.MainNormalActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SplashActivity" />
-        <activity android:name=".ui.BrowserActivity" />
-        <activity android:name=".ui.system.SystemTypeActivity" />
+        <activity android:name=".ui.SplashNormalActivity" />
+        <activity android:name=".ui.BrowserNormalActivity" />
+        <activity android:name=".ui.system.SystemTypeNormalActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.collect.MyCollectActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
     </application>
 
 </manifest>

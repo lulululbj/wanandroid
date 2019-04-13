@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.repository.LoginRepository
-import luyao.wanandroid.bean.User
+import luyao.wanandroid.model.bean.User
 
 /**
  * Created by luyao

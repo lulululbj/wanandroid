@@ -1,9 +1,9 @@
 package luyao.wanandroid.ui.home
 
-import androidx.lifecycle.Observer
 import android.content.Intent
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import dp2px
@@ -11,10 +11,9 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.bean.Article
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.Banner
-import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
@@ -58,8 +57,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun initAdapter() {
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-                Intent(activity, BrowserActivity::class.java).run {
-                    putExtra(BrowserActivity.URL, homeArticleAdapter.data[position].link)
+                Intent(activity, BrowserNormalActivity::class.java).run {
+                    putExtra(BrowserNormalActivity.URL, homeArticleAdapter.data[position].link)
                     startActivity(this)
                 }
 
@@ -79,7 +78,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                     homeArticleAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id,collect)
+                            mViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }
@@ -102,8 +101,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->
                 run {
-                    val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra(BrowserActivity.URL, bannerUrls[position])
+                    val intent = Intent(activity, BrowserNormalActivity::class.java)
+                    intent.putExtra(BrowserNormalActivity.URL, bannerUrls[position])
                     startActivity(intent)
                 }
             }

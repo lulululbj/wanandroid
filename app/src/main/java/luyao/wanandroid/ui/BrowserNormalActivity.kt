@@ -7,15 +7,15 @@ import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 import kotlinx.android.synthetic.main.activity_browser.*
-import kotlinx.android.synthetic.main.title_layout.*
+import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.wanandroid.R
-import luyao.wanandroid.base.BaseActivity
+import luyao.base.BaseNormalActivity
 
 /**
  * Created by Lu
  * on 2018/3/25 21:47
  */
-class BrowserActivity : BaseActivity() {
+class BrowserNormalActivity : BaseNormalActivity() {
 
     companion object {
         const val URL = "url"

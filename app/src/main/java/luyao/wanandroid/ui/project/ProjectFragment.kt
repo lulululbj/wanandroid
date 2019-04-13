@@ -1,12 +1,10 @@
 package luyao.wanandroid.ui.project
 
 import androidx.lifecycle.Observer
-import androidx.fragment.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.fragment_project.*
 import luyao.base.BaseFragment
 import luyao.wanandroid.R
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
+import luyao.wanandroid.model.bean.SystemParent
 
 /**
  * Created by Lu

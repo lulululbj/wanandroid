@@ -5,8 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.repository.HomeRepository
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.Banner
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.Banner
 
 /**
  * Created by luyao

@@ -2,7 +2,7 @@ package luyao.wanandroid.api
 
 import kotlinx.coroutines.Deferred
 import luyao.base.WanResponse
-import luyao.wanandroid.bean.*
+import luyao.wanandroid.model.bean.*
 import retrofit2.http.*
 
 

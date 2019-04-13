@@ -1,18 +1,18 @@
 package luyao.wanandroid.ui
 
 import luyao.wanandroid.R
-import luyao.wanandroid.base.BaseActivity
+import luyao.base.BaseNormalActivity
 
 /**
  * Created by luyao
  * on 2018/3/13 13:06
  */
-class SplashActivity : BaseActivity() {
+class SplashNormalActivity : BaseNormalActivity() {
 
     override fun getLayoutResId()= R.layout.activity_splash
 
     override fun initView() {
-        startActivity(MainActivity::class.java)
+        startActivity(MainNormalActivity::class.java)
     }
 
     override fun initData() {

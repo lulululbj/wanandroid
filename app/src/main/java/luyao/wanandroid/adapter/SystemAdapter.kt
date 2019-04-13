@@ -3,7 +3,7 @@ package luyao.wanandroid.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import luyao.wanandroid.R
-import luyao.wanandroid.bean.SystemParent
+import luyao.wanandroid.model.bean.SystemParent
 
 /**
  * Created by Lu

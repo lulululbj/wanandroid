@@ -4,10 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.WanRetrofitClient
 import luyao.wanandroid.api.repository.ProjectRepository
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.SystemParent
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.SystemParent
 
 /**
  * Created by luyao

@@ -43,8 +43,8 @@ class SystemFragment : BaseFragment<SystemViewModel>() {
 
     override fun initData() {
         systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
-            Intent(activity, SystemTypeActivity::class.java).run {
-                putExtra(SystemTypeActivity.ARTICLE_LIST, systemAdapter.data[position])
+            Intent(activity, SystemTypeNormalActivity::class.java).run {
+                putExtra(SystemTypeNormalActivity.ARTICLE_LIST, systemAdapter.data[position])
                 startActivity(this)
             }
         }

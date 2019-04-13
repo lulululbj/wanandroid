@@ -26,4 +26,14 @@
     <string name="is_registering">正在注册</string>
     <string name="my_collect">我的收藏</string>
     <string name="collect">收藏</string>
+    <string name="about">关于</string>
+    <string name="open_issue">提 issue</string>
+    <string name="send_email">发邮件</string>
+    <string name="sendto">mailto:sunluyao1993x@gmail.com</string>
+    <string name="mail_topic">Wanandroid 反馈</string>
+    <string name="license">开源协议</string>
+    <string name="source_url">源代码地址</string>
+    <string name="feedback">意见反馈</string>
+    <string name="third_lib">第三方库</string>
+    <string name="developer">开发者</string>
 </resources>

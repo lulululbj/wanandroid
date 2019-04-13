@@ -19,9 +19,9 @@ import kotlinx.android.synthetic.main.title_layout.*
 import luyao.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.bean.ArticleList
-import luyao.wanandroid.bean.Hot
-import luyao.wanandroid.ui.BrowserActivity
+import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.Hot
+import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
@@ -70,8 +70,8 @@ class SearchActivity : BaseActivity<SearchViewModel>() {
     private fun initAdapter() {
         searchAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val intent = Intent(this@SearchActivity, BrowserActivity::class.java)
-                intent.putExtra(BrowserActivity.URL, searchAdapter.data[position].link)
+                val intent = Intent(this@SearchActivity, BrowserNormalActivity::class.java)
+                intent.putExtra(BrowserNormalActivity.URL, searchAdapter.data[position].link)
                 startActivity(intent)
             }
             onItemChildClickListener = this@SearchActivity.onItemChildClickListener
@@ -147,8 +147,8 @@ class SearchActivity : BaseActivity<SearchViewModel>() {
             }
 
             setOnTagClickListener { _, position, parent ->
-                val intent = Intent(parent.context, BrowserActivity::class.java)
-                intent.putExtra(BrowserActivity.URL, webSitesList[position].link)
+                val intent = Intent(parent.context, BrowserNormalActivity::class.java)
+                intent.putExtra(BrowserNormalActivity.URL, webSitesList[position].link)
                 parent.context.startActivity(intent)
                 true
             }

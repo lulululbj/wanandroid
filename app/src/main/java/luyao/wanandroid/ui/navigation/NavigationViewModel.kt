@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
 import luyao.wanandroid.api.repository.NavigationRepository
-import luyao.wanandroid.bean.Navigation
+import luyao.wanandroid.model.bean.Navigation
 
 /**
  * Created by luyao

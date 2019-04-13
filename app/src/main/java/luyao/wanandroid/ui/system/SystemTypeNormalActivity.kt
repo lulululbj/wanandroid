@@ -1,16 +1,15 @@
 package luyao.wanandroid.ui.system
 
-import androidx.fragment.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.wanandroid.R
-import luyao.wanandroid.base.BaseActivity
-import luyao.wanandroid.bean.SystemParent
+import luyao.base.BaseNormalActivity
+import luyao.wanandroid.model.bean.SystemParent
 
 /**
  * Created by Lu
  * on 2018/3/27 20:42
  */
-class SystemTypeActivity : BaseActivity() {
+class SystemTypeNormalActivity : BaseNormalActivity() {
 
     companion object {
         const val ARTICLE_LIST = "article_list"

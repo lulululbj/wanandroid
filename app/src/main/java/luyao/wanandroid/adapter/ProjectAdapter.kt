@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import luyao.wanandroid.App
 import luyao.wanandroid.R
-import luyao.wanandroid.bean.Article
+import luyao.wanandroid.model.bean.Article
 
 /**
  * Created by Lu

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<notices>
+    <notice>
+        <name>kotlinx.coroutines</name>
+        <url>https://github.com/Kotlin/kotlinx.coroutines</url>
+        <copyright/>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Retrofit</name>
+        <url>https://github.com/square/retrofit</url>
+        <copyright>Copyright 2013 Square, Inc.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>OkHttp</name>
+        <url>https://github.com/square/okhttp</url>
+        <copyright>Square, Inc</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>BaseRecyclerViewAdapterHelper</name>
+        <url>http://www.recyclerview.org/</url>
+        <copyright>Copyright 2016 陈宇明</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>CircleImageView</name>
+        <url>https://github.com/hdodenhof/CircleImageView/</url>
+        <copyright>Copyright 2014 - 2019 Henning Dodenhof</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>banner</name>
+        <url>https://github.com/youth5201314/banner/</url>
+        <copyright></copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <!--<notice>-->
+        <!--<name>Glide</name>-->
+        <!--<url>https://github.com/bumptech/glide/</url>-->
+        <!--<copyright>Copyright 2014 Google, Inc.</copyright>-->
+        <!--<license></license>-->
+    <!--</notice>-->
+    <notice>
+        <name>VerticalTabLayout</name>
+        <url>https://github.com/qstumn/VerticalTabLayout/</url>
+        <copyright>Copyright 2016, RorbinQiu</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>FlowLayout</name>
+        <url>https://github.com/hongyangAndroid/FlowLayout</url>
+        <copyright></copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>PersistentCookieJar</name>
+        <url>https://github.com/franmontiel/PersistentCookieJar</url>
+        <copyright>Copyright 2016 Francisco José Montiel Navarro</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>material-dialogs</name>
+        <url>https://af.codes/</url>
+        <copyright/>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>LicensesDialog</name>
+        <url>http://psdev.de/LicensesDialog</url>
+        <copyright>Copyright 2013 Philip Schiffer</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <!--<notice>-->
+        <!--<name>Crouton</name>-->
+        <!--<url>https://github.com/keyboardsurfer/Crouton</url>-->
+        <!--<copyright>Copyright 2012 Benjamin Weiss&lt;br/&gt;Copyright 2012 Neofonie Mobile GmbH</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Jackson JSON-processor</name>-->
+        <!--<url>http://jackson.codehaus.org/</url>-->
+        <!--<copyright/>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>OrmLite</name>-->
+        <!--<url>http://ormlite.com/</url>-->
+        <!--<copyright>Copyright Gray Watson</copyright>-->
+        <!--<license>ISC License</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Apache Commons IO</name>-->
+        <!--<url>http://commons.apache.org/io/</url>-->
+        <!--<copyright>Copyright 2002-2012 The Apache Software Foundation</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Apache Commons Lang</name>-->
+        <!--<url>http://commons.apache.org/lang/</url>-->
+        <!--<copyright>Copyright 2002-2011 The Apache Software Foundation</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Joda Time</name>-->
+        <!--<url>http://joda-time.sourceforge.net/</url>-->
+        <!--<copyright>Copyright 2001-2005 Stephen Colebourne</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>StickyListHeaders</name>-->
+        <!--<url>https://github.com/emilsjolander/StickyListHeaders</url>-->
+        <!--<copyright>Copyright 2012 Emil Sjölander</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>DiskLruCache</name>-->
+        <!--<url>https://github.com/JakeWharton/DiskLruCache</url>-->
+        <!--<copyright>Copyright (C) 2011 The Android Open Source Project&lt;br/&gt;Copyright 2012 Jake Wharton</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Google Guava</name>-->
+        <!--<url>http://code.google.com/p/guava-libraries/</url>-->
+        <!--<copyright>Copyright (C) 2007 The Guava Authors</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>PhotoView</name>-->
+        <!--<url>https://github.com/chrisbanes/PhotoView</url>-->
+        <!--<copyright>Copyright 2011, 2012 Chris Banes.</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Inscription</name>-->
+        <!--<url>https://github.com/MartinvanZ/Inscription</url>-->
+        <!--<copyright>(c) 2012 Martin van Zuilekom (http://martin.cubeactive.com)</copyright>-->
+        <!--<license>Apache Software License 2.0</license>-->
+    <!--</notice>-->
+    <!--<notice>-->
+        <!--<name>Cool Project with BSD License</name>-->
+        <!--<url>http://example.com</url>-->
+        <!--<copyright>Author of Cool Project with BSD License</copyright>-->
+        <!--<license>BSD 3-Clause License</license>-->
+    <!--</notice>-->
+</notices>

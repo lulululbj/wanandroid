@@ -1,4 +1,4 @@
-package luyao.wanandroid.base
+package luyao.base
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.title_layout.*
  * Created by luyao
  * on 2018/1/9 14:01
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseNormalActivity : AppCompatActivity() {
 
     private var mDialog: MaterialDialog? = null
 
