@@ -1,4 +1,4 @@
-package luyao.wanandroid.api
+package luyao.wanandroid.model.api
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.api.repository.HomeRepository
+import luyao.wanandroid.model.repository.HomeRepository
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 

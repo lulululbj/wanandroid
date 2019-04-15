@@ -1,18 +1,23 @@
-package luyao.wanandroid.api.repository
+package luyao.wanandroid.model.repository
 
 import luyao.base.BaseRepository
 import luyao.base.WanResponse
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.model.bean.Banner
 
 /**
  * Created by luyao
- * on 2019/4/10 14:01
+ * on 2019/4/10 14:09
  */
-class CollectRepository : BaseRepository(){
+class HomeRepository : BaseRepository() {
 
-    suspend fun getCollectArticles(page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getCollectArticles(page).await() }
+    suspend fun getBanners(): WanResponse<List<Banner>> {
+        return apiCall { WanRetrofitClient.service.getBanner().await() }
+    }
+
+    suspend fun getArticleList(page: Int): WanResponse<ArticleList> {
+        return apiCall { WanRetrofitClient.service.getHomeArticles(page).await() }
     }
 
     suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {

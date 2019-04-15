@@ -1,8 +1,8 @@
-package luyao.wanandroid.api.repository
+package luyao.wanandroid.model.repository
 
 import luyao.base.BaseRepository
 import luyao.base.WanResponse
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.User
 
 /**
@@ -18,6 +18,5 @@ class LoginRepository : BaseRepository() {
     suspend fun register(userName: String, passWord: String): WanResponse<User> {
         return apiCall { WanRetrofitClient.service.register(userName, passWord, passWord).await() }
     }
-
 
 }

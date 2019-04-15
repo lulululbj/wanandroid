@@ -1,4 +1,4 @@
-package luyao.wanandroid.api
+package luyao.wanandroid.model.api
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import luyao.wanandroid.BuildConfig

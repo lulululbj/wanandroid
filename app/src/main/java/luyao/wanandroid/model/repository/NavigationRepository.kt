@@ -1,8 +1,8 @@
-package luyao.wanandroid.api.repository
+package luyao.wanandroid.model.repository
 
 import luyao.base.BaseRepository
 import luyao.base.WanResponse
-import luyao.wanandroid.api.WanRetrofitClient
+import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.Navigation
 
 /**

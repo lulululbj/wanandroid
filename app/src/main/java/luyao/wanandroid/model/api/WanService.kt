@@ -1,4 +1,4 @@
-package luyao.wanandroid.api
+package luyao.wanandroid.model.api
 
 import kotlinx.coroutines.Deferred
 import luyao.base.WanResponse

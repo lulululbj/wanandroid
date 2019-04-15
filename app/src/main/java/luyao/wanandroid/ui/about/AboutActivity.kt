@@ -1,7 +1,6 @@
 package luyao.wanandroid.ui.about
 
 import GITHUB_PAGE
-import HOME_PAGE
 import ISSUE_URL
 import android.content.Intent
 import android.net.Uri
@@ -80,9 +79,9 @@ class AboutActivity : BaseNormalActivity() {
         feedbackMenu.show()
     }
 
-    private fun showMe(){
+    private fun showMe() {
         MaterialDialog.Builder(this)
-                .customView(R.layout.dialog_me,false)
+                .customView(R.layout.dialog_me, false)
                 .show()
     }
 }
