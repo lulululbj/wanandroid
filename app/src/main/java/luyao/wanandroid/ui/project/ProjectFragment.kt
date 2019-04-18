@@ -28,7 +28,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel>() {
 
     private fun initViewPager() {
         viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(activity!!.supportFragmentManager) {
-            override fun getItem(position: Int) = ProjectTypeFragment.newInstance(mProjectTypeList[position].id)
+            override fun getItem(position: Int) = ProjectTypeFragment.newInstance(mProjectTypeList[position].id,false)
 
             override fun getCount() = mProjectTypeList.size
 

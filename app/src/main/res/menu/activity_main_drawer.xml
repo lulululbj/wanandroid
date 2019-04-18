@@ -9,6 +9,12 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/email"
             android:title="@string/home" />
+
+        <item
+            android:id="@+id/nav_lasted_project"
+            android:icon="@drawable/email"
+            android:title="@string/lasted_project" />
+
         <item
             android:id="@+id/nav_system"
             android:icon="@drawable/email"
@@ -19,9 +25,9 @@
             android:title="@string/navigation" />
 
         <item
-            android:id="@+id/nav_project"
+            android:id="@+id/nav_project_type"
             android:icon="@drawable/email"
-            android:title="@string/project" />
+            android:title="@string/project_type" />
 
         <item
             android:id="@+id/nav_tool"

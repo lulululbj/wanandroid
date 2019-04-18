@@ -15,9 +15,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.base.BaseNormalActivity
 import luyao.wanandroid.App
 import luyao.wanandroid.R
-import luyao.base.BaseNormalActivity
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.ui.about.AboutActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
@@ -25,10 +25,10 @@ import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectFragment
+import luyao.wanandroid.ui.project.ProjectTypeFragment
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
-import toast
 
 class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +39,7 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
     private val systemFragment by lazy { SystemFragment() }
     private val navigationFragment by lazy { NavigationFragment() }
     private val projectFragment by lazy { ProjectFragment() }
+    private val lastedProjectFragment by lazy { ProjectTypeFragment.newInstance(0, true) }
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -58,14 +59,14 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
 
         if (isLogin && userJson != "") {
             App.CURRENT_USER = Gson().fromJson(userJson, User::class.java)
-            val user=App.CURRENT_USER
+            val user = App.CURRENT_USER
             initUser(user)
         }
     }
 
     private fun initUser(user: User) {
-       val navUserName: TextView= navigationView.getHeaderView(0).findViewById(R.id.navUserName)
-        val navAvatar:ImageView = navigationView.getHeaderView(0).findViewById(R.id.navAvatar)
+        val navUserName: TextView = navigationView.getHeaderView(0).findViewById(R.id.navUserName)
+        val navAvatar: ImageView = navigationView.getHeaderView(0).findViewById(R.id.navAvatar)
         navUserName.text = user.username
         Glide.with(this).load(user.icon).apply(
                 RequestOptions().error(R.mipmap.ic_launcher)
@@ -84,40 +85,42 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
         }
         transition.commit()
         currentFragment = targetFragment
+
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> switchFragment(homeFragment)
+            R.id.nav_lasted_project -> switchFragment(lastedProjectFragment)
             R.id.nav_system -> switchFragment(systemFragment)
             R.id.nav_navigation -> switchFragment(navigationFragment)
-            R.id.nav_project -> switchFragment(projectFragment)
+            R.id.nav_project_type -> switchFragment(projectFragment)
             R.id.nav_tool -> switchToTool()
             R.id.nav_collect -> switchCollect()
             R.id.nav_about -> switchAbout()
             R.id.nav_exit -> exit()
-
         }
         mToolbar.title = item.title
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    private fun exit(){
+    private fun exit() {
         MaterialDialog.Builder(this)
                 .title("退出")
                 .content("是否确认退出登录？")
                 .positiveText("确认")
                 .negativeText("取消")
-                .onPositive { dialog, which ->
-                    isLogin=false
-                    userJson=""
+                .onPositive { _, _ ->
+                    isLogin = false
+                    userJson = ""
                     navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
                 }.show()
 
     }
 
-    private fun switchAbout(){
+    private fun switchAbout() {
         Intent(this, AboutActivity::class.java).run { startActivity(this) }
     }
 

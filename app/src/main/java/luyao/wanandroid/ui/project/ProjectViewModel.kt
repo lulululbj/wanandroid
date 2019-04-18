@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.model.repository.ProjectRepository
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.model.repository.ProjectRepository
 
 /**
  * Created by luyao
@@ -19,14 +19,14 @@ class ProjectViewModel : BaseViewModel() {
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
     fun getProjectTypeDetailList(page: Int, cid: Int) {
-        launch{
+        launch {
             val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
             executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
 
     fun getProjectTypeList() {
-        launch{
+        launch {
             val result = withContext(Dispatchers.IO) { repository.getProjectTypeList() }
             executeResponse(result, { mSystemParentList.value = result.data }, {})
         }
@@ -38,6 +38,13 @@ class ProjectViewModel : BaseViewModel() {
                 if (boolean) repository.collectArticle(articleId)
                 else repository.unCollectArticle(articleId)
             }
+        }
+    }
+
+    fun getLastedProject(page: Int) {
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getLastedProject(page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
 }

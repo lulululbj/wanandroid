@@ -70,7 +70,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mViewModel?.let {
+        mViewModel.let {
             lifecycle.removeObserver(it)
         }
         super.onDestroy()

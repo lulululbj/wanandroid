@@ -1,8 +1,8 @@
 package luyao.wanandroid.ui.project
 
-import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
@@ -25,9 +25,10 @@ import luyao.wanandroid.view.SpaceItemDecoration
 class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-    override fun providerVMClass(): Class<ProjectViewModel>? =ProjectViewModel::class.java
+    override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
     private val cid by lazy { arguments?.getInt(ProjectTypeFragment.CID) }
-    private var currentPage = 1
+    private val isLasted by lazy { arguments?.getBoolean(ProjectTypeFragment.LASTED) } // 区分是最新项目 还是项目分类
+    private var currentPage = 0
     private val projectAdapter by lazy { ProjectAdapter() }
 
     override fun getLayoutResId() = R.layout.fragment_projecttype
@@ -35,10 +36,12 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
     companion object {
 
         private const val CID = "projectCid"
-        fun newInstance(cid: Int): ProjectTypeFragment {
+        private const val LASTED = "projectCid"
+        fun newInstance(cid: Int, isLasted: Boolean): ProjectTypeFragment {
             val fragment = ProjectTypeFragment()
             val bundle = Bundle()
             bundle.putInt(CID, cid)
+            bundle.putBoolean(LASTED, isLasted)
             fragment.arguments = bundle
             return fragment
         }
@@ -58,9 +61,17 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
     private fun refresh() {
         projectAdapter.setEnableLoadMore(false)
         projectRefreshLayout.isRefreshing = true
-        currentPage = 1
-        cid?.let {
-            mViewModel.getProjectTypeDetailList(currentPage, it)
+
+        isLasted?.run {
+            if (this) {
+                currentPage = 0
+                mViewModel.getLastedProject(currentPage);
+            } else {
+                currentPage = 1
+                cid?.let {
+                    mViewModel.getProjectTypeDetailList(currentPage, it)
+                }
+            }
         }
     }
 
@@ -82,8 +93,13 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
     }
 
     private fun loadMore() {
-        cid?.let {
-            mViewModel.getProjectTypeDetailList(currentPage, it)
+        isLasted?.run {
+            if (this)
+                mViewModel.getLastedProject(currentPage)
+            else
+                cid?.let {
+                    mViewModel.getProjectTypeDetailList(currentPage, it)
+                }
         }
     }
 
@@ -115,7 +131,7 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
                     projectAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id,collect)
+                            mViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }

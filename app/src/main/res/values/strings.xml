@@ -6,7 +6,7 @@
     <string name="home">首页</string>
     <string name="system">体系</string>
     <string name="navigation">导航</string>
-    <string name="project">项目</string>
+    <string name="project_type">项目分类</string>
     <string name="tool">工具</string>
 
     <string name="brvah_loading">正在加载中...</string>
@@ -36,4 +36,5 @@
     <string name="feedback">意见反馈</string>
     <string name="third_lib">第三方库</string>
     <string name="developer">开发者</string>
+    <string name="lasted_project">最新项目</string>
 </resources>
