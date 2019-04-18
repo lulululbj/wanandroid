@@ -37,8 +37,9 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
     private var currentFragment: androidx.fragment.app.Fragment? = null
     private val homeFragment by lazy { HomeFragment() }
     private val systemFragment by lazy { SystemFragment() }
+    private val blogFragment by lazy { ProjectFragment.newInstance(true) }
     private val navigationFragment by lazy { NavigationFragment() }
-    private val projectFragment by lazy { ProjectFragment() }
+    private val projectFragment by lazy { ProjectFragment.newInstance(false) }
     private val lastedProjectFragment by lazy { ProjectTypeFragment.newInstance(0, true) }
 
     override fun getLayoutResId() = R.layout.activity_main
@@ -94,6 +95,7 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
             R.id.nav_home -> switchFragment(homeFragment)
             R.id.nav_lasted_project -> switchFragment(lastedProjectFragment)
             R.id.nav_system -> switchFragment(systemFragment)
+            R.id.nav_blog -> switchFragment(blogFragment)
             R.id.nav_navigation -> switchFragment(navigationFragment)
             R.id.nav_project_type -> switchFragment(projectFragment)
             R.id.nav_tool -> switchToTool()

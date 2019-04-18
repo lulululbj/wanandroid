@@ -35,7 +35,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     private fun initVM() {
         providerVMClass()?.let {
             mViewModel = ViewModelProviders.of(this).get(it)
-            mViewModel?.let(lifecycle::addObserver)
+            mViewModel.let(lifecycle::addObserver)
         }
     }
 

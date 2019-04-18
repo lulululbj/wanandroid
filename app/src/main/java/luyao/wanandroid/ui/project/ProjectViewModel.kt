@@ -47,4 +47,11 @@ class ProjectViewModel : BaseViewModel() {
             executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
+
+    fun getBlogType() {
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getBlog() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
+        }
+    }
 }

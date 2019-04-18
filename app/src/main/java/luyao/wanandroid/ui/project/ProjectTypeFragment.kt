@@ -36,7 +36,7 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
     companion object {
 
         private const val CID = "projectCid"
-        private const val LASTED = "projectCid"
+        private const val LASTED = "lasted"
         fun newInstance(cid: Int, isLasted: Boolean): ProjectTypeFragment {
             val fragment = ProjectTypeFragment()
             val bundle = Bundle()

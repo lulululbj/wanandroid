@@ -20,6 +20,10 @@
             android:icon="@drawable/email"
             android:title="@string/system" />
         <item
+            android:id="@+id/nav_blog"
+            android:icon="@drawable/email"
+            android:title="@string/blog" />
+        <item
             android:id="@+id/nav_navigation"
             android:icon="@drawable/email"
             android:title="@string/navigation" />

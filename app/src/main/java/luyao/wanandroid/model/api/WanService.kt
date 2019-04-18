@@ -34,6 +34,9 @@ interface WanService {
     @GET("/project/tree/json")
     fun getProjectType(): Deferred<WanResponse<List<SystemParent>>>
 
+    @GET("/wxarticle/chapters/json")
+    fun getBlogType():Deferred<WanResponse<List<SystemParent>>>
+
     @GET("/project/list/{page}/json")
     fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Deferred<WanResponse<ArticleList>>
 
@@ -66,5 +69,6 @@ interface WanService {
 
     @POST("/lg/uncollect_originId/{id}/json")
     fun cancelCollectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
+
 
 }

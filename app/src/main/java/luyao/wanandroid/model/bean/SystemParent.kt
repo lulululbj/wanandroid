@@ -12,4 +12,5 @@ data class SystemParent(val children: List<SystemChild>,
                         val name: String,
                         val order: Int,
                         val parentChapterId: Int,
-                        val visible: Int):Serializable
+                        val visible: Int,
+                        val userControlSetTop: Boolean) : Serializable

@@ -28,7 +28,11 @@ class ProjectRepository : BaseRepository() {
         return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
     }
 
-    suspend fun getLastedProject(page:Int):WanResponse<ArticleList>{
+    suspend fun getLastedProject(page: Int): WanResponse<ArticleList> {
         return apiCall { WanRetrofitClient.service.getLastedProject(page).await() }
+    }
+
+    suspend fun getBlog(): WanResponse<List<SystemParent>> {
+        return apiCall { WanRetrofitClient.service.getBlogType().await() }
     }
 }
