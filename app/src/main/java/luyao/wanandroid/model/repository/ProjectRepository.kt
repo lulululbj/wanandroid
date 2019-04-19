@@ -35,4 +35,6 @@ class ProjectRepository : BaseRepository() {
     suspend fun getBlog(): WanResponse<List<SystemParent>> {
         return apiCall { WanRetrofitClient.service.getBlogType().await() }
     }
+
+
 }

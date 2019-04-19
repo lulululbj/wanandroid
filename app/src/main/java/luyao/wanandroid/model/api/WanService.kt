@@ -35,13 +35,16 @@ interface WanService {
     fun getProjectType(): Deferred<WanResponse<List<SystemParent>>>
 
     @GET("/wxarticle/chapters/json")
-    fun getBlogType():Deferred<WanResponse<List<SystemParent>>>
+    fun getBlogType(): Deferred<WanResponse<List<SystemParent>>>
+
+    @GET("/wxarticle/list/{id}/{page}/json")
+    fun getBlogArticle(@Path("id") id: Int, @Path("page") page: Int): Deferred<WanResponse<ArticleList>>
 
     @GET("/project/list/{page}/json")
     fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Deferred<WanResponse<ArticleList>>
 
     @GET("/article/listproject/{page}/json")
-    fun getLastedProject(@Path("page")page:Int):Deferred<WanResponse<ArticleList>>
+    fun getLastedProject(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
 
     @GET("/friend/json")
     fun getWebsites(): Deferred<WanResponse<List<Hot>>>
@@ -62,7 +65,7 @@ interface WanService {
     fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Deferred<WanResponse<User>>
 
     @GET("/lg/collect/list/{page}/json")
-     fun getCollectArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+    fun getCollectArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
 
     @POST("/lg/collect/{id}/json")
     fun collectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>

@@ -3,12 +3,13 @@ package luyao.wanandroid.ui.project
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.fragment_project.*
 import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.home.HomeFragment
+import luyao.wanandroid.ui.system.SystemFragment
+import luyao.wanandroid.ui.system.SystemTypeFragment
 
 /**
  * Created by Lu
@@ -52,7 +53,6 @@ class ProjectFragment : BaseFragment<ProjectViewModel>() {
             override fun getItem(position: Int) = chooseFragment(position)
 
 
-
             override fun getCount() = mProjectTypeList.size
 
             override fun getPageTitle(position: Int) = mProjectTypeList[position].name
@@ -61,9 +61,9 @@ class ProjectFragment : BaseFragment<ProjectViewModel>() {
         tabLayout.setupWithViewPager(viewPager)
     }
 
-    private fun chooseFragment(position:Int): Fragment {
+    private fun chooseFragment(position: Int): Fragment {
         isBlog?.run {
-            return if (this) HomeFragment()
+            return if (this) SystemTypeFragment.newInstance(mProjectTypeList[position].id,true)
             else ProjectTypeFragment.newInstance(mProjectTypeList[position].id, false)
         }
         return HomeFragment()

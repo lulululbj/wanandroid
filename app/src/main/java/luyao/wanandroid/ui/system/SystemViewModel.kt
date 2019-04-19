@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.base.BaseViewModel
-import luyao.wanandroid.model.repository.SystemRepository
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.model.repository.SystemRepository
 
 /**
  * Created by luyao
@@ -39,6 +39,13 @@ class SystemViewModel : BaseViewModel() {
                 if (boolean) repository.collectArticle(articleId)
                 else repository.unCollectArticle(articleId)
             }
+        }
+    }
+
+    fun getBlogArticle(id: Int, page: Int) {
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getBlogArticle(id, page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
 }

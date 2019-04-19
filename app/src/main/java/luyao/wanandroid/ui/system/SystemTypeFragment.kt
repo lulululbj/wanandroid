@@ -1,15 +1,15 @@
 package luyao.wanandroid.ui.system
 
-import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import dp2px
 import kotlinx.android.synthetic.main.fragment_systemtype.*
+import luyao.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.base.BaseFragment
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
@@ -21,21 +21,25 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseFragment<SystemViewModel>(){
+class SystemTypeFragment : BaseFragment<SystemViewModel>() {
+
     private val isLogin by Preference(Preference.IS_LOGIN, false)
 
-    override fun providerVMClass(): Class<SystemViewModel>? =SystemViewModel::class.java
+    override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
 
     private val cid by lazy { arguments?.getInt(CID) }
+    private val isBlog by lazy { arguments?.getBoolean(BLOG) } // 区分是体系下的文章列表还是公众号下的文章列表
     private val systemTypeAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
 
     companion object {
 
         private const val CID = "cid"
-        fun newInstance(cid: Int): SystemTypeFragment {
+        private const val BLOG = "blog"
+        fun newInstance(cid: Int, isBlog: Boolean): SystemTypeFragment {
             val fragment = SystemTypeFragment()
             val bundle = Bundle()
+            bundle.putBoolean(BLOG, isBlog)
             bundle.putInt(CID, cid)
             fragment.arguments = bundle
             return fragment
@@ -84,7 +88,7 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
                     systemTypeAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id,collect)
+                            mViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }
@@ -97,7 +101,10 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
 
     private fun loadMore() {
         cid?.let {
-            mViewModel.getSystemTypeDetail(it, currentPage)
+            if (this.isBlog!!)
+                mViewModel.getBlogArticle(it, currentPage)
+            else
+                mViewModel.getSystemTypeDetail(it, currentPage)
         }
     }
 
@@ -105,15 +112,13 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>(){
         systemTypeAdapter.setEnableLoadMore(false)
         typeRefreshLayout.isRefreshing = true
         currentPage = 0
-        cid?.let {
-            mViewModel.getSystemTypeDetail(it, currentPage)
-        }
+       loadMore()
     }
 
     override fun initData() {
     }
 
-     fun getSystemTypeDetail(articleList: ArticleList) {
+    private fun getSystemTypeDetail(articleList: ArticleList) {
         systemTypeAdapter.run {
             if (articleList.offset >= articleList.total) {
                 loadMoreEnd()

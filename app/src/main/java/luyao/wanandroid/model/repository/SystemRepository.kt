@@ -27,4 +27,8 @@ class SystemRepository : BaseRepository() {
     suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
         return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
     }
+
+    suspend fun getBlogArticle(id:Int,page:Int): WanResponse<ArticleList> {
+        return apiCall { WanRetrofitClient.service.getBlogArticle(id, page).await() }
+    }
 }
