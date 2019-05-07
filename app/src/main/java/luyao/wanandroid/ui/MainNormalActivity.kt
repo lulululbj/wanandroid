@@ -23,6 +23,7 @@ import luyao.wanandroid.ui.about.AboutActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.ui.main.NewMainActivity
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.project.ProjectTypeFragment
@@ -123,7 +124,7 @@ class MainNormalActivity : BaseNormalActivity(), NavigationView.OnNavigationItem
     }
 
     private fun switchAbout() {
-        Intent(this, AboutActivity::class.java).run { startActivity(this) }
+        Intent(this, NewMainActivity::class.java).run { startActivity(this) }
     }
 
     private fun switchCollect() {
