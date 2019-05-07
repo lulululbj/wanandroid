@@ -144,7 +144,6 @@ class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
 
     override fun startObserve() {
         mViewModel.run {
-
             mArticleList.observe(this@ProjectTypeFragment, Observer {
                 it?.run { getProjectTypeDetailList(it) }
             })
