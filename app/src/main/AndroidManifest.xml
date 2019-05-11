@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.MainNormalActivity">
+        <activity android:name=".ui.main.NewMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity android:name=".ui.about.AboutActivity" />
-        <activity android:name=".ui.main.NewMainActivity" />
+        <activity android:name=".ui.project.ProjectActivity" />
     </application>
 
 </manifest>

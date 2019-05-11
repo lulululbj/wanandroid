@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.wanandroid.App
 import luyao.wanandroid.R
-import luyao.wanandroid.ui.MainNormalActivity
+import luyao.wanandroid.ui.main.NewMainActivity
 import luyao.wanandroid.util.Preference
 import toast
 
@@ -44,7 +44,7 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
                 App.CURRENT_USER=it
                 userJson=Gson().toJson(it)
                 dismissProgressDialog()
-                startActivity(MainNormalActivity::class.java)
+                startActivity(NewMainActivity::class.java)
                 finish()
             })
 

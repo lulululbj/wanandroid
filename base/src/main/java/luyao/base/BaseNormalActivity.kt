@@ -30,6 +30,11 @@ abstract class BaseNormalActivity : AppCompatActivity() {
         startActivity(Intent(this, z))
     }
 
+    protected fun startActivity(z:Class<*>,name:String,value : Boolean){
+        val intent = Intent(this,z).putExtra(name,value)
+        startActivity(intent)
+    }
+
     protected fun showProgressDialog(content: String) {
         if (mDialog == null)
             mDialog = MaterialDialog.Builder(this)

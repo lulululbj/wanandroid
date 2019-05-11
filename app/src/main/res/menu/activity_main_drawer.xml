@@ -5,28 +5,28 @@
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/email"
-            android:title="@string/home" />
+        <!--<item-->
+            <!--android:id="@+id/nav_home"-->
+            <!--android:icon="@drawable/email"-->
+            <!--android:title="@string/home" />-->
 
-        <item
-            android:id="@+id/nav_lasted_project"
-            android:icon="@drawable/email"
-            android:title="@string/lasted_project" />
+        <!--<item-->
+            <!--android:id="@+id/nav_lasted_project"-->
+            <!--android:icon="@drawable/email"-->
+            <!--android:title="@string/lasted_project" />-->
 
-        <item
-            android:id="@+id/nav_system"
-            android:icon="@drawable/email"
-            android:title="@string/system" />
+        <!--<item-->
+            <!--android:id="@+id/nav_system"-->
+            <!--android:icon="@drawable/email"-->
+            <!--android:title="@string/system" />-->
         <item
             android:id="@+id/nav_blog"
             android:icon="@drawable/email"
             android:title="@string/blog" />
-        <item
-            android:id="@+id/nav_navigation"
-            android:icon="@drawable/email"
-            android:title="@string/navigation" />
+        <!--<item-->
+            <!--android:id="@+id/nav_navigation"-->
+            <!--android:icon="@drawable/email"-->
+            <!--android:title="@string/navigation" />-->
 
         <item
             android:id="@+id/nav_project_type"

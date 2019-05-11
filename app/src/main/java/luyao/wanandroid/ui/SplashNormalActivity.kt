@@ -2,6 +2,7 @@ package luyao.wanandroid.ui
 
 import luyao.wanandroid.R
 import luyao.base.BaseNormalActivity
+import luyao.wanandroid.ui.main.NewMainActivity
 
 /**
  * Created by luyao
@@ -12,7 +13,7 @@ class SplashNormalActivity : BaseNormalActivity() {
     override fun getLayoutResId()= R.layout.activity_splash
 
     override fun initView() {
-        startActivity(MainNormalActivity::class.java)
+        startActivity(NewMainActivity::class.java)
     }
 
     override fun initData() {
