@@ -30,15 +30,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    //    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.google.android.material:material:1.0.0-beta01'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
@@ -47,7 +46,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar')
-    implementation 'androidx.cardview:cardview:1.0.0-beta01'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
