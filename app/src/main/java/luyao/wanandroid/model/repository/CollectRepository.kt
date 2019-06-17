@@ -12,14 +12,14 @@ import luyao.wanandroid.model.bean.ArticleList
 class CollectRepository : BaseRepository(){
 
     suspend fun getCollectArticles(page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getCollectArticles(page).await() }
+        return apiCall { WanRetrofitClient.service.getCollectArticles(page) }
     }
 
     suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
     }
 
     suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
     }
 }

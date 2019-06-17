@@ -13,18 +13,18 @@ import luyao.wanandroid.model.bean.Banner
 class HomeRepository : BaseRepository() {
 
     suspend fun getBanners(): WanResponse<List<Banner>> {
-        return apiCall { WanRetrofitClient.service.getBanner().await() }
+        return apiCall { WanRetrofitClient.service.getBanner() }
     }
 
     suspend fun getArticleList(page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getHomeArticles(page).await() }
+        return apiCall { WanRetrofitClient.service.getHomeArticles(page) }
     }
 
     suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
     }
 
     suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
     }
 }

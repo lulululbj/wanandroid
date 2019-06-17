@@ -1,6 +1,5 @@
 package luyao.wanandroid.model.api
 
-import kotlinx.coroutines.Deferred
 import luyao.base.WanResponse
 import luyao.wanandroid.model.bean.*
 import retrofit2.http.*
@@ -17,61 +16,61 @@ interface WanService {
     }
 
     @GET("/article/list/{page}/json")
-    fun getHomeArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun getHomeArticles(@Path("page") page: Int): WanResponse<ArticleList>
 
     @GET("/banner/json")
-    fun getBanner(): Deferred<WanResponse<List<Banner>>>
+    suspend fun getBanner(): WanResponse<List<Banner>>
 
     @GET("/tree/json")
-    fun getSystemType(): Deferred<WanResponse<List<SystemParent>>>
+    suspend fun getSystemType(): WanResponse<List<SystemParent>>
 
     @GET("/article/list/{page}/json")
-    fun getSystemTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun getSystemTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): WanResponse<ArticleList>
 
     @GET("/navi/json")
-    fun getNavigation(): Deferred<WanResponse<List<Navigation>>>
+    suspend fun getNavigation(): WanResponse<List<Navigation>>
 
     @GET("/project/tree/json")
-    fun getProjectType(): Deferred<WanResponse<List<SystemParent>>>
+    suspend fun getProjectType(): WanResponse<List<SystemParent>>
 
     @GET("/wxarticle/chapters/json")
-    fun getBlogType(): Deferred<WanResponse<List<SystemParent>>>
+    suspend fun getBlogType(): WanResponse<List<SystemParent>>
 
     @GET("/wxarticle/list/{id}/{page}/json")
-    fun getBlogArticle(@Path("id") id: Int, @Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+    fun getBlogArticle(@Path("id") id: Int, @Path("page") page: Int): WanResponse<ArticleList>
 
     @GET("/project/list/{page}/json")
-    fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun getProjectTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int): WanResponse<ArticleList>
 
     @GET("/article/listproject/{page}/json")
-    fun getLastedProject(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun getLastedProject(@Path("page") page: Int): WanResponse<ArticleList>
 
     @GET("/friend/json")
-    fun getWebsites(): Deferred<WanResponse<List<Hot>>>
+    suspend fun getWebsites(): WanResponse<List<Hot>>
 
     @GET("/hotkey/json")
-    fun getHot(): Deferred<WanResponse<List<Hot>>>
+    suspend fun getHot(): WanResponse<List<Hot>>
 
     @FormUrlEncoded
     @POST("/article/query/{page}/json")
-    fun searchHot(@Path("page") page: Int, @Field("k") key: String): Deferred<WanResponse<ArticleList>>
+    suspend fun searchHot(@Path("page") page: Int, @Field("k") key: String): WanResponse<ArticleList>
 
     @FormUrlEncoded
     @POST("/user/login")
-    fun login(@Field("username") userName: String, @Field("password") passWord: String): Deferred<WanResponse<User>>
+    suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): WanResponse<User>
 
     @FormUrlEncoded
     @POST("/user/register")
-    fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): Deferred<WanResponse<User>>
+    suspend fun register(@Field("username") userName: String, @Field("password") passWord: String, @Field("repassword") rePassWord: String): WanResponse<User>
 
     @GET("/lg/collect/list/{page}/json")
-    fun getCollectArticles(@Path("page") page: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun getCollectArticles(@Path("page") page: Int): WanResponse<ArticleList>
 
     @POST("/lg/collect/{id}/json")
-    fun collectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun collectArticle(@Path("id") id: Int): WanResponse<ArticleList>
 
     @POST("/lg/uncollect_originId/{id}/json")
-    fun cancelCollectArticle(@Path("id") id: Int): Deferred<WanResponse<ArticleList>>
+    suspend fun cancelCollectArticle(@Path("id") id: Int): WanResponse<ArticleList>
 
 
 }

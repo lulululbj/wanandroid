@@ -13,27 +13,27 @@ import luyao.wanandroid.model.bean.SystemParent
 class ProjectRepository : BaseRepository() {
 
     suspend fun getProjectTypeDetailList(page: Int, cid: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getProjectTypeDetail(page, cid).await() }
+        return apiCall { WanRetrofitClient.service.getProjectTypeDetail(page, cid) }
     }
 
     suspend fun getProjectTypeList(): WanResponse<List<SystemParent>> {
-        return apiCall { WanRetrofitClient.service.getProjectType().await() }
+        return apiCall { WanRetrofitClient.service.getProjectType() }
     }
 
     suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
     }
 
     suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
     }
 
     suspend fun getLastedProject(page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getLastedProject(page).await() }
+        return apiCall { WanRetrofitClient.service.getLastedProject(page) }
     }
 
     suspend fun getBlog(): WanResponse<List<SystemParent>> {
-        return apiCall { WanRetrofitClient.service.getBlogType().await() }
+        return apiCall { WanRetrofitClient.service.getBlogType() }
     }
 
 

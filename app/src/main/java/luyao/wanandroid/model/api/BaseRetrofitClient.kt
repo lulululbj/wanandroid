@@ -1,6 +1,5 @@
 package luyao.wanandroid.model.api
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import luyao.wanandroid.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,7 +42,7 @@ abstract class BaseRetrofitClient {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
 //                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+//                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
                 .baseUrl(baseUrl)
                 .build().create(serviceClass)
     }

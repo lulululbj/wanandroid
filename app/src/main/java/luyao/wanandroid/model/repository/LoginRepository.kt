@@ -12,11 +12,11 @@ import luyao.wanandroid.model.bean.User
 class LoginRepository : BaseRepository() {
 
     suspend fun login(userName: String, passWord: String): WanResponse<User> {
-        return apiCall { WanRetrofitClient.service.login(userName, passWord).await() }
+        return apiCall { WanRetrofitClient.service.login(userName, passWord) }
     }
 
     suspend fun register(userName: String, passWord: String): WanResponse<User> {
-        return apiCall { WanRetrofitClient.service.register(userName, passWord, passWord).await() }
+        return apiCall { WanRetrofitClient.service.register(userName, passWord, passWord) }
     }
 
 }

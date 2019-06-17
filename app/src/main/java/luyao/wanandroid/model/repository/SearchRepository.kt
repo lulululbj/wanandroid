@@ -12,22 +12,22 @@ import luyao.wanandroid.model.bean.Hot
  */
 class SearchRepository : BaseRepository() {
     suspend fun searchHot(page: Int, key: String): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.searchHot(page, key).await() }
+        return apiCall { WanRetrofitClient.service.searchHot(page, key) }
     }
 
     suspend fun getWebSites(): WanResponse<List<Hot>> {
-        return apiCall { WanRetrofitClient.service.getWebsites().await() }
+        return apiCall { WanRetrofitClient.service.getWebsites() }
     }
 
     suspend fun getHotSearch(): WanResponse<List<Hot>> {
-        return apiCall { WanRetrofitClient.service.getHot().await() }
+        return apiCall { WanRetrofitClient.service.getHot() }
     }
 
     suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
     }
 
     suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId).await() }
+        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
     }
 }

@@ -13,6 +13,6 @@ class NavigationRepository : BaseRepository() {
 
 
     suspend fun getNavigation(): WanResponse<List<Navigation>> {
-        return apiCall { WanRetrofitClient.service.getNavigation().await() }
+        return apiCall { WanRetrofitClient.service.getNavigation() }
     }
 }
