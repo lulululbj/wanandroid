@@ -7,7 +7,7 @@ import luyao.base.BaseViewModel
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.bean.ArticleList
 
-/**
+/**launch
  * Created by luyao
  * on 2019/4/8 16:03
  */

@@ -12,38 +12,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <RelativeLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <com.google.android.material.appbar.AppBarLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mainToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:navigationIcon="@drawable/ic_menu_white"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleTextColor="@color/white">
+
+                <TextView
+                    android:id="@+id/mainSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="5dp"
+                    android:background="#33000000"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_article"
+                    android:drawableLeft="@drawable/search">
+
+                </TextView>
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                app:tabIndicatorColor="#ADBE107E"
+                app:tabMode="fixed"
+                app:tabTextAppearance="@style/TabTextStyle" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabIndicatorColor="#ADBE107E"
-                    app:tabMode="fixed"
-                    app:tabTextAppearance="@style/TabTextStyle" />
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <ImageButton
-                android:id="@+id/mainSearch"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/colorPrimary"
-                android:src="@drawable/search" />
-
-        </RelativeLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.viewpager.widget.ViewPager
@@ -63,7 +71,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

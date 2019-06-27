@@ -50,8 +50,8 @@ class NewMainActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSel
 
     override fun initView() {
         initViewPager()
+        mainToolBar.setNavigationOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
         navigationView.setNavigationItemSelectedListener(this)
-
         navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
     }
 
