@@ -4,18 +4,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_project.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.home.HomeFragment
-import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.ui.system.SystemTypeFragment
 
 /**
  * Created by Lu
  * on 2018/4/1 16:52
  */
-class ProjectFragment : BaseFragment<ProjectViewModel>() {
+class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
 
     override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
 
@@ -63,7 +62,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel>() {
 
     private fun chooseFragment(position: Int): Fragment {
         isBlog?.run {
-            return if (this) SystemTypeFragment.newInstance(mProjectTypeList[position].id,true)
+            return if (this) SystemTypeFragment.newInstance(mProjectTypeList[position].id, true)
             else ProjectTypeFragment.newInstance(mProjectTypeList[position].id, false)
         }
         return HomeFragment()

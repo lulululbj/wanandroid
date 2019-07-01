@@ -1,10 +1,10 @@
 package luyao.wanandroid.ui.project
 
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.base.BaseNormalActivity
+import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
 
-class ProjectActivity : BaseNormalActivity() {
+class ProjectActivity : BaseActivity() {
 
     companion object {
         const val BLOG_TAG = "isBlog"

@@ -1,10 +1,10 @@
 package luyao.wanandroid.model.repository
 
-import luyao.base.BaseRepository
-import luyao.base.WanResponse
+import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.model.bean.WanResponse
 
 /**
  * Created by luyao

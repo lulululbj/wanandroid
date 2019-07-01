@@ -1,9 +1,9 @@
 package luyao.wanandroid.model.repository
 
-import luyao.base.BaseRepository
-import luyao.base.WanResponse
+import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.User
+import luyao.wanandroid.model.bean.WanResponse
 
 /**
  * Created by luyao

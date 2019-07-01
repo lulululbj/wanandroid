@@ -4,10 +4,11 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import dp2px
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.base.BaseActivity
+import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -15,13 +16,12 @@ import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import toast
 
 /**
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : BaseActivity<CollectViewModel>() {
+class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
 
     override fun providerVMClass(): Class<CollectViewModel>? = CollectViewModel::class.java
 

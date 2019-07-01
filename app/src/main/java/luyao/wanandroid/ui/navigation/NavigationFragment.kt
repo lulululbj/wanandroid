@@ -2,9 +2,9 @@ package luyao.wanandroid.ui.navigation
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import dp2px
 import kotlinx.android.synthetic.main.fragment_navigation.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
@@ -17,7 +17,7 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by Lu
  * on 2018/3/28 21:26
  */
-class NavigationFragment : BaseFragment<NavigationViewModel>() {
+class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
 
     override fun providerVMClass(): Class<NavigationViewModel>? = NavigationViewModel::class.java
 

@@ -8,16 +8,17 @@ import android.view.Gravity
 import android.view.MenuItem
 import androidx.appcompat.widget.PopupMenu
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import de.psdev.licensesdialog.LicensesDialog
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20
 import de.psdev.licensesdialog.model.Notice
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.base.BaseNormalActivity
+import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
 import openBrowser
 
-class AboutActivity : BaseNormalActivity() {
+class AboutActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_about
 
@@ -80,8 +81,8 @@ class AboutActivity : BaseNormalActivity() {
     }
 
     private fun showMe() {
-        MaterialDialog.Builder(this)
-                .customView(R.layout.dialog_me, false)
-                .show()
+        MaterialDialog(this).show {
+            customView(R.layout.dialog_me)
+        }
     }
 }

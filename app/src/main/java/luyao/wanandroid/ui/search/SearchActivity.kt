@@ -1,22 +1,22 @@
 package luyao.wanandroid.ui.search
 
-import androidx.lifecycle.Observer
 import android.content.Intent
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.appcompat.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import dp2px
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.base.BaseActivity
+import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -32,7 +32,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseActivity<SearchViewModel>() {
+class SearchActivity : BaseVMActivity<SearchViewModel>() {
 
     override fun providerVMClass(): Class<SearchViewModel>? = SearchViewModel::class.java
 
@@ -102,7 +102,7 @@ class SearchActivity : BaseActivity<SearchViewModel>() {
                     searchAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id,collect)
+                            mViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }

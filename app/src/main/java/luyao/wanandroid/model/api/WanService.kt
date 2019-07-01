@@ -1,6 +1,5 @@
 package luyao.wanandroid.model.api
 
-import luyao.base.WanResponse
 import luyao.wanandroid.model.bean.*
 import retrofit2.http.*
 

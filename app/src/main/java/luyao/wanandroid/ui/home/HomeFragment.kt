@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
-import dp2px
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -25,7 +25,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseFragment<HomeViewModel>() {
+class HomeFragment : BaseVMFragment<HomeViewModel>() {
 
     override fun providerVMClass(): Class<HomeViewModel>? = HomeViewModel::class.java
     private val isLogin by Preference(Preference.IS_LOGIN, false)

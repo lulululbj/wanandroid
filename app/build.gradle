@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "luyao.wanandroid"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -51,8 +51,7 @@ dependencies {
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
 
-
-
-    implementation project(':base')
+//    implementation project(':base')
+    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.2'
 }
 

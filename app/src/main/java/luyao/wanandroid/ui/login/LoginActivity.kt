@@ -1,21 +1,23 @@
 package luyao.wanandroid.ui.login
 
-import androidx.lifecycle.Observer
+import android.app.ProgressDialog
 import android.view.View
+import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.App
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.NewMainActivity
 import luyao.wanandroid.util.Preference
-import toast
 
 /**
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
+class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
 
@@ -41,8 +43,8 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
         mViewModel.apply {
             mLoginUser.observe(this@LoginActivity, Observer {
                 isLogin = true
-                App.CURRENT_USER=it
-                userJson=Gson().toJson(it)
+                App.CURRENT_USER = it
+                userJson = Gson().toJson(it)
                 dismissProgressDialog()
                 startActivity(NewMainActivity::class.java)
                 finish()
@@ -94,6 +96,17 @@ class LoginActivity : luyao.base.BaseActivity<LoginViewModel>() {
             return false
         }
         return true
+    }
+
+    var progressDialog : ProgressDialog? = null
+    private fun showProgressDialog(message: String) {
+        if (progressDialog == null)
+            progressDialog = ProgressDialog(this)
+        progressDialog?.show()
+    }
+
+    private fun dismissProgressDialog(){
+        progressDialog?.dismiss()
     }
 
 }

@@ -1,12 +1,12 @@
 package luyao.wanandroid.ui.system
 
-import androidx.lifecycle.Observer
 import android.content.Intent
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import dp2px
 import kotlinx.android.synthetic.main.fragment_system.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
 import luyao.wanandroid.view.SpaceItemDecoration
@@ -15,7 +15,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/26 21:11
  */
-class SystemFragment : BaseFragment<SystemViewModel>() {
+class SystemFragment : BaseVMFragment<SystemViewModel>() {
 
     override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
     private val systemAdapter by lazy { SystemAdapter() }

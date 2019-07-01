@@ -1,12 +1,13 @@
 package luyao.wanandroid.ui.search
 
 import androidx.lifecycle.MutableLiveData
+import executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import luyao.base.BaseViewModel
-import luyao.wanandroid.model.repository.SearchRepository
+import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
+import luyao.wanandroid.model.repository.SearchRepository
 
 /**
  * Created by luyao
@@ -21,22 +22,22 @@ class SearchViewModel : BaseViewModel() {
 
     fun searchHot(page: Int, key: String) {
         launch {
-            val result = withContext(Dispatchers.IO){repository.searchHot(page, key)}
-            executeResponse(result,{mArticleList.value = result.data},{})
+            val result = withContext(Dispatchers.IO) { repository.searchHot(page, key) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
 
     fun getWebSites() {
-       launch{
-            val result =  withContext(Dispatchers.IO){repository.getWebSites()}
-            executeResponse(result,{mWebSiteHot.value = result.data},{})
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getWebSites() }
+            executeResponse(result, { mWebSiteHot.value = result.data }, {})
         }
     }
 
     fun getHotSearch() {
-        launch{
-            val result =  withContext(Dispatchers.IO){repository.getHotSearch()}
-            executeResponse(result,{mHotSearch.value = result.data},{})
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getHotSearch() }
+            executeResponse(result, { mHotSearch.value = result.data }, {})
         }
     }
 

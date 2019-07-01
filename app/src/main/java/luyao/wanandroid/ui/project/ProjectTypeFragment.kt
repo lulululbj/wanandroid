@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import dp2px
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -22,12 +22,12 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : BaseFragment<ProjectViewModel>() {
+class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
-    private val cid by lazy { arguments?.getInt(ProjectTypeFragment.CID) }
-    private val isLasted by lazy { arguments?.getBoolean(ProjectTypeFragment.LASTED) } // 区分是最新项目 还是项目分类
+    private val cid by lazy { arguments?.getInt(CID) }
+    private val isLasted by lazy { arguments?.getBoolean(LASTED) } // 区分是最新项目 还是项目分类
     private var currentPage = 0
     private val projectAdapter by lazy { ProjectAdapter() }
 

@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import dp2px
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.base.BaseFragment
+import luyao.util.ktx.base.BaseVMFragment
+import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -21,7 +21,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseFragment<SystemViewModel>() {
+class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
 
@@ -75,7 +75,7 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>() {
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
         }
         typeRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(typeRecycleView.dp2px(10f)))
             adapter = systemTypeAdapter
         }
@@ -112,7 +112,7 @@ class SystemTypeFragment : BaseFragment<SystemViewModel>() {
         systemTypeAdapter.setEnableLoadMore(false)
         typeRefreshLayout.isRefreshing = true
         currentPage = 0
-       loadMore()
+        loadMore()
     }
 
     override fun initData() {

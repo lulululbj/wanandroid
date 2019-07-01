@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_new_main.*
-import luyao.base.BaseNormalActivity
+import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.about.AboutActivity
@@ -26,7 +26,7 @@ import luyao.wanandroid.util.Preference
  * Created by luyao
  * on 2019/5/7 15:36
  */
-class NewMainActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSelectedListener {
+class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
@@ -74,8 +74,8 @@ class NewMainActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSel
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_blog -> startActivity(ProjectActivity::class.java,ProjectActivity.BLOG_TAG,true)
-            R.id.nav_project_type -> startActivity(ProjectActivity::class.java,ProjectActivity.BLOG_TAG,false)
+            R.id.nav_blog -> startActivity(ProjectActivity::class.java, ProjectActivity.BLOG_TAG, true)
+            R.id.nav_project_type -> startActivity(ProjectActivity::class.java, ProjectActivity.BLOG_TAG, false)
             R.id.nav_tool -> switchToTool()
             R.id.nav_collect -> switchCollect()
             R.id.nav_about -> switchAbout()
@@ -86,21 +86,20 @@ class NewMainActivity : BaseNormalActivity(), NavigationView.OnNavigationItemSel
     }
 
     private fun exit() {
-        MaterialDialog.Builder(this)
-                .title("退出")
-                .content("是否确认退出登录？")
-                .positiveText("确认")
-                .negativeText("取消")
-                .onPositive { _, _ ->
-                    isLogin = false
-                    userJson = ""
-                    navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
-                }.show()
-
+        MaterialDialog(this).show {
+            title = "退出"
+            message(text = "是否确认退出登录？")
+            positiveButton(text = "确认") {
+                isLogin = false
+                userJson = ""
+                navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
+            }
+            negativeButton(text = "取消")
+        }
     }
 
     private fun switchAbout() {
-       startActivity(AboutActivity::class.java)
+        startActivity(AboutActivity::class.java)
     }
 
     private fun switchCollect() {

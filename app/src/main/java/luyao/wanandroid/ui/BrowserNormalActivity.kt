@@ -9,13 +9,13 @@ import com.tencent.smtt.sdk.WebViewClient
 import kotlinx.android.synthetic.main.activity_browser.*
 import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.wanandroid.R
-import luyao.base.BaseNormalActivity
+import luyao.util.ktx.base.BaseActivity
 
 /**
  * Created by Lu
  * on 2018/3/25 21:47
  */
-class BrowserNormalActivity : BaseNormalActivity() {
+class BrowserNormalActivity : BaseActivity() {
 
     companion object {
         const val URL = "url"
@@ -32,7 +32,7 @@ class BrowserNormalActivity : BaseNormalActivity() {
     override fun initData() {
         mToolbar.setNavigationOnClickListener { onBackPressed() }
 
-        intent.extras.getString(URL).let {
+        intent?.extras?.getString(URL).let {
             webView.loadUrl(it)
         }
     }

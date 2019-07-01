@@ -1,4 +1,6 @@
-package luyao.base
+package luyao.wanandroid.model.api
+
+import luyao.wanandroid.model.bean.WanResponse
 
 /**
  * Created by luyao
