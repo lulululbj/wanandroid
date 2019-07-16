@@ -27,7 +27,7 @@ class CollectViewModel : BaseViewModel() {
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
-            val result = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 if (boolean) repository.collectArticle(articleId)
                 else repository.unCollectArticle(articleId)
             }

@@ -7,7 +7,7 @@ import q.rorbin.verticaltablayout.widget.ITabView
  * Created by Lu
  * on 2018/3/28 22:24
  */
-class VerticalTabAdapter(val titles: List<String>) : TabAdapter {
+class VerticalTabAdapter(private val titles: List<String>) : TabAdapter {
 
     override fun getIcon(position: Int) = null
 

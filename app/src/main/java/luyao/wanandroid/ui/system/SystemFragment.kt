@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.system
 
-import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -9,7 +8,9 @@ import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
+import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.view.SpaceItemDecoration
+import startKtxActivity
 
 /**
  * Created by Lu
@@ -43,10 +44,7 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
 
     override fun initData() {
         systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
-            Intent(activity, SystemTypeNormalActivity::class.java).run {
-                putExtra(SystemTypeNormalActivity.ARTICLE_LIST, systemAdapter.data[position])
-                startActivity(this)
-            }
+            startKtxActivity<SystemTypeNormalActivity>(value = SystemTypeNormalActivity.ARTICLE_LIST to systemAdapter.data[position])
         }
     }
 

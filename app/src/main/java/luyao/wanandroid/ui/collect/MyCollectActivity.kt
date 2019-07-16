@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
@@ -16,6 +17,7 @@ import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import startKtxActivity
 
 /**
  * Created by Lu
@@ -59,20 +61,16 @@ class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
         articleAdapter.run {
             showStar(false)
             setOnItemClickListener { _, _, position ->
-                Intent(this@MyCollectActivity, BrowserNormalActivity::class.java).run {
-                    putExtra(BrowserNormalActivity.URL, articleAdapter.data[position].link)
-                    startActivity(this)
-                }
-
+                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to articleAdapter.data[position].link)
             }
-            onItemChildClickListener = this.onItemChildClickListener
+            onItemChildClickListener = itemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, collectRecycleView)
         }
         collectRecycleView.adapter = articleAdapter
     }
 
-    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+    private val itemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
         when (view.id) {
             R.id.articleStar -> {
                 articleAdapter.run {
@@ -127,7 +125,7 @@ class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
                 it?.run {
                     collectRefreshLayout.isRefreshing = false
                     toast(it)
-                    startActivity(LoginActivity::class.java)
+                    startKtxActivity<LoginActivity>()
                     finish()
                 }
             })

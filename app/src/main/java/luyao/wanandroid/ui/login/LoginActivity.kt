@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.App
 import luyao.wanandroid.R
@@ -46,7 +47,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
                 App.CURRENT_USER = it
                 userJson = Gson().toJson(it)
                 dismissProgressDialog()
-                startActivity(NewMainActivity::class.java)
+                startKtxActivity<NewMainActivity>()
                 finish()
             })
 

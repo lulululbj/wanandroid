@@ -9,10 +9,12 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import com.zhy.view.flowlayout.TagFlowLayout
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.ui.BrowserNormalActivity
+import startKtxActivity
 
 
 /**
@@ -38,12 +40,10 @@ class NavigationAdapter(layoutResId: Int = R.layout.item_navigation) : BaseQuick
                 }
             }
 
-            setOnTagClickListener({ _, position, parent ->
-                val intent = Intent(parent.context, BrowserNormalActivity::class.java)
-                intent.putExtra(BrowserNormalActivity.URL, item.articles[position].link)
-                parent.context.startActivity(intent)
+            setOnTagClickListener { _, position, parent ->
+                parent.context.startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to item.articles[position].link)
                 true
-            })
+            }
         }
     }
 

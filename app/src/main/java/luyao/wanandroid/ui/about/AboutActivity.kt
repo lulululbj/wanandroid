@@ -15,8 +15,8 @@ import de.psdev.licensesdialog.model.Notice
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseActivity
+import luyao.util.ktx.ext.openBrowser
 import luyao.wanandroid.R
-import openBrowser
 
 class AboutActivity : BaseActivity() {
 

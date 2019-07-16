@@ -31,6 +31,7 @@ public class X5WebView extends WebView {
         this.getView().setClickable(true);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebViewSettings() {
         WebSettings webSetting = this.getSettings();
         webSetting.setJavaScriptEnabled(true);
@@ -41,7 +42,7 @@ public class X5WebView extends WebView {
         webSetting.setBuiltInZoomControls(true);
         webSetting.setUseWideViewPort(true);
         webSetting.setSupportMultipleWindows(true);
-         webSetting.setLoadWithOverviewMode(true);
+        webSetting.setLoadWithOverviewMode(true);
         webSetting.setAppCacheEnabled(true);
         // webSetting.setDatabaseEnabled(true);
         webSetting.setDomStorageEnabled(true);

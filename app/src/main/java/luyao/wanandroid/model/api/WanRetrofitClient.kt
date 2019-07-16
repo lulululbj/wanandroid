@@ -17,7 +17,7 @@ import java.io.File
  */
 object WanRetrofitClient : BaseRetrofitClient() {
 
-    val service by lazy { WanRetrofitClient.getService(WanService::class.java, WanService.BASE_URL) }
+    val service by lazy { getService(WanService::class.java, WanService.BASE_URL) }
 
     private val cookieJar by lazy { PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.CONTEXT)) }
 

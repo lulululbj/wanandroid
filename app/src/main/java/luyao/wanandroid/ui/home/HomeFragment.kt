@@ -9,6 +9,7 @@ import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -19,6 +20,7 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import startKtxActivity
 
 
 /**
@@ -57,11 +59,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     private fun initAdapter() {
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-                Intent(activity, BrowserNormalActivity::class.java).run {
-                    putExtra(BrowserNormalActivity.URL, homeArticleAdapter.data[position].link)
-                    startActivity(this)
-                }
-
+                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
             addHeaderView(banner)
@@ -83,7 +81,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                    startKtxActivity<LoginActivity>()
                 }
             }
         }
@@ -101,9 +99,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->
                 run {
-                    val intent = Intent(activity, BrowserNormalActivity::class.java)
-                    intent.putExtra(BrowserNormalActivity.URL, bannerUrls[position])
-                    startActivity(intent)
+                    startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to bannerUrls[position])
                 }
             }
         }

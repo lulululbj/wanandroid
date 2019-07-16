@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.project
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +8,7 @@ import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -17,6 +17,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import startKtxActivity
 
 /**
  * Created by Lu
@@ -78,9 +79,7 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
     private fun initRecycleView() {
         projectAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val intent = Intent(activity, BrowserNormalActivity::class.java)
-                intent.putExtra(BrowserNormalActivity.URL, projectAdapter.data[position].link)
-                startActivity(intent)
+                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to projectAdapter.data[position].link)
             }
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
@@ -136,7 +135,7 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                    startKtxActivity<LoginActivity>()
                 }
             }
         }

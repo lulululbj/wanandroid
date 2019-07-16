@@ -14,9 +14,7 @@ class SystemAdapter(layoutResId: Int = R.layout.item_system) : BaseQuickAdapter<
     override fun convert(helper: BaseViewHolder, item: SystemParent) {
         helper.run {
             setText(R.id.systemParent, item.name)
-            setText(R.id.systemChild, item.children.joinToString("     ", transform = { child ->
-                child.name
-            }))
+            setText(R.id.systemChild, item.children.joinToString("     ", transform = { child -> child.name }))
         }
     }
 }

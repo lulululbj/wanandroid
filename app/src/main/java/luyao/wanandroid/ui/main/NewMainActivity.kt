@@ -1,7 +1,6 @@
 package luyao.wanandroid.ui.main
 
 import TOOL_URL
-import android.content.Intent
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -9,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_new_main.*
 import luyao.util.ktx.base.BaseActivity
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.about.AboutActivity
@@ -21,6 +21,7 @@ import luyao.wanandroid.ui.project.ProjectTypeFragment
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
+import startKtxActivity
 
 /**
  * Created by luyao
@@ -56,7 +57,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     override fun initData() {
-        mainSearch.setOnClickListener { startActivity(SearchActivity::class.java) }
+        mainSearch.setOnClickListener { startKtxActivity<SearchActivity>() }
     }
 
     private fun initViewPager() {
@@ -74,8 +75,8 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_blog -> startActivity(ProjectActivity::class.java, ProjectActivity.BLOG_TAG, true)
-            R.id.nav_project_type -> startActivity(ProjectActivity::class.java, ProjectActivity.BLOG_TAG, false)
+            R.id.nav_blog -> startKtxActivity<ProjectActivity>(value = ProjectActivity.BLOG_TAG to true)
+            R.id.nav_project_type -> startKtxActivity<ProjectActivity>(value = ProjectActivity.BLOG_TAG to false)
             R.id.nav_tool -> switchToTool()
             R.id.nav_collect -> switchCollect()
             R.id.nav_about -> switchAbout()
@@ -99,21 +100,18 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     private fun switchAbout() {
-        startActivity(AboutActivity::class.java)
+        startKtxActivity<AboutActivity>()
     }
 
     private fun switchCollect() {
         if (isLogin) {
-            Intent(this, MyCollectActivity::class.java).run { startActivity(this) }
+            startKtxActivity<MyCollectActivity>()
         } else {
-            Intent(this, LoginActivity::class.java).run { startActivity(this) }
+            startKtxActivity<LoginActivity>()
         }
     }
 
     private fun switchToTool() {
-        Intent(this, BrowserNormalActivity::class.java).run {
-            putExtra(BrowserNormalActivity.URL, TOOL_URL)
-            startActivity(this)
-        }
+        startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to TOOL_URL)
     }
 }

@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -26,6 +27,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import startKtxActivity
 
 
 /**
@@ -70,9 +72,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     private fun initAdapter() {
         searchAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val intent = Intent(this@SearchActivity, BrowserNormalActivity::class.java)
-                intent.putExtra(BrowserNormalActivity.URL, searchAdapter.data[position].link)
-                startActivity(intent)
+                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to searchAdapter.data[position].link)
             }
             onItemChildClickListener = this@SearchActivity.onItemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
@@ -107,7 +107,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    Intent(this, LoginActivity::class.java).run { startActivity(this) }
+                    startKtxActivity<LoginActivity>()
                 }
             }
         }
@@ -147,9 +147,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
             }
 
             setOnTagClickListener { _, position, parent ->
-                val intent = Intent(parent.context, BrowserNormalActivity::class.java)
-                intent.putExtra(BrowserNormalActivity.URL, webSitesList[position].link)
-                parent.context.startActivity(intent)
+                parent.context.startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to webSitesList[position].link)
                 true
             }
         }
