@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SplashNormalActivity" />
-        <activity android:name=".ui.BrowserNormalActivity" />
+        <activity android:name=".ui.BrowserNormalActivity"
+            android:process=":tbs"/>
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.login.LoginActivity" />

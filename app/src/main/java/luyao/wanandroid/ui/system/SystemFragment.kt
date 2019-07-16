@@ -8,7 +8,6 @@ import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
-import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.view.SpaceItemDecoration
 import startKtxActivity
 
