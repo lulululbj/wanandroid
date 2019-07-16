@@ -1,8 +1,6 @@
 package luyao.wanandroid.ui.search
 
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -14,7 +12,6 @@ import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
@@ -39,7 +36,6 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     override fun providerVMClass(): Class<SearchViewModel>? = SearchViewModel::class.java
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-    private lateinit var searchView: SearchView
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0
     private var key = ""
@@ -50,7 +46,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
-        mToolbar.setNavigationIcon(R.drawable.arrow_back)
+        searchToolbar.setNavigationIcon(R.drawable.arrow_back)
         initTagLayout()
 
         searchRecycleView.run {
@@ -60,6 +56,12 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         }
         initAdapter()
         searchRefreshLayout.setOnRefreshListener { refresh() }
+
+        searchView.run {
+            isIconified = false
+            onActionViewExpanded()
+            setOnQueryTextListener(onQueryTextListener)
+        }
     }
 
     private fun refresh() {
@@ -90,7 +92,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     }
 
     override fun initData() {
-        mToolbar.setNavigationOnClickListener { onBackPressed() }
+        searchToolbar.setNavigationOnClickListener { onBackPressed() }
         mViewModel.getHotSearch()
         mViewModel.getWebSites()
     }
@@ -158,14 +160,19 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         searchRefreshLayout.isRefreshing = true
         currentPage = 0
         mViewModel.searchHot(0, key)
-        hotContent.visibility = View.GONE
-        searchRecycleView.visibility = View.VISIBLE
+
     }
 
     private fun searchHot(articleList: ArticleList) {
+
         searchAdapter.run {
 
             if (articleList.datas.isEmpty()) {
+                searchRefreshLayout.isRefreshing = false
+                if (currentPage == 0){
+                    data.clear()
+                    notifyItemRangeRemoved(0,data.size)
+                }
                 loadMoreEnd()
                 return
             }
@@ -178,20 +185,12 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
             else addData(articleList.datas)
             setEnableLoadMore(true)
             loadMoreComplete()
-        }
-        searchRefreshLayout.isRefreshing = false
-        currentPage++
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_searchview, menu)
-        searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.run {
-            isIconified = false
-            onActionViewExpanded()
-            setOnQueryTextListener(onQueryTextListener)
+            searchRefreshLayout.isRefreshing = false
+            currentPage++
         }
-        return super.onCreateOptionsMenu(menu)
+
+
     }
 
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {
@@ -219,7 +218,9 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     override fun startObserve() {
         mViewModel.apply {
             mArticleList.observe(this@SearchActivity, Observer {
-                it?.run { searchHot(it) }
+                hotContent.visibility = View.GONE
+                searchRecycleView.visibility = View.VISIBLE
+                searchHot(it)
             })
 
             mWebSiteHot.observe(this@SearchActivity, Observer {

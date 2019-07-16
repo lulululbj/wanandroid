@@ -62,7 +62,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     private fun initViewPager() {
         viewPager.offscreenPageLimit = titleList.size
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int) = fragmentList[position]
 
             override fun getCount() = titleList.size
