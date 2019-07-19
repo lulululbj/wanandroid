@@ -1,6 +1,8 @@
 package luyao.wanandroid.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,15 +18,19 @@ import luyao.wanandroid.model.bean.Banner
 class HomeViewModel : BaseViewModel() {
 
     private val repository by lazy { HomeRepository() }
-    val mBanners: MutableLiveData<List<Banner>> = MutableLiveData()
+//    val mBanners: MutableLiveData<List<Banner>> = MutableLiveData()
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
 
-    fun getBanners() {
-        launch {
-            val result = withContext(Dispatchers.IO) { repository.getBanners() }
-            executeResponse(result, { mBanners.value = result.data }, {})
-        }
+    val mBanners : LiveData<List<Banner>> = liveData {
+        val data  = withContext(Dispatchers.IO) { repository.getBanners() }
+        emit(data.data)
     }
+//    fun getBanners() {
+//        launch {
+//            val result = withContext(Dispatchers.IO) { repository.getBanners() }
+//            executeResponse(result, { mBanners.value = result.data }, {})
+//        }
+//    }
 
     fun getArticleList(page: Int) {
         launch {
@@ -32,6 +38,7 @@ class HomeViewModel : BaseViewModel() {
             executeResponse(result, { mArticleList.value = result.data }, {})
         }
     }
+
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {

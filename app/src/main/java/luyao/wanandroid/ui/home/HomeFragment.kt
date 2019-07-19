@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.home
 
-import android.content.Intent
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import startKtxActivity
 
 
 /**
@@ -113,7 +111,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.getBanners()
+//        mViewModel.getBanners()
     }
 
     override fun startObserve() {
