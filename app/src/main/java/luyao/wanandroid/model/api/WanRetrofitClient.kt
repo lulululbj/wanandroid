@@ -32,7 +32,8 @@ object WanRetrofitClient : BaseRetrofitClient() {
                     var request = chain.request()
                     if (!NetWorkUtils.isNetworkAvailable(App.CONTEXT)) {
                         request = request.newBuilder()
-                                .cacheControl(CacheControl.FORCE_CACHE)
+                                .removeHeader("Pragma")
+                                .header("Cache-Control", "public, only-if-cached")
                                 .build()
                     }
                     val response = chain.proceed(request)

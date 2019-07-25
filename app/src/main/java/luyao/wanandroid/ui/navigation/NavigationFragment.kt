@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
@@ -12,6 +13,7 @@ import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
+import retrofit2.HttpException
 
 /**
  * Created by Lu
@@ -73,10 +75,18 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     }
 
     override fun startObserve() {
+        super.startObserve()
         mViewModel.run {
             mNavigationList.observe(this@NavigationFragment, Observer {
                 it?.run { getNavigation(it) }
             })
+        }
+    }
+
+    override fun onError(e: Exception) {
+        super.onError(e)
+        if (e is HttpException){
+            activity?.toast(e.message())
         }
     }
 

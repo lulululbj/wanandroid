@@ -7,9 +7,11 @@ import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
 import luyao.wanandroid.view.SpaceItemDecoration
+import retrofit2.HttpException
 
 /**
  * Created by Lu
@@ -48,6 +50,7 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
     }
 
     override fun startObserve() {
+        super.startObserve()
         mViewModel.run {
             mSystemParentList.observe(this@SystemFragment, Observer {
                 it?.run {
@@ -55,6 +58,13 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
                     systemAdapter.setNewData(it)
                 }
             })
+        }
+    }
+
+    override fun onError(e: Exception) {
+        super.onError(e)
+        if (e is HttpException){
+            activity?.toast(e.message())
         }
     }
 }

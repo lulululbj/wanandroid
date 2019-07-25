@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.ProjectAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -17,6 +18,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import retrofit2.HttpException
 
 /**
  * Created by Lu
@@ -141,10 +143,18 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
     }
 
     override fun startObserve() {
+        super.startObserve()
         mViewModel.run {
             mArticleList.observe(this@ProjectTypeFragment, Observer {
                 it?.run { getProjectTypeDetailList(it) }
             })
+        }
+    }
+
+    override fun onError(e: Exception) {
+        super.onError(e)
+        if (e is HttpException){
+            activity?.toast(e.message())
         }
     }
 }

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
@@ -19,6 +20,7 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import retrofit2.HttpException
 
 
 /**
@@ -115,6 +117,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     }
 
     override fun startObserve() {
+        super.startObserve()
         mViewModel.apply {
             mBanners.observe(this@HomeFragment, Observer { it ->
                 it?.let { setBanner(it) }
@@ -157,5 +160,12 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     override fun onStop() {
         super.onStop()
         banner.stopAutoPlay()
+    }
+
+    override fun onError(e: Exception) {
+        super.onError(e)
+        if (e is HttpException){
+            activity?.toast(e.message())
+        }
     }
 }

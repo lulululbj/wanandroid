@@ -22,8 +22,12 @@ class HomeViewModel : BaseViewModel() {
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
 
     val mBanners : LiveData<List<Banner>> = liveData {
-        val data  = withContext(Dispatchers.IO) { repository.getBanners() }
-        emit(data.data)
+
+        kotlin.runCatching {
+            val data  = withContext(Dispatchers.IO) { repository.getBanners() }
+            emit(data.data)
+        }
+
     }
 //    fun getBanners() {
 //        launch {
@@ -33,20 +37,28 @@ class HomeViewModel : BaseViewModel() {
 //    }
 
     fun getArticleList(page: Int) {
-        launch {
-            val result = withContext(Dispatchers.IO) { repository.getArticleList(page) }
-            executeResponse(result, { mArticleList.value = result.data }, {})
+
+        kotlin.runCatching {
+            launch {
+                val result = withContext(Dispatchers.IO) { repository.getArticleList(page) }
+                executeResponse(result, { mArticleList.value = result.data }, {})
+            }
         }
+
     }
 
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
-        launch {
-            withContext(Dispatchers.IO) {
-                if (boolean) repository.collectArticle(articleId)
-                else repository.unCollectArticle(articleId)
+
+        kotlin.runCatching {
+            launch {
+                withContext(Dispatchers.IO) {
+                    if (boolean) repository.collectArticle(articleId)
+                    else repository.unCollectArticle(articleId)
+                }
             }
         }
+
     }
 
 }

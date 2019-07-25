@@ -113,4 +113,6 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     private fun switchToTool() {
         startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to TOOL_URL)
     }
+
+
 }
