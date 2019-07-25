@@ -73,14 +73,14 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     private fun login() {
         if (checkInput()) {
-            showProgressDialog(getString(R.string.is_logining))
+            showProgressDialog()
             mViewModel.login(userName, passWord)
         }
     }
 
     private fun register() {
         if (checkInput()) {
-            showProgressDialog(getString(R.string.is_registering))
+            showProgressDialog()
             mViewModel.register(userName, passWord)
         }
     }
@@ -100,7 +100,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     }
 
     var progressDialog : ProgressDialog? = null
-    private fun showProgressDialog(message: String) {
+    private fun showProgressDialog() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(this)
         progressDialog?.show()

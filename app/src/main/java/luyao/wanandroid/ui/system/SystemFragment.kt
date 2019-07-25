@@ -6,10 +6,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
 import luyao.wanandroid.view.SpaceItemDecoration
-import startKtxActivity
 
 /**
  * Created by Lu

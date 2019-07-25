@@ -17,7 +17,6 @@ import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import startKtxActivity
 
 /**
  * Created by Lu

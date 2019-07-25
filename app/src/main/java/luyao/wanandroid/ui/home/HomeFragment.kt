@@ -19,7 +19,6 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import startKtxActivity
 
 
 /**

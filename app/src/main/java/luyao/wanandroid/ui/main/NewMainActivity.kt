@@ -21,7 +21,6 @@ import luyao.wanandroid.ui.project.ProjectTypeFragment
 import luyao.wanandroid.ui.search.SearchActivity
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
-import startKtxActivity
 
 /**
  * Created by luyao

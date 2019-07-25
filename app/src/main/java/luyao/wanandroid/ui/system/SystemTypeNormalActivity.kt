@@ -34,7 +34,7 @@ class SystemTypeNormalActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int) = SystemTypeFragment.newInstance(systemParent.children[position].id, false)
 
             override fun getCount() = systemParent.children.size

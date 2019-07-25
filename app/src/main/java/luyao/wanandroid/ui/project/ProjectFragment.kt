@@ -48,7 +48,7 @@ class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(activity!!.supportFragmentManager) {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(activity!!.supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int) = chooseFragment(position)
 
 

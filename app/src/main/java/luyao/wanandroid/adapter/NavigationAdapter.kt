@@ -14,7 +14,6 @@ import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.ui.BrowserNormalActivity
-import startKtxActivity
 
 
 /**
