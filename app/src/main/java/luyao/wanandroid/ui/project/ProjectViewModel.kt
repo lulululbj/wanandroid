@@ -20,25 +20,17 @@ class ProjectViewModel : BaseViewModel() {
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
     fun getProjectTypeDetailList(page: Int, cid: Int) {
-
-        runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
-                executeResponse(result, { mArticleList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
-
     }
 
     fun getProjectTypeList() {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getProjectTypeList() }
-                executeResponse(result, { mSystemParentList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getProjectTypeList() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
         }
-
     }
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
@@ -51,24 +43,16 @@ class ProjectViewModel : BaseViewModel() {
     }
 
     fun getLastedProject(page: Int) {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getLastedProject(page) }
-                executeResponse(result, { mArticleList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getLastedProject(page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
-
     }
 
     fun getBlogType() {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getBlog() }
-                executeResponse(result, { mSystemParentList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getBlog() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
         }
-
     }
 }

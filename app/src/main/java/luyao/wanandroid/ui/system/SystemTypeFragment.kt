@@ -17,6 +17,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import onNetError
 
 /**
  * Created by Lu
@@ -134,10 +135,17 @@ class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
     }
 
     override fun startObserve() {
+        super.startObserve()
         mViewModel.run {
             mArticleList.observe(this@SystemTypeFragment, Observer {
                 it?.run { getSystemTypeDetail(it) }
             })
+        }
+    }
+
+    override fun onError(e: Throwable) {
+        activity?.onNetError(e){
+            typeRefreshLayout.isRefreshing=false
         }
     }
 }

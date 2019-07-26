@@ -18,14 +18,9 @@ class NavigationViewModel : BaseViewModel() {
     val mNavigationList: MutableLiveData<List<Navigation>> = MutableLiveData()
 
     fun getNavigation() {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getNavigation() }
-                executeResponse(result, { mNavigationList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getNavigation() }
+            executeResponse(result, { mNavigationList.value = result.data }, {})
         }
-
-
     }
 }

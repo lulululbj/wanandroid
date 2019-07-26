@@ -21,26 +21,17 @@ class SystemViewModel : BaseViewModel() {
 
 
     fun getSystemTypeDetail(id: Int, page: Int) {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getSystemTypeDetail(id, page) }
-                executeResponse(result, { mArticleList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getSystemTypeDetail(id, page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
-
     }
 
     fun getSystemTypes() {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getSystemTypes() }
-                executeResponse(result, { mSystemParentList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getSystemTypes() }
+            executeResponse(result, { mSystemParentList.value = result.data }, {})
         }
-
-
     }
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
@@ -53,14 +44,9 @@ class SystemViewModel : BaseViewModel() {
     }
 
     fun getBlogArticle(id: Int, page: Int) {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getBlogArticle(id, page) }
-                executeResponse(result, { mArticleList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getBlogArticle(id, page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
-
-
     }
 }

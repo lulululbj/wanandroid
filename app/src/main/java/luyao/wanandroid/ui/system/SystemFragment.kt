@@ -7,11 +7,10 @@ import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
-import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.SystemAdapter
 import luyao.wanandroid.view.SpaceItemDecoration
-import retrofit2.HttpException
+import onNetError
 
 /**
  * Created by Lu
@@ -61,10 +60,11 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
         }
     }
 
-    override fun onError(e: Exception) {
+    override fun onError(e: Throwable) {
         super.onError(e)
-        if (e is HttpException){
-            activity?.toast(e.message())
+
+        activity?.onNetError(e) {
+            systemRefreshLayout.isRefreshing = false
         }
     }
 }

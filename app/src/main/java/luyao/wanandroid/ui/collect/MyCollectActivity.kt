@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.collect
 
-import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -24,7 +23,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
 
-    override fun providerVMClass(): Class<CollectViewModel>? = CollectViewModel::class.java
+    override fun providerVMClass() = CollectViewModel::class.java
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
     private var currentPage = 0

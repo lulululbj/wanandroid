@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.util.ktx.base.BaseVMFragment
@@ -18,6 +19,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import onNetError
 import retrofit2.HttpException
 
 /**
@@ -151,10 +153,11 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
         }
     }
 
-    override fun onError(e: Exception) {
+    override fun onError(e: Throwable) {
         super.onError(e)
-        if (e is HttpException){
-            activity?.toast(e.message())
+
+        activity?.onNetError(e){
+            projectRefreshLayout.isRefreshing = false
         }
     }
 }

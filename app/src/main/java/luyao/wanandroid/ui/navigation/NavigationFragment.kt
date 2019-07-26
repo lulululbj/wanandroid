@@ -11,6 +11,7 @@ import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
+import onNetError
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 import retrofit2.HttpException
@@ -83,10 +84,11 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
         }
     }
 
-    override fun onError(e: Exception) {
+    override fun onError(e: Throwable) {
         super.onError(e)
-        if (e is HttpException){
-            activity?.toast(e.message())
+
+        activity?.onNetError(e) {
+
         }
     }
 

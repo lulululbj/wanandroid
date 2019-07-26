@@ -7,9 +7,9 @@ import executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
-import luyao.wanandroid.model.repository.HomeRepository
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.model.repository.HomeRepository
 
 /**
  * Created by luyao
@@ -18,16 +18,14 @@ import luyao.wanandroid.model.bean.Banner
 class HomeViewModel : BaseViewModel() {
 
     private val repository by lazy { HomeRepository() }
-//    val mBanners: MutableLiveData<List<Banner>> = MutableLiveData()
+    //    val mBanners: MutableLiveData<List<Banner>> = MutableLiveData()
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
 
-    val mBanners : LiveData<List<Banner>> = liveData {
-
+    val mBanners: LiveData<List<Banner>> = liveData {
         kotlin.runCatching {
-            val data  = withContext(Dispatchers.IO) { repository.getBanners() }
+            val data = withContext(Dispatchers.IO) { repository.getBanners() }
             emit(data.data)
         }
-
     }
 //    fun getBanners() {
 //        launch {
@@ -37,28 +35,20 @@ class HomeViewModel : BaseViewModel() {
 //    }
 
     fun getArticleList(page: Int) {
-
-        kotlin.runCatching {
-            launch {
-                val result = withContext(Dispatchers.IO) { repository.getArticleList(page) }
-                executeResponse(result, { mArticleList.value = result.data }, {})
-            }
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getArticleList(page) }
+            executeResponse(result, { mArticleList.value = result.data }, {})
         }
-
     }
 
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
-
-        kotlin.runCatching {
-            launch {
-                withContext(Dispatchers.IO) {
-                    if (boolean) repository.collectArticle(articleId)
-                    else repository.unCollectArticle(articleId)
-                }
+        launch {
+            withContext(Dispatchers.IO) {
+                if (boolean) repository.collectArticle(articleId)
+                else repository.unCollectArticle(articleId)
             }
         }
-
     }
 
 }

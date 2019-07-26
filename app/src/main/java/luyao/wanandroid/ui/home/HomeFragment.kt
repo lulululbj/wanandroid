@@ -20,6 +20,7 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import onNetError
 import retrofit2.HttpException
 
 
@@ -162,10 +163,11 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
         banner.stopAutoPlay()
     }
 
-    override fun onError(e: Exception) {
+    override fun onError(e: Throwable) {
         super.onError(e)
-        if (e is HttpException){
-            activity?.toast(e.message())
+
+        activity?.onNetError(e){
+            homeRefreshLayout.isRefreshing = false
         }
     }
 }
