@@ -29,14 +29,15 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha08'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
+    implementation 'com.google.android.material:material:1.1.0-beta01'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
@@ -49,9 +50,9 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-beta01'
 //    implementation project(':base')
-    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.5-alpha03'
+    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha01'
 //    implementation project(path: ':ktx')
 }
 

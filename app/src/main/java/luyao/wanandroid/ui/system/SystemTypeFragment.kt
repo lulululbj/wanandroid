@@ -76,7 +76,7 @@ class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
         }
         typeRecycleView.run {
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(SpaceItemDecoration(typeRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(typeRecycleView.dp2px(10)))
             adapter = systemTypeAdapter
         }
     }

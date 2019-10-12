@@ -36,7 +36,7 @@ class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
 
         collectRecycleView.run {
             layoutManager = LinearLayoutManager(this@MyCollectActivity)
-            addItemDecoration(SpaceItemDecoration(collectRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(collectRecycleView.dp2px(10)))
         }
 
         initAdapter()

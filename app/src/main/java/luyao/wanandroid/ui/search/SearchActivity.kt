@@ -50,7 +50,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
 
         searchRecycleView.run {
             layoutManager = LinearLayoutManager(this@SearchActivity)
-            addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10)))
 
         }
         initAdapter()

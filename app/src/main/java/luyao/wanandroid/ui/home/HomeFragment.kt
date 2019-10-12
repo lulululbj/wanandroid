@@ -44,7 +44,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     override fun initView() {
         homeRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10)))
         }
 
         initBanner()
@@ -82,7 +82,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    startKtxActivity<LoginActivity>()
+                    activity?.startKtxActivity<LoginActivity>()
                 }
             }
         }
@@ -95,7 +95,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     private fun initBanner() {
 
         banner.run {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200f))
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
             setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->

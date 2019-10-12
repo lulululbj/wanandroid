@@ -14,6 +14,7 @@
         android:hint="@string/username">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/userNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true" />
@@ -28,6 +29,7 @@
         app:passwordToggleEnabled="true">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -45,6 +47,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
         android:text="@string/login"
+        android:enabled="false"
         android:textColor="@color/white"
         android:textSize="16sp" />
 

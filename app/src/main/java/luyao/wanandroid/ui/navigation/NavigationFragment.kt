@@ -34,7 +34,7 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     override fun initView() {
         navigationRecycleView.run {
             layoutManager = mLayoutManager
-            addItemDecoration(SpaceItemDecoration(this.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(this.dp2px(10)))
             adapter = navigationAdapter
         }
 
@@ -58,7 +58,7 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
         when {
             position <= firstPotion || position >= lastPosition -> navigationRecycleView.smoothScrollToPosition(position)
             else -> navigationRecycleView.run {
-                smoothScrollBy(0, this.getChildAt(position - firstPotion).top - this.dp2px(8f))
+                smoothScrollBy(0, this.getChildAt(position - firstPotion).top - this.dp2px(8))
             }
         }
     }

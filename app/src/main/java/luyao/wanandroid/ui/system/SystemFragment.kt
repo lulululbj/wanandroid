@@ -26,7 +26,7 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
     override fun initView() {
         systemRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(systemRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(systemRecycleView.dp2px(10)))
             adapter = systemAdapter
         }
 

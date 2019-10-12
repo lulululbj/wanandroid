@@ -89,7 +89,7 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
         }
         projectRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(projectRecycleView.dp2px(10f)))
+            addItemDecoration(SpaceItemDecoration(projectRecycleView.dp2px(10)))
             adapter = projectAdapter
         }
     }
@@ -138,7 +138,7 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    startKtxActivity<LoginActivity>()
+                    activity?.startKtxActivity<LoginActivity>()
                 }
             }
         }

@@ -3,16 +3,14 @@ package luyao.wanandroid.ui.login
 import android.app.ProgressDialog
 import android.view.View
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.ext.listener.textWatcher
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
-import luyao.wanandroid.App
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.NewMainActivity
-import luyao.wanandroid.util.Preference
 
 /**
  * Created by Lu
@@ -24,8 +22,8 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     private lateinit var userName: String
     private lateinit var passWord: String
-    private var isLogin by Preference(Preference.IS_LOGIN, false)
-    private var userJson by Preference(Preference.USER_GSON, "")
+//    private var isLogin by Preference(Preference.IS_LOGIN, false)
+//    private var userJson by Preference(Preference.USER_GSON, "")
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -38,18 +36,18 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
         mToolbar.setNavigationOnClickListener { onBackPressed() }
         login.setOnClickListener(onClickListener)
         register.setOnClickListener(onClickListener)
+        passwordEt.textWatcher { afterTextChanged { mViewModel.loginDataChanged(userNameEt.text.toString(), passwordEt.text.toString()) } }
+        userNameEt.textWatcher { afterTextChanged { mViewModel.loginDataChanged(userNameEt.text.toString(), passwordEt.text.toString()) } }
     }
 
     override fun startObserve() {
         mViewModel.apply {
-            mLoginUser.observe(this@LoginActivity, Observer {
-                isLogin = true
-                App.CURRENT_USER = it
-                userJson = Gson().toJson(it)
-                dismissProgressDialog()
-                startKtxActivity<NewMainActivity>()
-                finish()
-            })
+            //            mLoginUser.observe(this@LoginActivity, Observer {
+//                isLogin = true
+//                App.CURRENT_USER = it
+//                userJson = Gson().toJson(it)
+//
+//            })
 
             mRegisterUser.observe(this@LoginActivity, Observer {
                 it?.run {
@@ -57,9 +55,26 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
                 }
             })
 
-            errMsg.observe(this@LoginActivity, Observer {
-                dismissProgressDialog()
-                it?.run { toast(it) }
+//            errMsg.observe(this@LoginActivity, Observer {
+//                dismissProgressDialog()
+//                it?.run { toast(it) }
+//            })
+
+            uiState.observe(this@LoginActivity, Observer {
+                if (it.showProgress) showProgressDialog()
+
+                it.showSuccess?.let {
+                    dismissProgressDialog()
+                    startKtxActivity<NewMainActivity>()
+                    finish()
+                }
+
+                it.showError?.let { err ->
+                    dismissProgressDialog()
+                    toast(err)
+                }
+
+                login.isEnabled = it.enableLoginButton
             })
         }
     }
@@ -73,7 +88,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     private fun login() {
         if (checkInput()) {
-            showProgressDialog()
+//            showProgressDialog()
             mViewModel.login(userName, passWord)
         }
     }
@@ -99,14 +114,14 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
         return true
     }
 
-    var progressDialog : ProgressDialog? = null
+    var progressDialog: ProgressDialog? = null
     private fun showProgressDialog() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(this)
         progressDialog?.show()
     }
 
-    private fun dismissProgressDialog(){
+    private fun dismissProgressDialog() {
         progressDialog?.dismiss()
     }
 
