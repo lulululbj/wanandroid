@@ -59,6 +59,11 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         mainSearch.setOnClickListener { startKtxActivity<SearchActivity>() }
     }
 
+    override fun onResume() {
+        super.onResume()
+        navigationView?.menu?.findItem(R.id.nav_exit)?.isVisible = isLogin
+    }
+
     private fun initViewPager() {
         viewPager.offscreenPageLimit = titleList.size
         viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -92,7 +97,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
             positiveButton(text = "确认") {
                 isLogin = false
                 userJson = ""
-                navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
+                navigationView?.menu?.findItem(R.id.nav_exit)?.isVisible = isLogin
             }
             negativeButton(text = "取消")
         }

@@ -22,17 +22,8 @@ class LoginViewModel : BaseViewModel() {
     val uiState: LiveData<LoginUiModel>
         get() = _uiState
 
-    val mLoginUser: MutableLiveData<User> = MutableLiveData()
     val mRegisterUser: MutableLiveData<User> = MutableLiveData()
-    val errMsg: MutableLiveData<String> = MutableLiveData()
     private val repository by lazy { LoginRepository() }
-
-    //    fun login(userName: String, passWord: String) {
-//        launch {
-//            val response = withContext(Dispatchers.IO) { repository.login(userName, passWord) }
-//            executeResponse(response, { mLoginUser.value = response.data }, { errMsg.value = response.errorMsg })
-//        }
-//    }
 
     private fun isInputValid(userName: String, passWord: String) = userName.isNotBlank() && passWord.isNotBlank()
 
@@ -40,6 +31,7 @@ class LoginViewModel : BaseViewModel() {
         emitUiState(enableLoginButton = isInputValid(userName, passWord))
     }
 
+    // ViewModel 只处理视图逻辑，数据仓库 Repository 负责业务逻辑
     fun login(userName: String, passWord: String) {
         viewModelScope.launch(Dispatchers.Default) {
             if (userName.isBlank() || passWord.isBlank()) return@launch
@@ -59,9 +51,19 @@ class LoginViewModel : BaseViewModel() {
     }
 
     fun register(userName: String, passWord: String) {
-        launch {
-            val result = withContext(Dispatchers.IO) { repository.register(userName, passWord) }
-            executeResponse(result, { mRegisterUser.value = result.data }, { errMsg.value = result.errorMsg })
+        viewModelScope.launch(Dispatchers.Default) {
+            if (userName.isBlank() || passWord.isBlank()) return@launch
+
+            withContext(Dispatchers.Main) { showLoading() }
+
+            val result = repository.register(userName, passWord)
+            withContext(Dispatchers.Main){
+                if (result is Result.Success) {
+                    emitUiState(showSuccess = result.data,enableLoginButton = true)
+                } else if (result is Result.Error) {
+                    emitUiState(showError = result.exception.message,enableLoginButton = true)
+                }
+            }
         }
     }
 
@@ -74,9 +76,10 @@ class LoginViewModel : BaseViewModel() {
             showProgress: Boolean = false,
             showError: String? = null,
             showSuccess: User? = null,
-            enableLoginButton: Boolean = false
+            enableLoginButton: Boolean = false,
+            needLogin: Boolean = false
     ) {
-        val uiModel = LoginUiModel(showProgress, showError, showSuccess, enableLoginButton)
+        val uiModel = LoginUiModel(showProgress, showError, showSuccess, enableLoginButton,needLogin)
         _uiState.value = uiModel
     }
 
@@ -84,7 +87,8 @@ class LoginViewModel : BaseViewModel() {
             val showProgress: Boolean,
             val showError: String?,
             val showSuccess: User?,
-            val enableLoginButton: Boolean
+            val enableLoginButton: Boolean,
+            val needLogin:Boolean
     )
 
 

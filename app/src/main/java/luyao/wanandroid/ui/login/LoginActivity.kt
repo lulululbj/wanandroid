@@ -6,10 +6,12 @@ import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.core.util.contentView
 import luyao.util.ktx.ext.listener.textWatcher
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
+import luyao.wanandroid.databinding.ActivityLoginBinding
 import luyao.wanandroid.ui.main.NewMainActivity
 
 /**
@@ -18,18 +20,18 @@ import luyao.wanandroid.ui.main.NewMainActivity
  */
 class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
-    override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
+    private val binding by contentView<LoginActivity, ActivityLoginBinding>(R.layout.activity_login)
 
-    private lateinit var userName: String
-    private lateinit var passWord: String
-//    private var isLogin by Preference(Preference.IS_LOGIN, false)
-//    private var userJson by Preference(Preference.USER_GSON, "")
+    override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
 
     override fun getLayoutResId() = R.layout.activity_login
 
     override fun initView() {
         mToolbar.setTitle(R.string.login)
         mToolbar.setNavigationIcon(R.drawable.arrow_back)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = mViewModel
     }
 
     override fun initData() {
@@ -42,23 +44,12 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     override fun startObserve() {
         mViewModel.apply {
-            //            mLoginUser.observe(this@LoginActivity, Observer {
-//                isLogin = true
-//                App.CURRENT_USER = it
-//                userJson = Gson().toJson(it)
-//
-//            })
 
             mRegisterUser.observe(this@LoginActivity, Observer {
                 it?.run {
                     mViewModel.login(username, password)
                 }
             })
-
-//            errMsg.observe(this@LoginActivity, Observer {
-//                dismissProgressDialog()
-//                it?.run { toast(it) }
-//            })
 
             uiState.observe(this@LoginActivity, Observer {
                 if (it.showProgress) showProgressDialog()
@@ -73,8 +64,6 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
                     dismissProgressDialog()
                     toast(err)
                 }
-
-                login.isEnabled = it.enableLoginButton
             })
         }
     }
@@ -87,34 +76,14 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     }
 
     private fun login() {
-        if (checkInput()) {
-//            showProgressDialog()
-            mViewModel.login(userName, passWord)
-        }
+        mViewModel.login(userNameEt.text.toString(), passwordEt.text.toString())
     }
 
     private fun register() {
-        if (checkInput()) {
-            showProgressDialog()
-            mViewModel.register(userName, passWord)
-        }
+        mViewModel.register(userNameEt.text.toString(), passwordEt.text.toString())
     }
 
-    private fun checkInput(): Boolean {
-        userName = userNameLayout.editText?.text.toString()
-        passWord = pswLayout.editText?.text.toString()
-        if (userName.isEmpty()) {
-            userNameLayout.error = getString(R.string.please_input_username)
-            return false
-        }
-        if (passWord.isEmpty()) {
-            pswLayout.error = getString(R.string.please_input_psw)
-            return false
-        }
-        return true
-    }
-
-    var progressDialog: ProgressDialog? = null
+    private var progressDialog: ProgressDialog? = null
     private fun showProgressDialog() {
         if (progressDialog == null)
             progressDialog = ProgressDialog(this)

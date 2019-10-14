@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -24,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled true
     }
 }
 
@@ -51,8 +54,7 @@ dependencies {
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-beta01'
-//    implementation project(':base')
-    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha01'
-//    implementation project(path: ':ktx')
+//    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha02'
+    implementation project(path: ':ktx')
 }
 

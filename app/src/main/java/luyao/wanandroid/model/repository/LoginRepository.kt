@@ -26,6 +26,7 @@ class LoginRepository : BaseRepository() {
                 errorMessage = "登录失败!")
     }
 
+    // TODO Move into DataSource Layer ?
     private suspend fun requestLogin(userName: String, passWord: String): Result<User> {
         val response = WanRetrofitClient.service.login(userName, passWord)
         return if (response.errorCode != -1) {
@@ -39,8 +40,18 @@ class LoginRepository : BaseRepository() {
         }
     }
 
-    suspend fun register(userName: String, passWord: String): WanResponse<User> {
-        return apiCall { WanRetrofitClient.service.register(userName, passWord, passWord) }
+    suspend fun register(userName: String, passWord: String): Result<User> {
+//        return apiCall { WanRetrofitClient.service.register(userName, passWord, passWord) }
+            return safeApiCall(call = {requestRegister(userName, passWord)},errorMessage = "注册失败")
+    }
+
+    private suspend fun requestRegister(userName: String, passWord: String): Result<User> {
+        val response = WanRetrofitClient.service.register(userName, passWord, passWord)
+        return if (response.errorCode != -1) {
+            requestLogin(userName, passWord)
+        } else {
+            Result.Error(IOException(response.errorMsg))
+        }
     }
 
 }
