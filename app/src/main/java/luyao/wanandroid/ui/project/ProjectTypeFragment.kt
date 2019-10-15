@@ -62,7 +62,7 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
         refresh()
     }
 
-    private fun refresh() {
+    fun refresh() {
         projectAdapter.setEnableLoadMore(false)
         projectRefreshLayout.isRefreshing = true
 

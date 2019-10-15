@@ -106,7 +106,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
         }
     }
 
-    private fun refresh() {
+    fun refresh() {
         homeArticleAdapter.setEnableLoadMore(false)
         homeRefreshLayout.isRefreshing = true
         currentPage = 0

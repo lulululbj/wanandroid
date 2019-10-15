@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_new_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import luyao.util.ktx.base.BaseActivity
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.about.AboutActivity
 import luyao.wanandroid.ui.collect.MyCollectActivity
@@ -52,16 +55,10 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         initViewPager()
         mainToolBar.setNavigationOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
         navigationView.setNavigationItemSelectedListener(this)
-        navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
     }
 
     override fun initData() {
         mainSearch.setOnClickListener { startKtxActivity<SearchActivity>() }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        navigationView?.menu?.findItem(R.id.nav_exit)?.isVisible = isLogin
     }
 
     private fun initViewPager() {
@@ -95,12 +92,21 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
             title = "退出"
             message(text = "是否确认退出登录？")
             positiveButton(text = "确认") {
+                launch(Dispatchers.Default) {
+                    WanRetrofitClient.service.logOut()
+                }
                 isLogin = false
                 userJson = ""
-                navigationView?.menu?.findItem(R.id.nav_exit)?.isVisible = isLogin
+                refreshView()
             }
             negativeButton(text = "取消")
         }
+    }
+
+    private fun refreshView(){
+        navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
+        homeFragment.refresh()
+        lastedProjectFragment.refresh()
     }
 
     private fun switchAbout() {

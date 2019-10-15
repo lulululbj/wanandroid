@@ -16,7 +16,7 @@ import java.io.IOException
  */
 class LoginRepository : BaseRepository() {
 
-    private var isLogin by Preference(Preference.IS_LOGIN, false)
+     var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
 
 

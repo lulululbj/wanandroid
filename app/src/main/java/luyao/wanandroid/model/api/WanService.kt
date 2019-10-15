@@ -2,6 +2,7 @@ package luyao.wanandroid.model.api
 
 import luyao.wanandroid.model.bean.*
 import retrofit2.http.*
+import java.util.*
 
 
 /**
@@ -57,6 +58,9 @@ interface WanService {
     @FormUrlEncoded
     @POST("/user/login")
     suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): WanResponse<User>
+
+    @GET("/user/logout/json")
+    suspend fun logOut() : WanResponse<Any>
 
     @FormUrlEncoded
     @POST("/user/register")
