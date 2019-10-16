@@ -1,9 +1,9 @@
 import android.app.Activity
-import android.os.Build
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
+import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.WanResponse
 import retrofit2.HttpException
 
@@ -31,13 +31,5 @@ fun Activity.onNetError(e: Throwable, func: (e: Throwable) -> Unit) {
     }
 }
 
-fun fromM() = fromSpecificVersion(Build.VERSION_CODES.M)
-fun beforeM() = beforeSpecificVersion(Build.VERSION_CODES.M)
-fun fromN() = fromSpecificVersion(Build.VERSION_CODES.N)
-fun beforeN() = beforeSpecificVersion(Build.VERSION_CODES.N)
-fun fromO() = fromSpecificVersion(Build.VERSION_CODES.O)
-fun beforeO() = beforeSpecificVersion(Build.VERSION_CODES.O)
-fun fromP() = fromSpecificVersion(Build.VERSION_CODES.P)
-fun beforeP() = beforeSpecificVersion(Build.VERSION_CODES.P)
-fun fromSpecificVersion(version: Int): Boolean = Build.VERSION.SDK_INT >= version
-fun beforeSpecificVersion(version: Int): Boolean = Build.VERSION.SDK_INT < version
+fun WanResponse<Any>.isSuccess() :Boolean = this.errorCode == 0
+

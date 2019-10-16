@@ -2,7 +2,6 @@ package luyao.wanandroid.model.api
 
 import luyao.wanandroid.model.bean.*
 import retrofit2.http.*
-import java.util.*
 
 
 /**
@@ -60,7 +59,7 @@ interface WanService {
     suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): WanResponse<User>
 
     @GET("/user/logout/json")
-    suspend fun logOut() : WanResponse<Any>
+    suspend fun logOut(): WanResponse<Any>
 
     @FormUrlEncoded
     @POST("/user/register")
@@ -75,5 +74,11 @@ interface WanService {
     @POST("/lg/uncollect_originId/{id}/json")
     suspend fun cancelCollectArticle(@Path("id") id: Int): WanResponse<ArticleList>
 
+    @GET("/user_article/list/{page}/json")
+    suspend fun getSquareArticleList(@Path("page") page: Int): WanResponse<ArticleList>
+
+    @FormUrlEncoded
+    @POST("/lg/user_article/add/json")
+    suspend fun shareArticle(@Field("title") title: String, @Field("link") url: String): WanResponse<String>
 
 }

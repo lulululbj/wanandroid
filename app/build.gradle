@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
+    implementation 'com.afollestad.material-dialogs:input:3.1.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-beta01'
 //    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha02'
     implementation project(path: ':ktx')

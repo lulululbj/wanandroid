@@ -22,6 +22,7 @@ import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectActivity
 import luyao.wanandroid.ui.project.ProjectTypeFragment
 import luyao.wanandroid.ui.search.SearchActivity
+import luyao.wanandroid.ui.square.SquareFragment
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
 
@@ -34,9 +35,10 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
 
-    private val titleList = arrayOf("首页", "最新项目", "体系", "导航")
+    private val titleList = arrayOf("首页", "广场","最新项目", "体系", "导航")
     private val fragmentList = arrayListOf<Fragment>()
     private val homeFragment by lazy { HomeFragment() } // 首页
+    private val squareFragment by lazy { SquareFragment() } // 广场
     private val lastedProjectFragment by lazy { ProjectTypeFragment.newInstance(0, true) } // 最新项目
     private val systemFragment by lazy { SystemFragment() } // 体系
     private val navigationFragment by lazy { NavigationFragment() } // 导航
@@ -46,6 +48,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
     init {
         fragmentList.add(homeFragment)
+        fragmentList.add(squareFragment)
         fragmentList.add(lastedProjectFragment)
         fragmentList.add(systemFragment)
         fragmentList.add(navigationFragment)
@@ -55,6 +58,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         initViewPager()
         mainToolBar.setNavigationOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
         navigationView.setNavigationItemSelectedListener(this)
+        navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
     }
 
     override fun initData() {

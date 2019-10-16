@@ -3,7 +3,7 @@ package luyao.wanandroid.adapter
 import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import fromN
+import luyao.util.ktx.ext.fromN
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
 

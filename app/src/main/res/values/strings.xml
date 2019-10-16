@@ -40,4 +40,8 @@
     <string name="blog">公众号</string>
     <string name="search_article">\u00A0\u00A0搜索文章</string>
     <string name="net_error">网络异常 !</string>
+    <string name="please_input_title">请输入标题</string>
+    <string name="please_input_url">请输入链接</string>
+    <string name="share">分享</string>
+    <string name="share_article">分享文章</string>
 </resources>

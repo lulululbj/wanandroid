@@ -34,6 +34,9 @@
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity android:name=".ui.about.AboutActivity" />
         <activity android:name=".ui.project.ProjectActivity" />
+        <activity android:name=".ui.share.ShareActivity"
+            android:theme="@style/Theme_ShareActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

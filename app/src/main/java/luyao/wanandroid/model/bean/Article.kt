@@ -20,6 +20,7 @@ data class Article( val id: Int,
                     val desc: String,
                     val visible: Int,
                     val niceDate: String,
+                    val niceShareDate: String,
                     val courseId: Int,
                     var collect: Boolean,
                     val apkLink:String,
@@ -27,4 +28,12 @@ data class Article( val id: Int,
                     val superChapterId:Int,
                     val superChapterName:String?,
                     val type:Int,
-                    val fresh:Boolean):Serializable
+                    val fresh:Boolean,
+                    val audit:Int,
+                    val prefix:String,
+                    val selfVisible:Int,
+                    val shareDate:Long,
+                    val shareUser:String,
+                    val tags:Any, // Not sure
+                    val userId:Int
+                    ):Serializable
