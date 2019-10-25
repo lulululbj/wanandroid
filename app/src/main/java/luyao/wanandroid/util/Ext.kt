@@ -1,9 +1,11 @@
+package luyao.wanandroid.util
+
 import android.app.Activity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
-import luyao.wanandroid.core.Result
+import luyao.wanandroid.model.bean.SystemChild
 import luyao.wanandroid.model.bean.WanResponse
 import retrofit2.HttpException
 
@@ -31,5 +33,8 @@ fun Activity.onNetError(e: Throwable, func: (e: Throwable) -> Unit) {
     }
 }
 
-fun WanResponse<Any>.isSuccess() :Boolean = this.errorCode == 0
+fun WanResponse<Any>.isSuccess(): Boolean = this.errorCode == 0
 
+fun transFormSystemChild(children: List<SystemChild>): String {
+    return children.joinToString("     ", transform = { child -> child.name })
+}

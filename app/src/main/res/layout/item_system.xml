@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+        <import type="luyao.wanandroid.util.ExtKt"/>
+        <variable
+            name="systemParent"
+            type="luyao.wanandroid.model.bean.SystemParent" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/systemParent"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            tools:text="Parent" />
+            android:gravity="center_vertical"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/systemChild"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/systemParent"
-            android:textColor="#323232"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            tools:text="Child" />
+            <TextView
+                android:id="@+id/systemParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="Parent"
+                android:text="@{systemParent.name}"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/arrow_back" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/systemChild"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/systemParent"
+                android:textColor="#323232"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                tools:text="Child"
+                android:text="@{ExtKt.transFormSystemChild(systemParent.children)}"/>
 
-</androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/arrow_back" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -17,7 +17,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import onNetError
+import luyao.wanandroid.util.onNetError
 
 /**
  * Created by Lu

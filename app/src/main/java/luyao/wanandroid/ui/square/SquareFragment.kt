@@ -2,15 +2,14 @@ package luyao.wanandroid.ui.square
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.input.input
 import kotlinx.android.synthetic.main.fragment_square.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.wanandroid.BR
 import luyao.wanandroid.R
-import luyao.wanandroid.adapter.SquareAdapter
+import luyao.wanandroid.adapter.BaseBindAdapter
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.share.ShareActivity
@@ -21,9 +20,9 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2019/10/15 10:18
  */
-class SquareFragment : BaseVMFragment<SquareViewModel>() {
+class SquareFragment : BaseVMFragment<SquareViewModel>(useBinding = true) {
 
-    private val squareAdapter by lazy { SquareAdapter() }
+    private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square, BR.article) }
 
     override fun providerVMClass() = SquareViewModel::class.java
 
@@ -33,7 +32,6 @@ class SquareFragment : BaseVMFragment<SquareViewModel>() {
     override fun initView() {
         initRecycleView()
         squareRefreshLayout.setOnRefreshListener { refresh() }
-        addFab.setOnClickListener { mViewModel.checkLogin() }
     }
 
     override fun initData() {
@@ -81,7 +79,7 @@ class SquareFragment : BaseVMFragment<SquareViewModel>() {
 
             if (it.showEnd) squareAdapter.loadMoreEnd()
 
-            it.needLogin?.let {needLogin ->
+            it.needLogin?.let { needLogin ->
                 if (needLogin) startKtxActivity<LoginActivity>()
                 else startKtxActivity<ShareActivity>()
             }

@@ -3,7 +3,7 @@ package luyao.wanandroid.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import executeResponse
+import luyao.wanandroid.util.executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
@@ -30,7 +30,7 @@ class HomeViewModel : BaseViewModel() {
 //    fun getBanners() {
 //        launch {
 //            val result = withContext(Dispatchers.IO) { repository.getBanners() }
-//            executeResponse(result, { mBanners.value = result.data }, {})
+//            luyao.wanandroid.util.executeResponse(result, { mBanners.value = result.data }, {})
 //        }
 //    }
 

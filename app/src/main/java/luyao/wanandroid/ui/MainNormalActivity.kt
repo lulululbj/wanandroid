@@ -1,6 +1,6 @@
 //package luyao.wanandroid.ui
 //
-//import TOOL_URL
+//import luyao.wanandroid.util.TOOL_URL
 //import android.content.Intent
 //import android.view.Menu
 //import android.view.MenuItem
@@ -137,7 +137,7 @@
 //
 //    private fun switchToTool() {
 //        Intent(this, BrowserNormalActivity::class.java).run {
-//            putExtra(BrowserNormalActivity.URL, TOOL_URL)
+//            putExtra(BrowserNormalActivity.URL, luyao.wanandroid.util.TOOL_URL)
 //            startActivity(this)
 //        }
 //    }

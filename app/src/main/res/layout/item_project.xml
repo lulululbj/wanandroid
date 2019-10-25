@@ -1,74 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <import type="luyao.wanandroid.R" alias="appR" />
+        <variable
+            name="article"
+            type="luyao.wanandroid.model.bean.Article" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/projectImg"
-            android:layout_width="120dp"
-            android:layout_height="200dp"
-            android:src="@mipmap/ic_launcher_round" />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
-            <TextView
-                android:id="@+id/projectName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                tools:text="音乐播放器" />
-
-            <TextView
-                android:id="@+id/projectDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/projectName"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/gray"
-                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/projectImg"
+                android:layout_width="120dp"
+                android:layout_height="200dp"
+                app:imageUrl="@{article.envelopePic}"
+                imagePlaceholder="@{appR.mipmap.ic_launcher_round}" />
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/projectTime"
+                    android:id="@+id/projectName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="音乐播放器"
+                    app:htmlText="@{article.title}"/>
 
                 <TextView
-                    android:id="@+id/projectAuthor"
+                    android:id="@+id/projectDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/projectTime"
+                    android:layout_below="@id/projectName"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:text="@{article.desc}"/>
 
-                <ImageView
-                    android:id="@+id/articleStar"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/timeline_like_normal" />
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/projectTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:text="@{article.niceDate}"/>
+
+                    <TextView
+                        android:id="@+id/projectAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/projectTime"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:text="@{article.author}"/>
+
+                    <ImageView
+                        android:id="@+id/articleStar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:clickable="true"
+                        app:articleStar="@{article.collect}" />
+                </RelativeLayout>
+
+
             </RelativeLayout>
-
-
-        </RelativeLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

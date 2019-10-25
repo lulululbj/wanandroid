@@ -1,6 +1,5 @@
 package luyao.wanandroid.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView

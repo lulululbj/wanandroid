@@ -7,19 +7,22 @@ import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.wanandroid.BR
 import luyao.wanandroid.R
-import luyao.wanandroid.adapter.SystemAdapter
+import luyao.wanandroid.adapter.BaseBindAdapter
+import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.view.SpaceItemDecoration
-import onNetError
+import luyao.wanandroid.util.onNetError
 
 /**
+ * 体系
  * Created by Lu
  * on 2018/3/26 21:11
  */
 class SystemFragment : BaseVMFragment<SystemViewModel>() {
 
     override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
-    private val systemAdapter by lazy { SystemAdapter() }
+    private val systemAdapter by lazy { BaseBindAdapter<SystemParent>(R.layout.item_system, BR.systemParent) }
 
     override fun getLayoutResId() = R.layout.fragment_system
 

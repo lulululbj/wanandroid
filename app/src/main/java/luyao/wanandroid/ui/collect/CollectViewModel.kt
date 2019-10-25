@@ -1,7 +1,7 @@
 package luyao.wanandroid.ui.collect
 
 import androidx.lifecycle.MutableLiveData
-import executeResponse
+import luyao.wanandroid.util.executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
