@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.fragment_square.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
@@ -20,11 +21,11 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by luyao
  * on 2019/10/15 10:18
  */
-class SquareFragment : BaseVMFragment<SquareViewModel>(useBinding = true) {
+class SquareFragment : BaseVMFragment<ArticleViewModel>() {
 
     private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square, BR.article) }
 
-    override fun providerVMClass() = SquareViewModel::class.java
+    override fun providerVMClass() = ArticleViewModel::class.java
 
     override fun getLayoutResId() = R.layout.fragment_square
 
@@ -35,7 +36,7 @@ class SquareFragment : BaseVMFragment<SquareViewModel>(useBinding = true) {
     }
 
     override fun initData() {
-        loadMore()
+        refresh()
     }
 
     private fun initRecycleView() {
@@ -59,7 +60,7 @@ class SquareFragment : BaseVMFragment<SquareViewModel>(useBinding = true) {
 
     fun refresh() {
         squareAdapter.setEnableLoadMore(false)
-        mViewModel.getSquareArticleList(true);
+        mViewModel.getSquareArticleList(true)
     }
 
     override fun startObserve() {
@@ -83,6 +84,10 @@ class SquareFragment : BaseVMFragment<SquareViewModel>(useBinding = true) {
                 if (needLogin) startKtxActivity<LoginActivity>()
                 else startKtxActivity<ShareActivity>()
             }
+
+           it.showError?.let { message ->
+               activity?.toast(if (message.isBlank()) "网络异常" else message)
+           }
 
         })
     }

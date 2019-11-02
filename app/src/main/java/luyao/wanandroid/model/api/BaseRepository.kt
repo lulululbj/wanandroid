@@ -1,5 +1,7 @@
 package luyao.wanandroid.model.api
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.WanResponse
 import java.io.IOException
@@ -20,6 +22,19 @@ open class BaseRepository {
         } catch (e: Exception) {
             // An exception was thrown when calling the API so we're converting this to an IOException
             Result.Error(IOException(errorMessage, e))
+        }
+    }
+
+    suspend fun <T : Any> executeResponse(response: WanResponse<T>, successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+                                          errorBlock: (suspend CoroutineScope.() -> Unit)? = null): Result<T> {
+        return coroutineScope {
+            if (response.errorCode == -1) {
+                errorBlock?.let { it() }
+                Result.Error(IOException(response.errorMsg))
+            } else {
+                successBlock?.let { it() }
+                Result.Success(response.data)
+            }
         }
     }
 

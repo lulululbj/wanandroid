@@ -19,7 +19,7 @@ const val GITHUB_PAGE = "https://github.com/lulululbj/wanandroid"
 const val ISSUE_URL = "https://github.com/lulululbj/wanandroid/issues"
 
 suspend fun executeResponse(response: WanResponse<Any>, successBlock: suspend CoroutineScope.() -> Unit,
-                            errorBlock: suspend CoroutineScope.() -> Unit) {
+                            errorBlock: suspend CoroutineScope.() -> Unit)  {
     coroutineScope {
         if (response.errorCode == -1) errorBlock()
         else successBlock()

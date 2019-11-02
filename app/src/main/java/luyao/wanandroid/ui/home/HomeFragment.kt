@@ -1,6 +1,7 @@
 package luyao.wanandroid.ui.home
 
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -9,53 +10,55 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import luyao.wanandroid.util.onNetError
 
 
 /**
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseVMFragment<HomeViewModel>() {
+class HomeFragment : BaseVMFragment<ArticleViewModel>() {
 
-    override fun providerVMClass(): Class<HomeViewModel>? = HomeViewModel::class.java
+    override fun providerVMClass(): Class<ArticleViewModel>? = ArticleViewModel::class.java
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
     private val bannerTitles = mutableListOf<String>()
     private val bannerUrls = mutableListOf<String>()
-    private var currentPage = 0
     private val banner by lazy { com.youth.banner.Banner(activity) }
 
     override fun getLayoutResId() = R.layout.fragment_home
 
     override fun initView() {
+
+        initRecycleView()
+        initBanner()
+
+        homeRefreshLayout.run {
+            setOnRefreshListener { refresh() }
+        }
+    }
+
+    override fun initData() {
+        refresh()
+    }
+
+    private fun initRecycleView(){
         homeRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10)))
         }
-
-        initBanner()
-        initAdapter()
-
-        homeRefreshLayout.run {
-            setOnRefreshListener { refresh() }
-            isRefreshing = true
-        }
-        refresh()
-    }
-
-    private fun initAdapter() {
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
@@ -87,13 +90,13 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     }
 
     private fun loadMore() {
-        mViewModel.getArticleList(currentPage)
+        mViewModel.getHomeArticleList(false)
     }
 
     private fun initBanner() {
 
         banner.run {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
+            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
             setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->
@@ -106,13 +109,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
 
     fun refresh() {
         homeArticleAdapter.setEnableLoadMore(false)
-        homeRefreshLayout.isRefreshing = true
-        currentPage = 0
-        mViewModel.getArticleList(currentPage)
-    }
-
-    override fun initData() {
-//        mViewModel.getBanners()
+        mViewModel.getHomeArticleList(true)
     }
 
     override fun startObserve() {
@@ -121,8 +118,17 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
             mBanners.observe(this@HomeFragment, Observer { it ->
                 it?.let { setBanner(it) }
             })
-            mArticleList.observe(this@HomeFragment, Observer { it ->
-                it?.let { setArticles(it) }
+
+            uiState.observe(this@HomeFragment, Observer {
+                homeRefreshLayout.isRefreshing = it.showLoading
+
+                it.showSuccess?.let { articleList -> setArticles(articleList) }
+
+                if (it.showEnd) homeArticleAdapter.loadMoreEnd()
+
+                it.showError?.let { message ->
+                    activity?.toast(if (message.isBlank()) "网络异常" else message)
+                }
             })
         }
     }
@@ -134,8 +140,6 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
             setEnableLoadMore(true)
             loadMoreComplete()
         }
-        homeRefreshLayout.isRefreshing = false
-        currentPage++
     }
 
     private fun setBanner(bannerList: List<Banner>) {
@@ -161,11 +165,11 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
         banner.stopAutoPlay()
     }
 
-    override fun onError(e: Throwable) {
-        super.onError(e)
-
-        activity?.onNetError(e){
-            homeRefreshLayout.isRefreshing = false
-        }
-    }
+//    override fun onError(e: Throwable) {
+//        super.onError(e)
+//
+//        activity?.onNetError(e){
+//            homeRefreshLayout.isRefreshing = false
+//        }
+//    }
 }
