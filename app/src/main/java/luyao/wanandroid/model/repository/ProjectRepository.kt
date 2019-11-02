@@ -1,5 +1,6 @@
 package luyao.wanandroid.model.repository
 
+import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
@@ -12,9 +13,12 @@ import luyao.wanandroid.model.bean.WanResponse
  */
 class ProjectRepository : BaseRepository() {
 
-    suspend fun getProjectTypeDetailList(page: Int, cid: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getProjectTypeDetail(page, cid) }
+    suspend fun getProjectTypeDetailList(page: Int, cid: Int): Result<ArticleList> {
+        return safeApiCall(call = {requestProjectTypeDetailList(page, cid)},errorMessage = "发生未知错误")
     }
+
+    private suspend fun requestProjectTypeDetailList(page: Int, cid: Int) =
+            executeResponse(WanRetrofitClient.service.getProjectTypeDetail(page, cid))
 
     suspend fun getProjectTypeList(): WanResponse<List<SystemParent>> {
         return apiCall { WanRetrofitClient.service.getProjectType() }
@@ -28,9 +32,12 @@ class ProjectRepository : BaseRepository() {
         return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
     }
 
-    suspend fun getLastedProject(page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getLastedProject(page) }
+    suspend fun getLastedProject(page: Int): Result<ArticleList> {
+        return safeApiCall(call = {requestLastedProject(page)},errorMessage = "发生未知错误")
     }
+
+    private suspend fun requestLastedProject(page: Int):Result<ArticleList> =
+            executeResponse(WanRetrofitClient.service.getLastedProject(page))
 
     suspend fun getBlog(): WanResponse<List<SystemParent>> {
         return apiCall { WanRetrofitClient.service.getBlogType() }

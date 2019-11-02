@@ -17,10 +17,6 @@ class HomeRepository : BaseRepository() {
         return apiCall { WanRetrofitClient.service.getBanner() }
     }
 
-    private suspend fun requestBanner() {
-        val response = WanRetrofitClient.service.getBanner()
-    }
-
     suspend fun getArticleList(page: Int): Result<ArticleList> {
         return safeApiCall(call = { requestArticleList(page) }, errorMessage = "")
     }

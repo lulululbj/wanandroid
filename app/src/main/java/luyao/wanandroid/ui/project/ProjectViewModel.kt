@@ -1,8 +1,10 @@
 package luyao.wanandroid.ui.project
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import luyao.wanandroid.util.executeResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
@@ -19,12 +21,12 @@ class ProjectViewModel : BaseViewModel() {
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
-    fun getProjectTypeDetailList(page: Int, cid: Int) {
-        launch {
-            val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
-            executeResponse(result, { mArticleList.value = result.data }, {})
-        }
-    }
+//    fun getProjectTypeDetailList(page: Int, cid: Int) {
+//        launch {
+//            val result = withContext(Dispatchers.IO) { repository.getProjectTypeDetailList(page, cid) }
+//            executeResponse(result, { mArticleList.value = result.data }, {})
+//        }
+//    }
 
     fun getProjectTypeList() {
         launch {
@@ -42,12 +44,12 @@ class ProjectViewModel : BaseViewModel() {
         }
     }
 
-    fun getLastedProject(page: Int) {
-        launch {
-            val result = withContext(Dispatchers.IO) { repository.getLastedProject(page) }
-            executeResponse(result, { mArticleList.value = result.data }, {})
-        }
-    }
+//    fun getLastedProject(page: Int) {
+//        viewModelScope.launch(Dispatchers.Main) {
+//            val result = withContext(Dispatchers.IO) { repository.getLastedProject(page) }
+//            executeResponse(result, { mArticleList.value = result.data }, {})
+//        }
+//    }
 
     fun getBlogType() {
         launch {

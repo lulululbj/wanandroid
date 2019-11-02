@@ -9,10 +9,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.core.Result
-import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.model.repository.HomeRepository
+import luyao.wanandroid.model.repository.ProjectRepository
 import luyao.wanandroid.model.repository.SquareRepository
 import luyao.wanandroid.util.Preference
 
@@ -23,10 +23,13 @@ import luyao.wanandroid.util.Preference
 class ArticleViewModel : BaseViewModel() {
 
     sealed class ArticleType {
-        object Home : ArticleType()
-        object Square : ArticleType()
+        object Home : ArticleType()                 // 首页
+        object Square : ArticleType()               // 广场
+        object LatestProject : ArticleType()        // 最新项目
+        object ProjectDetailList : ArticleType()    // 项目列表
     }
 
+    private var cid = 0
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private val _uiState = MutableLiveData<ArticleUiModel>()
     val uiState: LiveData<ArticleUiModel>
@@ -34,6 +37,8 @@ class ArticleViewModel : BaseViewModel() {
 
     private val squareRepository by lazy { SquareRepository() }
     private val homeRepository by lazy { HomeRepository() }
+    private val projectRepository by lazy { ProjectRepository() }
+
 
     private var currentPage = 0
 
@@ -45,8 +50,13 @@ class ArticleViewModel : BaseViewModel() {
         }
     }
 
-    fun getHomeArticleList(isRefresh: Boolean=false) = getArticleList(ArticleType.Home,isRefresh)
-    fun getSquareArticleList(isRefresh: Boolean=false) = getArticleList(ArticleType.Square,isRefresh)
+    fun getHomeArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Home, isRefresh)
+    fun getSquareArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Square, isRefresh)
+    fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject,isRefresh)
+    fun getProjectTypeDetailList(isRefresh: Boolean=false, cid: Int) {
+        this.cid =cid
+        getArticleList(ArticleType.ProjectDetailList,isRefresh)
+    }
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
@@ -61,11 +71,13 @@ class ArticleViewModel : BaseViewModel() {
         viewModelScope.launch(Dispatchers.Default) {
 
             withContext(Dispatchers.Main) { emitArticleUiState(true) }
-            if (isRefresh) currentPage = 0
+            if (isRefresh) currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
 
             val result = when (articleType) {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
+                ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
+                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(currentPage,cid)
             }
 
             withContext(Dispatchers.Main) {

@@ -16,24 +16,23 @@ import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import luyao.wanandroid.util.onNetError
 
 /**
  * 最新项目/项目分类
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
+class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-    override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
+    override fun providerVMClass(): Class<ArticleViewModel>? = ArticleViewModel::class.java
     private val cid by lazy { arguments?.getInt(CID) }
     private val isLasted by lazy { arguments?.getBoolean(LASTED) } // 区分是最新项目 还是项目分类
-    private var currentPage = 0
-    private val projectAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_project,BR.article) }
+    private val projectAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_project, BR.article) }
 
     override fun getLayoutResId() = R.layout.fragment_projecttype
 
@@ -53,27 +52,22 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
 
     override fun initView() {
         initRecycleView()
+        projectRefreshLayout.setOnRefreshListener { refresh() }
+    }
 
-
-        projectRefreshLayout.run {
-            isRefreshing = true
-            setOnRefreshListener { refresh() }
-        }
+    override fun initData() {
         refresh()
     }
 
     fun refresh() {
         projectAdapter.setEnableLoadMore(false)
-        projectRefreshLayout.isRefreshing = true
 
         isLasted?.run {
             if (this) {
-                currentPage = 0
-                mViewModel.getLastedProject(currentPage);
+                mViewModel.getLatestProjectList(true)
             } else {
-                currentPage = 1
                 cid?.let {
-                    mViewModel.getProjectTypeDetailList(currentPage, it)
+                    mViewModel.getProjectTypeDetailList(true, it)
                 }
             }
         }
@@ -97,24 +91,17 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
     private fun loadMore() {
         isLasted?.run {
             if (this)
-                mViewModel.getLastedProject(currentPage)
+                mViewModel.getLatestProjectList(false)
             else
                 cid?.let {
-                    mViewModel.getProjectTypeDetailList(currentPage, it)
+                    mViewModel.getProjectTypeDetailList(false, it)
                 }
         }
     }
 
-    override fun initData() {
-    }
-
-
-    private fun getProjectTypeDetailList(articleList: ArticleList) {
+    private fun setProjectTypeDetailList(articleList: ArticleList) {
         projectAdapter.run {
-            if (articleList.offset >= articleList.total) {
-                loadMoreEnd()
-                return
-            }
+
             onItemChildClickListener = this@ProjectTypeFragment.onItemChildClickListener
 
             if (projectRefreshLayout.isRefreshing) replaceData(articleList.datas)
@@ -122,8 +109,6 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
             setEnableLoadMore(true)
             loadMoreComplete()
         }
-        projectRefreshLayout.isRefreshing = false
-        currentPage++
     }
 
     private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
@@ -146,18 +131,13 @@ class ProjectTypeFragment : BaseVMFragment<ProjectViewModel>() {
 
     override fun startObserve() {
         super.startObserve()
-        mViewModel.run {
-            mArticleList.observe(this@ProjectTypeFragment, Observer {
-                it?.run { getProjectTypeDetailList(it) }
-            })
-        }
+        mViewModel.uiState.observe(this@ProjectTypeFragment, Observer {
+            projectRefreshLayout.isRefreshing = it.showLoading
+
+            it.showSuccess?.let { articleList -> setProjectTypeDetailList(articleList) }
+
+            if (it.showEnd) projectAdapter.loadMoreEnd()
+        })
     }
 
-    override fun onError(e: Throwable) {
-        super.onError(e)
-
-        activity?.onNetError(e){
-            projectRefreshLayout.isRefreshing = false
-        }
-    }
 }
