@@ -15,6 +15,7 @@ import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 
 /**
+ * 导航页面
  * Created by Lu
  * on 2018/3/28 21:26
  */
@@ -76,18 +77,9 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     override fun startObserve() {
         super.startObserve()
         mViewModel.run {
-            mNavigationList.observe(this@NavigationFragment, Observer {
+            navigationListState.observe(this@NavigationFragment, Observer {
                 it?.run { getNavigation(it) }
             })
         }
     }
-
-    override fun onError(e: Throwable) {
-        super.onError(e)
-
-        activity?.onNetError(e) {
-
-        }
-    }
-
 }

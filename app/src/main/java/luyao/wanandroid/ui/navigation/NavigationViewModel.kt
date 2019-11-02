@@ -1,10 +1,14 @@
 package luyao.wanandroid.ui.navigation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import luyao.wanandroid.util.executeResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
+import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.model.repository.NavigationRepository
 
@@ -15,12 +19,15 @@ import luyao.wanandroid.model.repository.NavigationRepository
 class NavigationViewModel : BaseViewModel() {
 
     private val repository by lazy { NavigationRepository() }
-    val mNavigationList: MutableLiveData<List<Navigation>> = MutableLiveData()
+    private val _navigationList: MutableLiveData<List<Navigation>> = MutableLiveData()
+    val navigationListState : LiveData<List<Navigation>>
+        get() = _navigationList
 
     fun getNavigation() {
-        launch {
+        viewModelScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) { repository.getNavigation() }
-            executeResponse(result, { mNavigationList.value = result.data }, {})
+            if (result is Result.Success)
+                _navigationList.value = result.data
         }
     }
 }

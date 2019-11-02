@@ -1,9 +1,9 @@
 package luyao.wanandroid.model.repository
 
+import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.Navigation
-import luyao.wanandroid.model.bean.WanResponse
 
 /**
  * Created by luyao
@@ -12,7 +12,11 @@ import luyao.wanandroid.model.bean.WanResponse
 class NavigationRepository : BaseRepository() {
 
 
-    suspend fun getNavigation(): WanResponse<List<Navigation>> {
-        return apiCall { WanRetrofitClient.service.getNavigation() }
+    suspend fun getNavigation(): Result<List<Navigation>> {
+        return safeApiCall(call = { requestNavigation() }, errorMessage = "获取数据失败")
     }
+
+
+    private suspend fun requestNavigation(): Result<List<Navigation>> =
+            executeResponse(WanRetrofitClient.service.getNavigation())
 }
