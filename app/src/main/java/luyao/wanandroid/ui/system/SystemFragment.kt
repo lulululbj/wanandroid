@@ -7,12 +7,13 @@ import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.SystemParent
-import luyao.wanandroid.view.SpaceItemDecoration
 import luyao.wanandroid.util.onNetError
+import luyao.wanandroid.view.SpaceItemDecoration
 
 /**
  * 体系
@@ -27,47 +28,42 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_system
 
     override fun initView() {
+        initRecycleView()
+    }
+
+    override fun initData() {
+        refresh()
+    }
+
+    private fun initRecycleView() {
         systemRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(SpaceItemDecoration(systemRecycleView.dp2px(10)))
             adapter = systemAdapter
         }
 
-        systemRefreshLayout.run {
-            isRefreshing = true
-            setOnRefreshListener { refresh() }
+        systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
+            startKtxActivity<SystemTypeNormalActivity>(value = SystemTypeNormalActivity.ARTICLE_LIST to systemAdapter.data[position])
         }
 
-        refresh()
+        systemRefreshLayout.setOnRefreshListener { refresh() }
     }
 
     private fun refresh() {
         mViewModel.getSystemTypes()
     }
 
-    override fun initData() {
-        systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
-            startKtxActivity<SystemTypeNormalActivity>(value = SystemTypeNormalActivity.ARTICLE_LIST to systemAdapter.data[position])
-        }
-    }
 
     override fun startObserve() {
         super.startObserve()
         mViewModel.run {
-            mSystemParentList.observe(this@SystemFragment, Observer {
-                it?.run {
-                    systemRefreshLayout.isRefreshing = false
-                    systemAdapter.setNewData(it)
-                }
+            uiState.observe(this@SystemFragment, Observer {
+                systemRefreshLayout.isRefreshing = it.showLoading
+
+                it.showSuccess?.let { list -> systemAdapter.replaceData(list) }
+
+                it.showError?.let { message -> activity?.toast(message) }
             })
-        }
-    }
-
-    override fun onError(e: Throwable) {
-        super.onError(e)
-
-        activity?.onNetError(e) {
-            systemRefreshLayout.isRefreshing = false
         }
     }
 }

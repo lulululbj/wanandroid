@@ -9,33 +9,32 @@ import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import luyao.wanandroid.util.onNetError
 
 /**
+ * 体系下文章列表
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
+class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
 
-    override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
+    override fun providerVMClass(): Class<ArticleViewModel>? = ArticleViewModel::class.java
 
     private val cid by lazy { arguments?.getInt(CID) }
-    private val isBlog by lazy { arguments?.getBoolean(BLOG) } // 区分是体系下的文章列表还是公众号下的文章列表
+    private val isBlog by lazy { arguments?.getBoolean(BLOG) ?: false } // 区分是体系下的文章列表还是公众号下的文章列表
     private val systemTypeAdapter by lazy { HomeArticleAdapter() }
-    private var currentPage = 0
 
     companion object {
-
         private const val CID = "cid"
         private const val BLOG = "blog"
         fun newInstance(cid: Int, isBlog: Boolean): SystemTypeFragment {
@@ -48,23 +47,18 @@ class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
         }
     }
 
-
     override fun getLayoutResId() = R.layout.fragment_systemtype
 
     override fun initView() {
-
         initRecycleView()
+    }
 
-
-        typeRefreshLayout.run {
-            isRefreshing = true
-            setOnRefreshListener { refresh() }
-        }
+    override fun initData() {
         refresh()
     }
 
     private fun initRecycleView() {
-
+        typeRefreshLayout.setOnRefreshListener { refresh() }
         systemTypeAdapter.run {
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to systemTypeAdapter.data[position].link)
@@ -100,52 +94,44 @@ class SystemTypeFragment : BaseVMFragment<SystemViewModel>() {
     }
 
     private fun loadMore() {
-        cid?.let {
-            if (this.isBlog!!)
-                mViewModel.getBlogArticle(it, currentPage)
-            else
-                mViewModel.getSystemTypeDetail(it, currentPage)
-        }
+        loadData(false)
     }
 
     private fun refresh() {
         systemTypeAdapter.setEnableLoadMore(false)
-        typeRefreshLayout.isRefreshing = true
-        currentPage = 0
-        loadMore()
+        loadData(true)
     }
 
-    override fun initData() {
-    }
 
-    private fun getSystemTypeDetail(articleList: ArticleList) {
-        systemTypeAdapter.run {
-            if (articleList.offset >= articleList.total) {
-                loadMoreEnd()
-                return
-            }
-
-            if (typeRefreshLayout.isRefreshing) replaceData(articleList.datas)
-            else addData(articleList.datas)
-            setEnableLoadMore(true)
-            loadMoreComplete()
+    private fun loadData(isRefresh: Boolean) {
+        cid?.let {
+            if (this.isBlog)
+                mViewModel.getBlogArticleList(isRefresh, it)
+            else
+                mViewModel.getSystemTypeArticleList(isRefresh, it)
         }
-        typeRefreshLayout.isRefreshing = false
-        currentPage++
     }
 
     override fun startObserve() {
         super.startObserve()
-        mViewModel.run {
-            mArticleList.observe(this@SystemTypeFragment, Observer {
-                it?.run { getSystemTypeDetail(it) }
-            })
-        }
+        mViewModel.uiState.observe(this, Observer {
+            typeRefreshLayout.isRefreshing = it.showLoading
+
+            it.showSuccess?.let { list ->
+                systemTypeAdapter.run {
+                    if (it.isRefresh) replaceData(list.datas)
+                    else addData(list.datas)
+                    setEnableLoadMore(true)
+                    loadMoreComplete()
+                }
+            }
+
+            if (it.showEnd) systemTypeAdapter.loadMoreEnd()
+
+            it.showError?.let { message ->
+                activity?.toast(if (message.isBlank()) "网络异常" else message)
+            }
+        })
     }
 
-    override fun onError(e: Throwable) {
-        activity?.onNetError(e){
-            typeRefreshLayout.isRefreshing=false
-        }
-    }
 }

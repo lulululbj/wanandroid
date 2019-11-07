@@ -1,5 +1,6 @@
 package luyao.wanandroid.model.repository
 
+import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
@@ -12,15 +13,24 @@ import luyao.wanandroid.model.bean.WanResponse
  */
 class SystemRepository : BaseRepository() {
 
-    suspend fun getSystemTypeDetail(id: Int, page: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getSystemTypeDetail(page, id) }
+    suspend fun getSystemTypeDetail(cid: Int, page: Int): Result<ArticleList> {
+        return safeApiCall(call = {requestSystemTypeDetail(cid, page)},errorMessage = "网络错误")
     }
 
-    suspend fun getSystemTypes(): WanResponse<List<SystemParent>> {
-        return apiCall { WanRetrofitClient.service.getSystemType() }
+    suspend fun getSystemTypes(): Result<List<SystemParent>> {
+        return safeApiCall(call = { requestSystemTypes() }, errorMessage = "网络错误")
     }
 
-    suspend fun getBlogArticle(id:Int,page:Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.getBlogArticle(id, page) }
+    suspend fun getBlogArticle(cid: Int, page: Int): Result<ArticleList> {
+        return safeApiCall(call = {requestBlogArticle(cid, page)},errorMessage = "网络错误")
     }
+
+    private suspend fun requestSystemTypes(): Result<List<SystemParent>> =
+            executeResponse(WanRetrofitClient.service.getSystemType())
+
+    private suspend fun requestSystemTypeDetail(cid: Int,page: Int): Result<ArticleList> =
+            executeResponse(WanRetrofitClient.service.getSystemTypeDetail(page, cid) )
+
+    private suspend fun requestBlogArticle(cid: Int,page: Int): Result<ArticleList> =
+            executeResponse(WanRetrofitClient.service.getSystemTypeDetail(page, cid) )
 }

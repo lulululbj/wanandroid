@@ -11,10 +11,7 @@ import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
-import luyao.wanandroid.model.repository.CollectRepository
-import luyao.wanandroid.model.repository.HomeRepository
-import luyao.wanandroid.model.repository.ProjectRepository
-import luyao.wanandroid.model.repository.SquareRepository
+import luyao.wanandroid.model.repository.*
 import luyao.wanandroid.util.Preference
 
 /**
@@ -29,9 +26,10 @@ class ArticleViewModel : BaseViewModel() {
         object LatestProject : ArticleType()        // 最新项目
         object ProjectDetailList : ArticleType()    // 项目列表
         object Collection : ArticleType()           // 收藏
+        object SystemType : ArticleType()           // 体系分类
+        object Blog : ArticleType()                 // 公众号
     }
 
-    private var cid = 0
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private val _uiState = MutableLiveData<ArticleUiModel>()
     val uiState: LiveData<ArticleUiModel>
@@ -41,6 +39,7 @@ class ArticleViewModel : BaseViewModel() {
     private val homeRepository by lazy { HomeRepository() }
     private val projectRepository by lazy { ProjectRepository() }
     private val collectRepository by lazy { CollectRepository() }
+    private val systemRepository by lazy { SystemRepository() }
 
 
     private var currentPage = 0
@@ -49,18 +48,17 @@ class ArticleViewModel : BaseViewModel() {
     val mBanners: LiveData<List<Banner>> = liveData {
         kotlin.runCatching {
             val data = withContext(Dispatchers.IO) { homeRepository.getBanners() }
-           if (data is Result.Success) emit(data.data)
+            if (data is Result.Success) emit(data.data)
         }
     }
 
     fun getHomeArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Home, isRefresh)
     fun getSquareArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Square, isRefresh)
-    fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject,isRefresh)
-    fun getProjectTypeDetailList(isRefresh: Boolean=false, cid: Int) {
-        this.cid =cid
-        getArticleList(ArticleType.ProjectDetailList,isRefresh)
-    }
-    fun getCollectArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Collection,isRefresh)
+    fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject, isRefresh)
+    fun getProjectTypeDetailList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.ProjectDetailList, isRefresh, cid)
+    fun getCollectArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Collection, isRefresh)
+    fun getSystemTypeArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.SystemType, isRefresh,cid)
+    fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.Blog, isRefresh,cid)
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
@@ -71,7 +69,7 @@ class ArticleViewModel : BaseViewModel() {
         }
     }
 
-    private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false) {
+    private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false, cid: Int = 0) {
         viewModelScope.launch(Dispatchers.Default) {
 
             withContext(Dispatchers.Main) { emitArticleUiState(true) }
@@ -81,8 +79,10 @@ class ArticleViewModel : BaseViewModel() {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
                 ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
-                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(currentPage,cid)
+                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(currentPage, cid)
                 ArticleType.Collection -> collectRepository.getCollectArticles(currentPage)
+                ArticleType.SystemType -> systemRepository.getSystemTypeDetail(cid, currentPage)
+                ArticleType.Blog -> systemRepository.getBlogArticle(cid, currentPage)
             }
 
             withContext(Dispatchers.Main) {

@@ -13,7 +13,6 @@ import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.Article
-import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
@@ -37,7 +36,6 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_projecttype
 
     companion object {
-
         private const val CID = "projectCid"
         private const val LASTED = "lasted"
         fun newInstance(cid: Int, isLasted: Boolean): ProjectTypeFragment {
@@ -52,7 +50,6 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     override fun initView() {
         initRecycleView()
-        projectRefreshLayout.setOnRefreshListener { refresh() }
     }
 
     override fun initData() {
@@ -61,19 +58,11 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     fun refresh() {
         projectAdapter.setEnableLoadMore(false)
-
-        isLasted?.run {
-            if (this) {
-                mViewModel.getLatestProjectList(true)
-            } else {
-                cid?.let {
-                    mViewModel.getProjectTypeDetailList(true, it)
-                }
-            }
-        }
+        loadData(true)
     }
 
     private fun initRecycleView() {
+        projectRefreshLayout.setOnRefreshListener { refresh() }
         projectAdapter.run {
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to projectAdapter.data[position].link)
@@ -90,13 +79,19 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     private fun loadMore() {
+        loadData(false)
+    }
+
+
+    private fun loadData(isRefresh: Boolean) {
         isLasted?.run {
-            if (this)
-                mViewModel.getLatestProjectList(false)
-            else
+            if (this) {
+                mViewModel.getLatestProjectList(isRefresh)
+            } else {
                 cid?.let {
-                    mViewModel.getProjectTypeDetailList(false, it)
+                    mViewModel.getProjectTypeDetailList(isRefresh, it)
                 }
+            }
         }
     }
 
