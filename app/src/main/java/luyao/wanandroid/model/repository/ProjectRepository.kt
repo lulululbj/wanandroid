@@ -17,23 +17,28 @@ class ProjectRepository : BaseRepository() {
         return safeApiCall(call = {requestProjectTypeDetailList(page, cid)},errorMessage = "发生未知错误")
     }
 
-    private suspend fun requestProjectTypeDetailList(page: Int, cid: Int) =
-            executeResponse(WanRetrofitClient.service.getProjectTypeDetail(page, cid))
-
-    suspend fun getProjectTypeList(): WanResponse<List<SystemParent>> {
-        return apiCall { WanRetrofitClient.service.getProjectType() }
-    }
-
     suspend fun getLastedProject(page: Int): Result<ArticleList> {
         return safeApiCall(call = {requestLastedProject(page)},errorMessage = "发生未知错误")
     }
 
+    suspend fun getProjectTypeList(): Result<List<SystemParent>> {
+        return safeApiCall(call = {requestProjectTypeList()},errorMessage = "网络错误")
+    }
+
+    suspend fun getBlog(): Result<List<SystemParent>> {
+        return safeApiCall(call = {requestBlogTypeList()},errorMessage = "网络错误")
+    }
+
+    private suspend fun requestProjectTypeDetailList(page: Int, cid: Int) =
+            executeResponse(WanRetrofitClient.service.getProjectTypeDetail(page, cid))
+
     private suspend fun requestLastedProject(page: Int):Result<ArticleList> =
             executeResponse(WanRetrofitClient.service.getLastedProject(page))
 
-    suspend fun getBlog(): WanResponse<List<SystemParent>> {
-        return apiCall { WanRetrofitClient.service.getBlogType() }
-    }
+    private suspend fun requestProjectTypeList() =
+            executeResponse(WanRetrofitClient.service.getProjectType())
 
+    private suspend fun requestBlogTypeList() =
+            executeResponse(WanRetrofitClient.service.getBlogType())
 
 }

@@ -11,6 +11,7 @@ import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.system.SystemTypeFragment
 
 /**
+ * 公众号/项目分类
  * Created by Lu
  * on 2018/4/1 16:52
  */
@@ -76,10 +77,8 @@ class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
     }
 
     override fun startObserve() {
-        mViewModel.run {
-            mSystemParentList.observe(this@ProjectFragment, Observer {
+            mViewModel.systemData.observe(this@ProjectFragment, Observer {
                 it?.run { getProjectTypeList(it) }
             })
-        }
     }
 }
