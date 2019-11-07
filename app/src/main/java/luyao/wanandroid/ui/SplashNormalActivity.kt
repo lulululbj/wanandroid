@@ -1,8 +1,8 @@
 package luyao.wanandroid.ui
 
-import luyao.wanandroid.R
 import luyao.util.ktx.base.BaseActivity
 import luyao.util.ktx.ext.startKtxActivity
+import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.NewMainActivity
 
 /**

@@ -1,10 +1,10 @@
 package luyao.wanandroid.model.repository
 
-import luyao.wanandroid.util.isSuccess
 import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
+import luyao.wanandroid.util.isSuccess
 import java.io.IOException
 
 /**

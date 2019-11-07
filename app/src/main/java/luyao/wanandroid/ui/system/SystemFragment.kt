@@ -12,7 +12,6 @@ import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.SystemParent
-import luyao.wanandroid.util.onNetError
 import luyao.wanandroid.view.SpaceItemDecoration
 
 /**

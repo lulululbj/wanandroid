@@ -5,7 +5,6 @@ import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
-import luyao.wanandroid.model.bean.WanResponse
 
 /**
  * Created by luyao

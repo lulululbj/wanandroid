@@ -1,7 +1,6 @@
 package luyao.wanandroid.ui.search
 
 import androidx.lifecycle.MutableLiveData
-import luyao.wanandroid.util.executeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
@@ -9,6 +8,7 @@ import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SearchRepository
+import luyao.wanandroid.util.executeResponse
 
 /**
  * Created by luyao

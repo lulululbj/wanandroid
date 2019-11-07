@@ -1,7 +1,5 @@
 package luyao.wanandroid.ui.about
 
-import luyao.wanandroid.util.GITHUB_PAGE
-import luyao.wanandroid.util.ISSUE_URL
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
@@ -17,6 +15,8 @@ import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseActivity
 import luyao.util.ktx.ext.openBrowser
 import luyao.wanandroid.R
+import luyao.wanandroid.util.GITHUB_PAGE
+import luyao.wanandroid.util.ISSUE_URL
 
 class AboutActivity : BaseActivity() {
 

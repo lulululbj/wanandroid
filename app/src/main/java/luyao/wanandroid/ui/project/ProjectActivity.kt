@@ -1,41 +1,69 @@
 package luyao.wanandroid.ui.project
 
-import kotlinx.android.synthetic.main.title_layout.*
-import luyao.util.ktx.base.BaseActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.activity_project.*
+import luyao.util.ktx.base.BaseVMActivity
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.ui.system.SystemTypeFragment
 
-class ProjectActivity : BaseActivity() {
+class ProjectActivity : BaseVMActivity<ProjectViewModel>() {
 
     companion object {
         const val BLOG_TAG = "isBlog"
     }
 
-    private val isBlog by lazy { intent.getBooleanExtra(BLOG_TAG, false) }
-    private var currentFragment: androidx.fragment.app.Fragment? = null
+    override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
+
+    private val mProjectTypeList = mutableListOf<SystemParent>()
+    private val isBlog by lazy { intent.getBooleanExtra(BLOG_TAG, false) } // 区分是公众号还是项目分类
 
     override fun getLayoutResId() = R.layout.activity_project
 
     override fun initView() {
-        mToolbar.title = if (isBlog) "公众号" else "项目分类"
-        mToolbar.setNavigationIcon(R.drawable.arrow_back)
+        projectToolbar.title = if (isBlog) "公众号" else "项目分类"
+        projectToolbar.setNavigationIcon(R.drawable.arrow_back)
+
+        initViewPager()
     }
 
     override fun initData() {
-        mToolbar.setNavigationOnClickListener { onBackPressed() }
+        projectToolbar.setNavigationOnClickListener { onBackPressed() }
 
-        switchFragment(ProjectFragment.newInstance(isBlog))
+        if (isBlog) mViewModel.getBlogType()
+        else mViewModel.getProjectTypeList()
+
     }
 
-    private fun switchFragment(targetFragment: androidx.fragment.app.Fragment) {
-        val transition = supportFragmentManager.beginTransaction()
-        if (!targetFragment.isAdded) {
-            if (currentFragment != null) transition.hide(currentFragment!!)
-            transition.add(R.id.content, targetFragment, targetFragment.javaClass.name)
-        } else {
-            transition.hide(currentFragment!!).show(targetFragment)
+    private fun initViewPager() {
+        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            override fun getItem(position: Int) = chooseFragment(position)
+
+
+            override fun getCount() = mProjectTypeList.size
+
+            override fun getPageTitle(position: Int) = mProjectTypeList[position].name
+
         }
-        transition.commit()
-        currentFragment = targetFragment
+        tabLayout.setupWithViewPager(viewPager)
+    }
+
+    private fun chooseFragment(position: Int): Fragment {
+        return if (isBlog) SystemTypeFragment.newInstance(mProjectTypeList[position].id, true)
+        else ProjectTypeFragment.newInstance(mProjectTypeList[position].id, false)
+    }
+
+    private fun getProjectTypeList(projectTypeList: List<SystemParent>) {
+        mProjectTypeList.clear()
+        mProjectTypeList.addAll(projectTypeList)
+        viewPager.adapter?.notifyDataSetChanged()
+    }
+
+    override fun startObserve() {
+        mViewModel.systemData.observe(this, Observer {
+            it?.run { getProjectTypeList(it) }
+        })
     }
 
 }

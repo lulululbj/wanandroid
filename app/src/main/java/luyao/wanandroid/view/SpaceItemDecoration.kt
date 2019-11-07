@@ -1,8 +1,8 @@
 package luyao.wanandroid.view
 
 import android.graphics.Rect
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Lu

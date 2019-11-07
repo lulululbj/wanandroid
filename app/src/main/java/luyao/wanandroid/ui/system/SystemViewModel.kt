@@ -8,11 +8,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.core.Result
-import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SystemRepository
-import luyao.wanandroid.util.executeResponse
 
 /**
  * Created by luyao
