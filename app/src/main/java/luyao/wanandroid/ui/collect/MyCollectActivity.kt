@@ -13,7 +13,7 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.ui.BrowserNormalActivity
-import luyao.wanandroid.ui.login.LoginActivity
+import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 
@@ -21,12 +21,11 @@ import luyao.wanandroid.view.SpaceItemDecoration
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
+class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
 
-    override fun providerVMClass() = CollectViewModel::class.java
+    override fun providerVMClass() = ArticleViewModel::class.java
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
-    private var currentPage = 0
 
     override fun getLayoutResId() = R.layout.activity_collect
 
@@ -43,21 +42,22 @@ class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
 
         collectRefreshLayout.run {
             setOnRefreshListener { refresh() }
-            isRefreshing = true
         }
+    }
+
+    override fun initData() {
+        mToolbar.setNavigationOnClickListener { onBackPressed() }
         refresh()
     }
 
     private fun refresh() {
         articleAdapter.setEnableLoadMore(false)
-        collectRefreshLayout.isRefreshing = true
-        currentPage = 0
-        mViewModel.getCollectArticles(currentPage)
+        mViewModel.getCollectArticleList(true)
     }
 
     private fun initAdapter() {
         articleAdapter.run {
-            showStar(false)
+            //            showStar(false)
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to articleAdapter.data[position].link)
             }
@@ -74,57 +74,39 @@ class MyCollectActivity : BaseVMActivity<CollectViewModel>() {
                 articleAdapter.run {
                     data[position].run {
                         collect = !collect
-                        mViewModel.collectArticle(id, collect)
+                        mViewModel.collectArticle(originId, collect)
                     }
-                    notifyDataSetChanged()
+                    notifyItemRemoved(position)
                 }
             }
         }
     }
 
     private fun loadMore() {
-        mViewModel.getCollectArticles(currentPage)
-    }
-
-    override fun initData() {
-        mToolbar.setNavigationOnClickListener { onBackPressed() }
-    }
-
-    private fun getCollectArticles(articleList: ArticleList) {
-        articleAdapter.run {
-
-            //            if (articleList.datas.isEmpty()) {
-//                replaceData(articleList.datas)
-//                return
-//            }
-            if (articleList.offset >= articleList.total) {
-                loadMoreEnd()
-                return
-            }
-
-            if (collectRefreshLayout.isRefreshing) replaceData(articleList.datas)
-            else addData(articleList.datas)
-            setEnableLoadMore(true)
-            loadMoreComplete()
-        }
-        collectRefreshLayout.isRefreshing = false
-        currentPage++
+        mViewModel.getCollectArticleList(false)
     }
 
     override fun startObserve() {
-        mViewModel.run {
-            mArticleList.observe(this@MyCollectActivity, Observer {
-                it?.run {
-                    getCollectArticles(it)
-                }
-            })
 
-            mErrorMsg.observe(this@MyCollectActivity, Observer {
-                it?.run {
-                    collectRefreshLayout.isRefreshing = false
-                    toast(it)
-                    startKtxActivity<LoginActivity>()
-                    finish()
+        mViewModel.apply {
+
+            uiState.observe(this@MyCollectActivity, Observer {
+                collectRefreshLayout.isRefreshing = it.showLoading
+
+                it.showSuccess?.let { list ->
+                    list.datas.forEach { it.collect = true }
+                    articleAdapter.run {
+                        if (it.isRefresh) replaceData(list.datas)
+                        else addData(list.datas)
+                        setEnableLoadMore(true)
+                        loadMoreComplete()
+                    }
+                }
+
+                if (it.showEnd) articleAdapter.loadMoreEnd()
+
+                it.showError?.let { message ->
+                    toast(if (message.isBlank()) "网络异常" else message)
                 }
             })
         }

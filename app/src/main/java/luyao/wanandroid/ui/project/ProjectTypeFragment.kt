@@ -80,6 +80,7 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
             }
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
+            onItemChildClickListener = this@ProjectTypeFragment.onItemChildClickListener
         }
         projectRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
@@ -96,18 +97,6 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
                 cid?.let {
                     mViewModel.getProjectTypeDetailList(false, it)
                 }
-        }
-    }
-
-    private fun setProjectTypeDetailList(articleList: ArticleList) {
-        projectAdapter.run {
-
-            onItemChildClickListener = this@ProjectTypeFragment.onItemChildClickListener
-
-            if (projectRefreshLayout.isRefreshing) replaceData(articleList.datas)
-            else addData(articleList.datas)
-            setEnableLoadMore(true)
-            loadMoreComplete()
         }
     }
 
@@ -134,7 +123,14 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
         mViewModel.uiState.observe(this@ProjectTypeFragment, Observer {
             projectRefreshLayout.isRefreshing = it.showLoading
 
-            it.showSuccess?.let { articleList -> setProjectTypeDetailList(articleList) }
+            it.showSuccess?.let { list ->
+                projectAdapter.run {
+                    if (it.isRefresh) replaceData(list.datas)
+                    else addData(list.datas)
+                    setEnableLoadMore(true)
+                    loadMoreComplete()
+                }
+            }
 
             if (it.showEnd) projectAdapter.loadMoreEnd()
         })

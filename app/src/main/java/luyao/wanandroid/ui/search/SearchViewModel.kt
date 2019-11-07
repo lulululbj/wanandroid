@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
+import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SearchRepository
 
 /**
@@ -16,6 +17,7 @@ import luyao.wanandroid.model.repository.SearchRepository
 class SearchViewModel : BaseViewModel() {
 
     private val repository by lazy { SearchRepository() }
+    private val collectRepository by lazy { CollectRepository() }
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mWebSiteHot: MutableLiveData<List<Hot>> = MutableLiveData()
     val mHotSearch: MutableLiveData<List<Hot>> = MutableLiveData()
@@ -44,8 +46,8 @@ class SearchViewModel : BaseViewModel() {
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
             withContext(Dispatchers.IO) {
-                if (boolean) repository.collectArticle(articleId)
-                else repository.unCollectArticle(articleId)
+                if (boolean) collectRepository.collectArticle(articleId)
+                else collectRepository.unCollectArticle(articleId)
             }
         }
     }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SystemRepository
 
 /**
@@ -16,6 +17,7 @@ import luyao.wanandroid.model.repository.SystemRepository
 class SystemViewModel : BaseViewModel() {
 
     private val repository by lazy { SystemRepository() }
+    private val collectRepository by lazy { CollectRepository() }
     val mArticleList: MutableLiveData<ArticleList> = MutableLiveData()
     val mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
 
@@ -37,8 +39,8 @@ class SystemViewModel : BaseViewModel() {
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
             withContext(Dispatchers.IO) {
-                if (boolean) repository.collectArticle(articleId)
-                else repository.unCollectArticle(articleId)
+                if (boolean) collectRepository.collectArticle(articleId)
+                else collectRepository.unCollectArticle(articleId)
             }
         }
     }

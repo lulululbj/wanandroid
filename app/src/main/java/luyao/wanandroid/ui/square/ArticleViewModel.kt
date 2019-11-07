@@ -11,6 +11,7 @@ import luyao.util.ktx.base.BaseViewModel
 import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.HomeRepository
 import luyao.wanandroid.model.repository.ProjectRepository
 import luyao.wanandroid.model.repository.SquareRepository
@@ -27,6 +28,7 @@ class ArticleViewModel : BaseViewModel() {
         object Square : ArticleType()               // 广场
         object LatestProject : ArticleType()        // 最新项目
         object ProjectDetailList : ArticleType()    // 项目列表
+        object Collection : ArticleType()           // 收藏
     }
 
     private var cid = 0
@@ -38,6 +40,7 @@ class ArticleViewModel : BaseViewModel() {
     private val squareRepository by lazy { SquareRepository() }
     private val homeRepository by lazy { HomeRepository() }
     private val projectRepository by lazy { ProjectRepository() }
+    private val collectRepository by lazy { CollectRepository() }
 
 
     private var currentPage = 0
@@ -46,7 +49,7 @@ class ArticleViewModel : BaseViewModel() {
     val mBanners: LiveData<List<Banner>> = liveData {
         kotlin.runCatching {
             val data = withContext(Dispatchers.IO) { homeRepository.getBanners() }
-            emit(data.data)
+           if (data is Result.Success) emit(data.data)
         }
     }
 
@@ -57,12 +60,13 @@ class ArticleViewModel : BaseViewModel() {
         this.cid =cid
         getArticleList(ArticleType.ProjectDetailList,isRefresh)
     }
+    fun getCollectArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Collection,isRefresh)
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
             withContext(Dispatchers.IO) {
-                if (boolean) homeRepository.collectArticle(articleId)
-                else homeRepository.unCollectArticle(articleId)
+                if (boolean) collectRepository.collectArticle(articleId)
+                else collectRepository.unCollectArticle(articleId)
             }
         }
     }
@@ -78,6 +82,7 @@ class ArticleViewModel : BaseViewModel() {
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
                 ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
                 ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(currentPage,cid)
+                ArticleType.Collection -> collectRepository.getCollectArticles(currentPage)
             }
 
             withContext(Dispatchers.Main) {

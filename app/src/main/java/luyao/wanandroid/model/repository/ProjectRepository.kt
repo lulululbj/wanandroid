@@ -24,14 +24,6 @@ class ProjectRepository : BaseRepository() {
         return apiCall { WanRetrofitClient.service.getProjectType() }
     }
 
-    suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
-    }
-
-    suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
-    }
-
     suspend fun getLastedProject(page: Int): Result<ArticleList> {
         return safeApiCall(call = {requestLastedProject(page)},errorMessage = "发生未知错误")
     }

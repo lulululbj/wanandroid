@@ -22,12 +22,4 @@ class SearchRepository : BaseRepository() {
     suspend fun getHotSearch(): WanResponse<List<Hot>> {
         return apiCall { WanRetrofitClient.service.getHot() }
     }
-
-    suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
-    }
-
-    suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
-    }
 }

@@ -120,25 +120,25 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
             })
 
             uiState.observe(this@HomeFragment, Observer {
+
                 homeRefreshLayout.isRefreshing = it.showLoading
 
-                it.showSuccess?.let { articleList -> setArticles(articleList) }
+                it.showSuccess?.let { list ->
+                    homeArticleAdapter.run {
+                        if (it.isRefresh) replaceData(list.datas)
+                        else addData(list.datas)
+                        setEnableLoadMore(true)
+                        loadMoreComplete()
+                    }
+                }
 
                 if (it.showEnd) homeArticleAdapter.loadMoreEnd()
 
                 it.showError?.let { message ->
                     activity?.toast(if (message.isBlank()) "网络异常" else message)
                 }
-            })
-        }
-    }
 
-    private fun setArticles(articleList: ArticleList) {
-        homeArticleAdapter.run {
-            if (homeRefreshLayout.isRefreshing) replaceData(articleList.datas)
-            else addData(articleList.datas)
-            setEnableLoadMore(true)
-            loadMoreComplete()
+            })
         }
     }
 
@@ -165,11 +165,4 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
         banner.stopAutoPlay()
     }
 
-//    override fun onError(e: Throwable) {
-//        super.onError(e)
-//
-//        activity?.onNetError(e){
-//            homeRefreshLayout.isRefreshing = false
-//        }
-//    }
 }

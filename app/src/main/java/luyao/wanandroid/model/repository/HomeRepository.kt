@@ -13,9 +13,13 @@ import luyao.wanandroid.model.bean.WanResponse
  */
 class HomeRepository : BaseRepository() {
 
-    suspend fun getBanners(): WanResponse<List<Banner>> {
-        return apiCall { WanRetrofitClient.service.getBanner() }
+    suspend fun getBanners(): Result<List<Banner>> {
+        return safeApiCall(call = {requestBanners()},errorMessage = "")
     }
+
+    private suspend fun requestBanners():Result<List<Banner>> =
+        executeResponse(WanRetrofitClient.service.getBanner())
+
 
     suspend fun getArticleList(page: Int): Result<ArticleList> {
         return safeApiCall(call = { requestArticleList(page) }, errorMessage = "")
@@ -23,13 +27,4 @@ class HomeRepository : BaseRepository() {
 
     private suspend fun requestArticleList(page: Int): Result<ArticleList> =
             executeResponse(WanRetrofitClient.service.getHomeArticles(page))
-
-
-    suspend fun collectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.collectArticle(articleId) }
-    }
-
-    suspend fun unCollectArticle(articleId: Int): WanResponse<ArticleList> {
-        return apiCall { WanRetrofitClient.service.cancelCollectArticle(articleId) }
-    }
 }
