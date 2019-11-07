@@ -12,7 +12,6 @@ import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SearchRepository
-import luyao.wanandroid.util.executeResponse
 
 /**
  * Created by luyao
@@ -29,13 +28,13 @@ class SearchViewModel : BaseViewModel() {
     private val repository by lazy { SearchRepository() }
     private val collectRepository by lazy { CollectRepository() }
 
-     fun searchHot(isRefresh: Boolean = false, key: String) {
+    fun searchHot(isRefresh: Boolean = false, key: String) {
         viewModelScope.launch(Dispatchers.Default) {
 
             withContext(Dispatchers.Main) { emitArticleUiState(showLoading = true) }
             if (isRefresh) currentPage = 0
 
-            val result = repository.searchHot(currentPage,key)
+            val result = repository.searchHot(currentPage, key)
 
             withContext(Dispatchers.Main) {
                 if (result is Result.Success) {
@@ -60,14 +59,14 @@ class SearchViewModel : BaseViewModel() {
     fun getWebSites() {
         viewModelScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) { repository.getWebSites() }
-            if (result is Result.Success) emitArticleUiState(showHot = true,showWebSites = result.data)
+            if (result is Result.Success) emitArticleUiState(showHot = true, showWebSites = result.data)
         }
     }
 
     fun getHotSearch() {
         viewModelScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) { repository.getHotSearch() }
-            if (result is Result.Success) emitArticleUiState(showHot = true,showHotSearch = result.data)
+            if (result is Result.Success) emitArticleUiState(showHot = true, showHotSearch = result.data)
         }
     }
 
@@ -91,7 +90,7 @@ class SearchViewModel : BaseViewModel() {
             showWebSites: List<Hot>? = null,
             showHotSearch: List<Hot>? = null
     ) {
-        val uiModel = SearchUiModel(showHot,showLoading, showError, showSuccess, showEnd, isRefresh, showWebSites, showHotSearch)
+        val uiModel = SearchUiModel(showHot, showLoading, showError, showSuccess, showEnd, isRefresh, showWebSites, showHotSearch)
         _uiState.value = uiModel
     }
 

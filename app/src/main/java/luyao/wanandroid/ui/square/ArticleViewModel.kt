@@ -12,7 +12,6 @@ import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.model.repository.*
-import luyao.wanandroid.util.Preference
 
 /**
  * Created by luyao
