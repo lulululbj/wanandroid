@@ -30,7 +30,6 @@ class ArticleViewModel : BaseViewModel() {
         object Blog : ArticleType()                 // 公众号
     }
 
-    private var isLogin by Preference(Preference.IS_LOGIN, false)
     private val _uiState = MutableLiveData<ArticleUiModel>()
     val uiState: LiveData<ArticleUiModel>
         get() = _uiState
@@ -102,10 +101,6 @@ class ArticleViewModel : BaseViewModel() {
             }
 
         }
-    }
-
-    fun checkLogin() {
-        emitArticleUiState(needLogin = !isLogin)
     }
 
     private fun emitArticleUiState(
