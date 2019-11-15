@@ -13,6 +13,7 @@ import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityLoginBinding
 import luyao.wanandroid.ui.main.NewMainActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
@@ -22,7 +23,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     private val binding by contentView<LoginActivity, ActivityLoginBinding>(R.layout.activity_login)
 
-    override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
+    private val mViewModel: LoginViewModel by viewModel()
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -32,6 +33,8 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
         binding.lifecycleOwner = this
         binding.viewModel = mViewModel
+
+        startObserve()
     }
 
     override fun initData() {

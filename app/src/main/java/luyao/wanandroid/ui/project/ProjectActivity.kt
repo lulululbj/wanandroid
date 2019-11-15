@@ -7,6 +7,7 @@ import luyao.util.ktx.base.BaseVMActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.system.SystemTypeFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProjectActivity : BaseVMActivity<ProjectViewModel>() {
 
@@ -14,7 +15,7 @@ class ProjectActivity : BaseVMActivity<ProjectViewModel>() {
         const val BLOG_TAG = "isBlog"
     }
 
-    override fun providerVMClass(): Class<ProjectViewModel>? = ProjectViewModel::class.java
+    private val mViewModel: ProjectViewModel by viewModel()
 
     private val mProjectTypeList = mutableListOf<SystemParent>()
     private val isBlog by lazy { intent.getBooleanExtra(BLOG_TAG, false) } // 区分是公众号还是项目分类

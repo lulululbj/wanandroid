@@ -17,7 +17,8 @@ import luyao.wanandroid.model.repository.SearchRepository
  * Created by luyao
  * on 2019/4/8 15:29
  */
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel(private val searchRepository: SearchRepository,
+                      private val collectRepository: CollectRepository) : BaseViewModel() {
 
     private var currentPage = 0
 
@@ -25,8 +26,6 @@ class SearchViewModel : BaseViewModel() {
     val uiState: LiveData<SearchUiModel>
         get() = _uiState
 
-    private val repository by lazy { SearchRepository() }
-    private val collectRepository by lazy { CollectRepository() }
 
     fun searchHot(isRefresh: Boolean = false, key: String) {
         viewModelScope.launch(Dispatchers.Default) {
@@ -34,7 +33,7 @@ class SearchViewModel : BaseViewModel() {
             withContext(Dispatchers.Main) { emitArticleUiState(showLoading = true) }
             if (isRefresh) currentPage = 0
 
-            val result = repository.searchHot(currentPage, key)
+            val result = searchRepository.searchHot(currentPage, key)
 
             withContext(Dispatchers.Main) {
                 if (result is Result.Success) {
@@ -58,14 +57,14 @@ class SearchViewModel : BaseViewModel() {
 
     fun getWebSites() {
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) { repository.getWebSites() }
+            val result = withContext(Dispatchers.IO) { searchRepository.getWebSites() }
             if (result is Result.Success) emitArticleUiState(showHot = true, showWebSites = result.data)
         }
     }
 
     fun getHotSearch() {
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) { repository.getHotSearch() }
+            val result = withContext(Dispatchers.IO) { searchRepository.getHotSearch() }
             if (result is Result.Success) emitArticleUiState(showHot = true, showHotSearch = result.data)
         }
     }

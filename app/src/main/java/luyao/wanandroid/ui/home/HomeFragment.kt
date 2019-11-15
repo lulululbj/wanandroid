@@ -21,6 +21,7 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -29,7 +30,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class HomeFragment : BaseVMFragment<ArticleViewModel>() {
 
-    override fun providerVMClass(): Class<ArticleViewModel>? = ArticleViewModel::class.java
+    private val mViewModel: ArticleViewModel by viewModel()
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
@@ -53,7 +54,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
         refresh()
     }
 
-    private fun initRecycleView(){
+    private fun initRecycleView() {
         homeRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10)))
@@ -112,7 +113,6 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     override fun startObserve() {
-        super.startObserve()
         mViewModel.apply {
             mBanners.observe(this@HomeFragment, Observer { it ->
                 it?.let { setBanner(it) }

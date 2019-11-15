@@ -16,10 +16,11 @@ import luyao.wanandroid.model.repository.SystemRepository
  * Created by luyao
  * on 2019/4/8 16:40
  */
-class SystemViewModel : BaseViewModel() {
+class SystemViewModel(
+        private val systemRepository: SystemRepository,
+        private val collectRepository: CollectRepository
+) : BaseViewModel() {
 
-    private val repository by lazy { SystemRepository() }
-    private val collectRepository by lazy { CollectRepository() }
 
     private val _mSystemParentList: MutableLiveData<SystemUiModel> = MutableLiveData()
     val uiState: LiveData<SystemUiModel>
@@ -29,7 +30,7 @@ class SystemViewModel : BaseViewModel() {
     fun getSystemTypes() {
         viewModelScope.launch(Dispatchers.Main) {
             emitArticleUiState(showLoading = true)
-            val result = withContext(Dispatchers.IO) { repository.getSystemTypes() }
+            val result = withContext(Dispatchers.IO) { systemRepository.getSystemTypes() }
             if (result is Result.Success)
                 emitArticleUiState(showLoading = false, showSuccess = result.data)
             else if (result is Result.Error)

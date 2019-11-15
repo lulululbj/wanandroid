@@ -16,6 +16,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.share.ShareActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
@@ -25,7 +26,7 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
 
     private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square, BR.article) }
 
-    override fun providerVMClass() = ArticleViewModel::class.java
+    private val mViewModel: ArticleViewModel by viewModel()
 
     override fun getLayoutResId() = R.layout.fragment_square
 
@@ -64,7 +65,6 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     override fun startObserve() {
-        super.startObserve()
         mViewModel.uiState.observe(this, Observer {
 
             squareRefreshLayout.isRefreshing = it.showLoading
@@ -85,9 +85,9 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
                 else startKtxActivity<ShareActivity>()
             }
 
-           it.showError?.let { message ->
-               activity?.toast(if (message.isBlank()) "网络异常" else message)
-           }
+            it.showError?.let { message ->
+                activity?.toast(if (message.isBlank()) "网络异常" else message)
+            }
 
         })
     }

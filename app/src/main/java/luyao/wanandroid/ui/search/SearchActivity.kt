@@ -23,6 +23,7 @@ import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -31,7 +32,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class SearchActivity : BaseVMActivity<SearchViewModel>() {
 
-    override fun providerVMClass(): Class<SearchViewModel>? = SearchViewModel::class.java
+    private val mViewModel: SearchViewModel by viewModel()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val searchAdapter by lazy { HomeArticleAdapter() }
@@ -256,5 +257,5 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
 //
 //                }
 //            })
-        }
     }
+}

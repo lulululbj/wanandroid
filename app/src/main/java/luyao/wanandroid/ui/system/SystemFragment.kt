@@ -13,6 +13,7 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系
@@ -21,7 +22,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class SystemFragment : BaseVMFragment<SystemViewModel>() {
 
-    override fun providerVMClass(): Class<SystemViewModel>? = SystemViewModel::class.java
+    private val mViewModel: SystemViewModel by viewModel()
     private val systemAdapter by lazy { BaseBindAdapter<SystemParent>(R.layout.item_system, BR.systemParent) }
 
     override fun getLayoutResId() = R.layout.fragment_system
@@ -54,7 +55,6 @@ class SystemFragment : BaseVMFragment<SystemViewModel>() {
 
 
     override fun startObserve() {
-        super.startObserve()
         mViewModel.run {
             uiState.observe(this@SystemFragment, Observer {
                 systemRefreshLayout.isRefreshing = it.showLoading

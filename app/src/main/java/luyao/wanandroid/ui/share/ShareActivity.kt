@@ -8,6 +8,7 @@ import luyao.util.ktx.ext.listener.textWatcher
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityShareBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
@@ -17,7 +18,7 @@ class ShareActivity : BaseVMActivity<ShareViewModel>() {
 
     private val binding by contentView<ShareActivity, ActivityShareBinding>(R.layout.activity_share)
 
-    override fun providerVMClass() = ShareViewModel::class.java
+    private val mViewModel: ShareViewModel by viewModel()
 
     override fun getLayoutResId() = R.layout.activity_share
 
@@ -34,8 +35,6 @@ class ShareActivity : BaseVMActivity<ShareViewModel>() {
 
 
     override fun startObserve() {
-        super.startObserve()
-
         mViewModel.uiState.observe(this, Observer {
 
             it.showSuccess?.let { finish() }

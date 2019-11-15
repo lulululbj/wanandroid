@@ -15,6 +15,7 @@ import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
@@ -22,7 +23,7 @@ import luyao.wanandroid.view.SpaceItemDecoration
  */
 class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
 
-    override fun providerVMClass() = ArticleViewModel::class.java
+    private val mViewModel: ArticleViewModel by viewModel()
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
 

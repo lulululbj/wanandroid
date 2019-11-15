@@ -15,16 +15,15 @@ import luyao.wanandroid.model.repository.NavigationRepository
  * Created by luyao
  * on 2019/4/8 16:21
  */
-class NavigationViewModel : BaseViewModel() {
+class NavigationViewModel(private val navigationRepository: NavigationRepository) : BaseViewModel() {
 
-    private val repository by lazy { NavigationRepository() }
     private val _navigationList: MutableLiveData<List<Navigation>> = MutableLiveData()
     val navigationListState : LiveData<List<Navigation>>
         get() = _navigationList
 
     fun getNavigation() {
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) { repository.getNavigation() }
+            val result = withContext(Dispatchers.IO) { navigationRepository.getNavigation() }
             if (result is Result.Success)
                 _navigationList.value = result.data
         }

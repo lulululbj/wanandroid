@@ -15,14 +15,14 @@ import luyao.wanandroid.model.repository.LoginRepository
  * Created by luyao
  * on 2019/4/2 16:36
  */
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel(val repository: LoginRepository) : BaseViewModel() {
 
     private val _uiState = MutableLiveData<LoginUiModel>()
     val uiState: LiveData<LoginUiModel>
         get() = _uiState
 
     val mRegisterUser: MutableLiveData<User> = MutableLiveData()
-    private val repository by lazy { LoginRepository() }
+//    private val repository by lazy { LoginRepository() }
 
     private fun isInputValid(userName: String, passWord: String) = userName.isNotBlank() && passWord.isNotBlank()
 

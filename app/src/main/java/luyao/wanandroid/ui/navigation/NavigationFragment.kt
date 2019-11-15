@@ -10,6 +10,7 @@ import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 
@@ -20,7 +21,7 @@ import q.rorbin.verticaltablayout.widget.TabView
  */
 class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
 
-    override fun providerVMClass(): Class<NavigationViewModel>? = NavigationViewModel::class.java
+    private val mViewModel: NavigationViewModel by viewModel()
 
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }
@@ -74,7 +75,6 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     }
 
     override fun startObserve() {
-        super.startObserve()
         mViewModel.run {
             navigationListState.observe(this@NavigationFragment, Observer {
                 it?.run { getNavigation(it) }

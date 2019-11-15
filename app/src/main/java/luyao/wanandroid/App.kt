@@ -4,7 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.tencent.smtt.sdk.QbSdk
+import luyao.wanandroid.di.appModule
 import luyao.wanandroid.model.bean.User
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import kotlin.properties.Delegates
 
 /**
@@ -21,6 +24,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         CONTEXT = applicationContext
+
+        startKoin {
+            androidContext(this@App)
+            modules(appModule)
+        }
 
         //x5内核初始化接口
         QbSdk.initX5Environment(applicationContext, object : QbSdk.PreInitCallback {

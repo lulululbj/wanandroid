@@ -17,7 +17,13 @@ import luyao.wanandroid.model.repository.*
  * Created by luyao
  * on 2019/10/15 10:46
  */
-class ArticleViewModel : BaseViewModel() {
+class ArticleViewModel(
+        private val squareRepository:SquareRepository,
+        private val homeRepository: HomeRepository,
+        private val projectRepository: ProjectRepository,
+        private val collectRepository: CollectRepository,
+        private val systemRepository: SystemRepository
+) : BaseViewModel() {
 
     sealed class ArticleType {
         object Home : ArticleType()                 // 首页
@@ -32,13 +38,6 @@ class ArticleViewModel : BaseViewModel() {
     private val _uiState = MutableLiveData<ArticleUiModel>()
     val uiState: LiveData<ArticleUiModel>
         get() = _uiState
-
-    private val squareRepository by lazy { SquareRepository() }
-    private val homeRepository by lazy { HomeRepository() }
-    private val projectRepository by lazy { ProjectRepository() }
-    private val collectRepository by lazy { CollectRepository() }
-    private val systemRepository by lazy { SystemRepository() }
-
 
     private var currentPage = 0
 

@@ -14,9 +14,8 @@ import luyao.wanandroid.model.repository.ShareRepository
  * Created by luyao
  * on 2019/10/15 15:21
  */
-class ShareViewModel : BaseViewModel() {
+class ShareViewModel(private val repository: ShareRepository) : BaseViewModel() {
 
-    private val repository by lazy { ShareRepository() }
     private val _uiState = MutableLiveData<ShareUiModel>()
     val uiState: LiveData<ShareUiModel>
         get() = _uiState

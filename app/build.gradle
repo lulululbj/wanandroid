@@ -36,25 +36,33 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
-    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     implementation 'com.youth.banner:banner:1.4.10'
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar')
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
+    implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
     implementation 'com.afollestad.material-dialogs:input:3.1.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc02'
+
+    // Koin for Android
+    implementation 'org.koin:koin-android:2.0.1'
+    // or Koin for Lifecycle scoping
+    implementation 'org.koin:koin-androidx-scope:2.0.1'
+    // or Koin for Android Architecture ViewModel
+    implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
+
 //    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha02'
     implementation project(path: ':ktx')
 }

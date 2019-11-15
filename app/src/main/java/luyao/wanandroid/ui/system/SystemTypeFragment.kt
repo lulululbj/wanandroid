@@ -18,6 +18,7 @@ import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系下文章列表
@@ -28,7 +29,7 @@ class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
 
-    override fun providerVMClass(): Class<ArticleViewModel>? = ArticleViewModel::class.java
+    private val mViewModel: ArticleViewModel by viewModel()
 
     private val cid by lazy { arguments?.getInt(CID) }
     private val isBlog by lazy { arguments?.getBoolean(BLOG) ?: false } // 区分是体系下的文章列表还是公众号下的文章列表
@@ -113,7 +114,6 @@ class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     override fun startObserve() {
-        super.startObserve()
         mViewModel.uiState.observe(this, Observer {
             typeRefreshLayout.isRefreshing = it.showLoading
 

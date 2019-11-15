@@ -15,9 +15,8 @@ import luyao.wanandroid.model.repository.ProjectRepository
  * Created by luyao
  * on 2019/4/8 16:28
  */
-class ProjectViewModel : BaseViewModel() {
+class ProjectViewModel(private val repository: ProjectRepository) : BaseViewModel() {
 
-    private val repository by lazy { ProjectRepository() }
     private val _mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
     val systemData: LiveData<List<SystemParent>>
         get() = _mSystemParentList
