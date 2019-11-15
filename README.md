@@ -1,3 +1,5 @@
+> 添加微信 **bingxinshuo_** ，加入技术交流群 。
+
 [Wanandroid](https://www.wanandroid.com/) 是鸿洋鸿大大的安卓开源知识网站，包含最新博文，最新项目，常用工具，公众号文章收录等等功能，同时也开源了所有 API 接口，方便大家打造自己的 Wanandroid 客户端。Github 上关于 Wanandroid 的客户端也层出不穷，Java的，Kotlin 的，Flutter 的，Mvp 的，MVMM 的，各种各样，但是还没看到 **Kotlin+MVVM+LiveData+协程** 版本的，加上最近正在看 MVVM 和 LiveData，就着手把我之前写的 Mvp 版本的 Wanandroid 改造成 MVVM，[项目地址](https://github.com/lulululbj/wanandroid) 。注意，`mater` 分支是年久失修的 `Mvp` 版本，不一定保证可以运行。`mvvm-kotlin
 ` 分支是最新代码。
 
