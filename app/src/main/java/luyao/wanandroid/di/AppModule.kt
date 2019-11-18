@@ -4,6 +4,7 @@ import luyao.wanandroid.model.repository.*
 import luyao.wanandroid.ui.login.LoginViewModel
 import luyao.wanandroid.ui.navigation.NavigationViewModel
 import luyao.wanandroid.ui.project.ProjectViewModel
+import luyao.wanandroid.ui.search.SearchViewModel
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.ui.system.SystemViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,6 +21,7 @@ val viewModelModule = module {
     viewModel { SystemViewModel(get(), get()) }
     viewModel { NavigationViewModel(get()) }
     viewModel { ProjectViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
 }
 
 val repositoryModule = module {
@@ -30,6 +32,7 @@ val repositoryModule = module {
     single { CollectRepository() }
     single { SystemRepository() }
     single { NavigationRepository() }
+    single { SearchRepository() }
 }
 
 val appModule = listOf(viewModelModule, repositoryModule)
