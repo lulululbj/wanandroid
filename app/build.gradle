@@ -55,6 +55,7 @@ dependencies {
     implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
     implementation 'com.afollestad.material-dialogs:input:3.1.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc02'
+    implementation "androidx.viewpager2:viewpager2:1.0.0-rc01"
 
     // Koin for Android
     implementation 'org.koin:koin-android:2.0.1'

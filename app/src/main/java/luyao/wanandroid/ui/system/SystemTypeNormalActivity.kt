@@ -1,5 +1,8 @@
 package luyao.wanandroid.ui.system
 
+
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
@@ -34,14 +37,16 @@ class SystemTypeNormalActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getItem(position: Int) = SystemTypeFragment.newInstance(systemParent.children[position].id, false)
 
-            override fun getCount() = systemParent.children.size
+        systemDetailViewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount() = systemParent.children.size
 
-            override fun getPageTitle(position: Int) = systemParent.children[position].name
-
+            override fun createFragment(position: Int) = SystemTypeFragment.newInstance(systemParent.children[position].id, false)
         }
-        tabLayout.setupWithViewPager(viewPager)
+
+        TabLayoutMediator(tabLayout, systemDetailViewPager) { tab, position ->
+            tab.text = systemParent.children[position].name
+        }.attach()
+
     }
 }

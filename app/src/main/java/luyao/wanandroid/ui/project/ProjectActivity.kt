@@ -2,6 +2,8 @@ package luyao.wanandroid.ui.project
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_project.*
 import luyao.util.ktx.base.BaseVMActivity
 import luyao.wanandroid.R
@@ -38,16 +40,17 @@ class ProjectActivity : BaseVMActivity<ProjectViewModel>() {
     }
 
     private fun initViewPager() {
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getItem(position: Int) = chooseFragment(position)
 
+        projectViewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount() = mProjectTypeList.size
 
-            override fun getCount() = mProjectTypeList.size
-
-            override fun getPageTitle(position: Int) = mProjectTypeList[position].name
+            override fun createFragment(position: Int) = chooseFragment(position)
 
         }
-        tabLayout.setupWithViewPager(viewPager)
+
+        TabLayoutMediator(tabLayout, projectViewPager) { tab, position ->
+            tab.text = mProjectTypeList[position].name
+        }.attach()
     }
 
     private fun chooseFragment(position: Int): Fragment {
@@ -58,7 +61,7 @@ class ProjectActivity : BaseVMActivity<ProjectViewModel>() {
     private fun getProjectTypeList(projectTypeList: List<SystemParent>) {
         mProjectTypeList.clear()
         mProjectTypeList.addAll(projectTypeList)
-        viewPager.adapter?.notifyDataSetChanged()
+        projectViewPager.adapter?.notifyDataSetChanged()
     }
 
     override fun startObserve() {

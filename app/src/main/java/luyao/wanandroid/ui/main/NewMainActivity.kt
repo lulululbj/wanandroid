@@ -3,13 +3,15 @@ package luyao.wanandroid.ui.main
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_new_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import luyao.util.ktx.base.BaseActivity
-import luyao.util.ktx.ext.listener.onPageSelected
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.api.WanRetrofitClient
@@ -37,7 +39,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
 
-    private val titleList = arrayOf("首页", "广场","最新项目", "体系", "导航")
+    private val titleList = arrayOf("首页", "广场", "最新项目", "体系", "导航")
     private val fragmentList = arrayListOf<Fragment>()
     private val homeFragment by lazy { HomeFragment() } // 首页
     private val squareFragment by lazy { SquareFragment() } // 广场
@@ -61,8 +63,10 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         mainToolBar.setNavigationOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
-        addFab.setOnClickListener {   if (!isLogin) startKtxActivity<LoginActivity>()
-        else startKtxActivity<ShareActivity>() }
+        addFab.setOnClickListener {
+            if (!isLogin) startKtxActivity<LoginActivity>()
+            else startKtxActivity<ShareActivity>()
+        }
     }
 
     override fun initData() {
@@ -70,17 +74,22 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     private fun initViewPager() {
-        viewPager.offscreenPageLimit = titleList.size
-        viewPager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getItem(position: Int) = fragmentList[position]
+        viewPager.offscreenPageLimit = 1
+        viewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int) = fragmentList[position]
 
-            override fun getCount() = titleList.size
-
-            override fun getPageTitle(position: Int) = titleList[position]
+            override fun getItemCount() = titleList.size
 
         }
-        viewPager.onPageSelected { newPosition -> if (newPosition == 1) addFab.show() else addFab.hide() }
-        tabLayout.setupWithViewPager(viewPager)
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 1) addFab.show() else addFab.hide()
+            }
+        })
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = titleList[position]
+        }.attach()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -112,7 +121,7 @@ class NewMainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         }
     }
 
-    private fun refreshView(){
+    private fun refreshView() {
         navigationView.menu.findItem(R.id.nav_exit).isVisible = isLogin
         homeFragment.refresh()
         lastedProjectFragment.refresh()
