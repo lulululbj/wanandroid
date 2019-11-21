@@ -44,4 +44,8 @@
     <string name="please_input_url">请输入链接</string>
     <string name="share">分享</string>
     <string name="share_article">分享文章</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

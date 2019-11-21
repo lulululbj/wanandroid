@@ -14,7 +14,7 @@ class SplashNormalActivity : BaseActivity() {
     override fun getLayoutResId()= R.layout.activity_splash
 
     override fun initView() {
-        startKtxActivity<NewMainActivity>()
+//        startKtxActivity<NewMainActivity>()
     }
 
     override fun initData() {

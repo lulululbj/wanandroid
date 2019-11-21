@@ -8,11 +8,9 @@ import kotlinx.android.synthetic.main.title_layout.*
 import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.core.util.contentView
 import luyao.util.ktx.ext.listener.textWatcher
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityLoginBinding
-import luyao.wanandroid.ui.main.NewMainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -59,7 +57,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
                 it.showSuccess?.let {
                     dismissProgressDialog()
-                    startKtxActivity<NewMainActivity>()
+//                    startKtxActivity<NewMainActivity>()
                     finish()
                 }
 

@@ -13,6 +13,7 @@ import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
@@ -30,7 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseVMActivity<SearchViewModel>() {
+class SearchActivity : BaseVMFragment<SearchViewModel>() {
 
     private val mViewModel: SearchViewModel by viewModel()
 
@@ -48,7 +49,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         initTagLayout()
 
         searchRecycleView.run {
-            layoutManager = LinearLayoutManager(this@SearchActivity)
+            layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10)))
 
         }
@@ -88,7 +89,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     }
 
     override fun initData() {
-        searchToolbar.setNavigationOnClickListener { onBackPressed() }
+//        searchToolbar.setNavigationOnClickListener { onBackPressed() }
         mViewModel.getHotSearch()
         mViewModel.getWebSites()
     }
@@ -198,14 +199,14 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         }
     }
 
-    override fun onBackPressed() {
-        if (hotContent.visibility == View.GONE) {
-            hotContent.visibility = View.VISIBLE
-            searchRecycleView.visibility = View.GONE
-            searchAdapter.setNewData(null)
-        } else
-            finish()
-    }
+//    override fun onBackPressed() {
+//        if (hotContent.visibility == View.GONE) {
+//            hotContent.visibility = View.VISIBLE
+//            searchRecycleView.visibility = View.GONE
+//            searchAdapter.setNewData(null)
+//        } else
+//            finish()
+//    }
 
     override fun startObserve() {
 
