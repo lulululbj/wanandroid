@@ -5,25 +5,25 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_home"
         android:name="luyao.wanandroid.ui.main.NewMainActivity"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_blog"
         android:name="luyao.wanandroid.ui.project.BlogFragment"
         android:label="@string/blog"
         tools:layout="@layout/activity_project" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_search"
         android:name="luyao.wanandroid.ui.search.SearchActivity"
         android:label="@string/search"
         tools:layout="@layout/activity_project" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_project"
         android:name="luyao.wanandroid.ui.project.ProjectFragment"
         android:label="@string/project_type"
