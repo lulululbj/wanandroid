@@ -96,13 +96,13 @@ fun BottomNavigationView.setupWithNavController(
                                     R.anim.nav_default_exit_anim,
                                     R.anim.nav_default_pop_enter_anim,
                                     R.anim.nav_default_pop_exit_anim)
-                            .attach(selectedFragment)
+                            .show(selectedFragment)
                             .setPrimaryNavigationFragment(selectedFragment)
                             .apply {
                                 // Detach all other Fragments
                                 graphIdToTagMap.forEach { _, fragmentTagIter ->
                                     if (fragmentTagIter != newlySelectedItemTag) {
-                                        detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
+                                        hide(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
                                     }
                                 }
                             }
@@ -188,7 +188,7 @@ private fun detachNavHostFragment(
         navHostFragment: NavHostFragment
 ) {
     fragmentManager.beginTransaction()
-            .detach(navHostFragment)
+            .hide(navHostFragment)
             .commitNow()
 }
 
@@ -198,7 +198,7 @@ private fun attachNavHostFragment(
         isPrimaryNavFragment: Boolean
 ) {
     fragmentManager.beginTransaction()
-            .attach(navHostFragment)
+            .show(navHostFragment)
             .apply {
                 if (isPrimaryNavFragment) {
                     setPrimaryNavigationFragment(navHostFragment)
