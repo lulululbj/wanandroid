@@ -22,8 +22,8 @@ class SystemViewModel(
 ) : BaseViewModel() {
 
 
-    private val _mSystemParentList: MutableLiveData<SystemUiModel> = MutableLiveData()
-    val uiState: LiveData<SystemUiModel>
+    private val _mSystemParentList: MutableLiveData<BaseUiModel<List<SystemParent>>> = MutableLiveData()
+    val uiState: LiveData<BaseUiModel<List<SystemParent>>>
         get() = _mSystemParentList
 
 
@@ -52,20 +52,7 @@ class SystemViewModel(
             showError: String? = null,
             showSuccess: List<SystemParent>? = null
     ) {
-        val uiModel = SystemUiModel(showLoading, showError, showSuccess)
+        val uiModel = BaseUiModel(showLoading, showError, showSuccess)
         _mSystemParentList.value = uiModel
     }
-
-    class SystemUiModel(showLoading: Boolean,
-                        showError: String?,
-                        showSuccess: List<SystemParent>?) : BaseUiModel<List<SystemParent>>(showLoading, showError, showSuccess)
-
-    open class BaseUiModel<T>(
-            val showLoading: Boolean = false,
-            val showError: String? = null,
-            val showSuccess: T? = null,
-            val showEnd: Boolean = false, // 加载更多
-            val isRefresh: Boolean = false // 刷新
-
-    )
 }

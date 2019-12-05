@@ -26,15 +26,6 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     abstract fun initView()
     abstract fun initData()
 
-    protected fun startActivity(z: Class<*>) {
-        startActivity(Intent(this, z))
-    }
-
-    protected fun startActivity(z: Class<*>, name: String, value: Boolean) {
-        val intent = Intent(this, z).putExtra(name, value)
-        startActivity(intent)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         cancel()

@@ -18,7 +18,7 @@ import luyao.wanandroid.model.repository.*
  * on 2019/10/15 10:46
  */
 class ArticleViewModel(
-        private val squareRepository:SquareRepository,
+        private val squareRepository: SquareRepository,
         private val homeRepository: HomeRepository,
         private val projectRepository: ProjectRepository,
         private val collectRepository: CollectRepository,
@@ -44,7 +44,7 @@ class ArticleViewModel(
 
     val mBanners: LiveData<List<Banner>> = liveData {
         kotlin.runCatching {
-            val data = withContext(Dispatchers.IO) { homeRepository.getBanners() }
+            val data = homeRepository.getBanners()
             if (data is Result.Success) emit(data.data)
         }
     }
@@ -54,8 +54,8 @@ class ArticleViewModel(
     fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject, isRefresh)
     fun getProjectTypeDetailList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.ProjectDetailList, isRefresh, cid)
     fun getCollectArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Collection, isRefresh)
-    fun getSystemTypeArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.SystemType, isRefresh,cid)
-    fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.Blog, isRefresh,cid)
+    fun getSystemTypeArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.SystemType, isRefresh, cid)
+    fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.Blog, isRefresh, cid)
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launch {
@@ -67,9 +67,8 @@ class ArticleViewModel(
     }
 
     private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false, cid: Int = 0) {
-        viewModelScope.launch(Dispatchers.Default) {
-
-            withContext(Dispatchers.Main) { emitArticleUiState(true) }
+        viewModelScope.launch(Dispatchers.Main) {
+            emitArticleUiState(true)
             if (isRefresh) currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
 
             val result = when (articleType) {
@@ -82,22 +81,18 @@ class ArticleViewModel(
                 ArticleType.Blog -> systemRepository.getBlogArticle(cid, currentPage)
             }
 
-            withContext(Dispatchers.Main) {
-                if (result is Result.Success) {
-                    val articleList = result.data
-                    if (articleList.offset >= articleList.total) {
-                        emitArticleUiState(showLoading = false, showEnd = true)
-                        return@withContext
-                    }
-                    currentPage++
-                    emitArticleUiState(showLoading = false, showSuccess = articleList, isRefresh = isRefresh)
-
-                } else if (result is Result.Error) {
-                    emitArticleUiState(showLoading = false, showError = result.exception.message)
+            if (result is Result.Success) {
+                val articleList = result.data
+                if (articleList.offset >= articleList.total) {
+                    emitArticleUiState(showLoading = false, showEnd = true)
+                    return@launch
                 }
+                currentPage++
+                emitArticleUiState(showLoading = false, showSuccess = articleList, isRefresh = isRefresh)
 
+            } else if (result is Result.Error) {
+                emitArticleUiState(showLoading = false, showError = result.exception.message)
             }
-
         }
     }
 

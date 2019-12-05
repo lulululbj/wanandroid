@@ -1,6 +1,5 @@
 package luyao.util.ktx.base
 
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,16 @@ import kotlinx.coroutines.*
  * Created by luyao
  * on 2019/5/31 16:06
  */
-open class BaseViewModel : ViewModel(), LifecycleObserver {
+open class BaseViewModel : ViewModel() {
+
+    open class BaseUiModel<T>(
+            var showLoading: Boolean = false,
+            var showError: String? = null,
+            var showSuccess: T? = null,
+            var showEnd: Boolean = false, // 加载更多
+            var isRefresh: Boolean = false // 刷新
+
+    )
 
     val mException: MutableLiveData<Throwable> = MutableLiveData()
 
@@ -54,10 +62,10 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
 
 
     private suspend fun tryCatch(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
-        finallyBlock: suspend CoroutineScope.() -> Unit,
-        handleCancellationExceptionManually: Boolean = false) {
+            tryBlock: suspend CoroutineScope.() -> Unit,
+            catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
+            finallyBlock: suspend CoroutineScope.() -> Unit,
+            handleCancellationExceptionManually: Boolean = false) {
         coroutineScope {
             try {
                 tryBlock()
