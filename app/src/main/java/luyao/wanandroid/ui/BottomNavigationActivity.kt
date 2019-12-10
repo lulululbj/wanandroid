@@ -44,7 +44,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         )
 
         controller.observe(this, Observer {
-            setupActionBarWithNavController(it)
+//           setupActionBarWithNavController(it)
         })
 
         currentNavController = controller

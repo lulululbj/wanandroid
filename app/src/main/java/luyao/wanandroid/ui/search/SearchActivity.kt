@@ -45,7 +45,6 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
-        searchToolbar.setNavigationIcon(R.drawable.arrow_back)
         initTagLayout()
 
         searchRecycleView.run {
@@ -57,8 +56,8 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
         searchRefreshLayout.setOnRefreshListener { refresh() }
 
         searchView.run {
-            isIconified = false
-            onActionViewExpanded()
+//            isIconified = false
+//            onActionViewExpanded()
             setOnQueryTextListener(onQueryTextListener)
         }
     }
@@ -157,35 +156,6 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
         mViewModel.searchHot(true, key)
     }
 
-//    private fun searchHot(articleList: ArticleList) {
-//
-//        searchAdapter.run {
-//
-//            if (articleList.datas.isEmpty()) {
-//                searchRefreshLayout.isRefreshing = false
-//                if (currentPage == 0) {
-//                    data.clear()
-//                    notifyItemRangeRemoved(0, data.size)
-//                }
-//                loadMoreEnd()
-//                return
-//            }
-//            if (articleList.offset >= articleList.total) {
-//                loadMoreEnd()
-//                return
-//            }
-//
-//            if (searchRefreshLayout.isRefreshing) replaceData(articleList.datas)
-//            else addData(articleList.datas)
-//            setEnableLoadMore(true)
-//            loadMoreComplete()
-//
-//            searchRefreshLayout.isRefreshing = false
-//        }
-//
-//
-//    }
-
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {
 
         override fun onQueryTextChange(newText: String?) = false
@@ -198,15 +168,6 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
             return true
         }
     }
-
-//    override fun onBackPressed() {
-//        if (hotContent.visibility == View.GONE) {
-//            hotContent.visibility = View.VISIBLE
-//            searchRecycleView.visibility = View.GONE
-//            searchAdapter.setNewData(null)
-//        } else
-//            finish()
-//    }
 
     override fun startObserve() {
 
@@ -240,23 +201,5 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
 
         })
 
-//        mViewModel.apply {
-//            mArticleList.observe(this@SearchActivity, Observer {
-//                hotContent.visibility = View.GONE
-//                searchRecycleView.visibility = View.VISIBLE
-//                searchHot(it)
-//            })
-//
-//            mWebSiteHot.observe(this@SearchActivity, Observer {
-//                it?.run {
-//
-//                }
-//            })
-//
-//            mHotSearch.observe(this@SearchActivity, Observer {
-//                it?.run {
-//
-//                }
-//            })
     }
 }
