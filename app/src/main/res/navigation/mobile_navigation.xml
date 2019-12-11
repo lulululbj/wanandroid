@@ -7,7 +7,7 @@
 
     <keep_state_fragment
         android:id="@+id/navigation_home"
-        android:name="luyao.wanandroid.ui.main.NewMainActivity"
+        android:name="luyao.wanandroid.ui.main.MainFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
@@ -19,7 +19,7 @@
 
     <keep_state_fragment
         android:id="@+id/navigation_search"
-        android:name="luyao.wanandroid.ui.search.SearchActivity"
+        android:name="luyao.wanandroid.ui.search.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/activity_project" />
 

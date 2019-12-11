@@ -7,8 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="luyao.wanandroid.ui.main.NewMainActivity"
+        android:name="luyao.wanandroid.ui.main.MainFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action android:id="@+id/to_browser"
+            app:destination="@id/navigation_browser"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_browser"
+        android:name="luyao.wanandroid.ui.BrowserFragment"
+        android:label="browser"
+        tools:layout="@layout/activity_browser"/>
 
 </navigation>

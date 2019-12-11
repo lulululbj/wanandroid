@@ -30,7 +30,7 @@
             android:name=".ui.BrowserNormalActivity"
             android:process=":tbs" />
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
-        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.search.SearchFragment" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity android:name=".ui.about.AboutActivity" />

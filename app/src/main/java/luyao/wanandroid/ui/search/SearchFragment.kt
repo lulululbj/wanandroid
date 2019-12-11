@@ -12,7 +12,6 @@ import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
@@ -31,7 +30,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseVMFragment<SearchViewModel>() {
+class SearchFragment : BaseVMFragment<SearchViewModel>() {
 
     private val mViewModel: SearchViewModel by viewModel()
 
@@ -72,7 +71,7 @@ class SearchActivity : BaseVMFragment<SearchViewModel>() {
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to searchAdapter.data[position].link)
             }
-            onItemChildClickListener = this@SearchActivity.onItemChildClickListener
+            onItemChildClickListener = this@SearchFragment.onItemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }

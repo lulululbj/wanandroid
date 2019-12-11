@@ -57,7 +57,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
                 it.showSuccess?.let {
                     dismissProgressDialog()
-//                    startKtxActivity<NewMainActivity>()
+//                    startKtxActivity<MainFragment>()
                     finish()
                 }
 
