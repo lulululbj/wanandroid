@@ -18,7 +18,7 @@ class Ktx : ContentProvider() {
     companion object {
         lateinit var app: Application
         var watchActivityLife = true
-        var watchAppLife = true
+        var watchAppLife = false
     }
 
 

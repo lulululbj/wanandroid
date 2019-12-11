@@ -14,6 +14,7 @@ import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.ui.BrowserNormalActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
@@ -61,10 +62,11 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
         }
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
+//                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
+                androidx.navigation.Navigation.findNavController(homeRecycleView).navigate(R.id.to_browser)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
-            addHeaderView(banner)
+//            addHeaderView(banner)
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }

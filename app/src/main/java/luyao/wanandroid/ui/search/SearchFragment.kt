@@ -12,7 +12,7 @@ import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.base.BaseVMActivity
+import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
@@ -30,7 +30,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchActivity : BaseVMActivity<SearchViewModel>() {
+class SearchFragment : BaseVMFragment<SearchViewModel>() {
 
     private val mViewModel: SearchViewModel by viewModel()
 
@@ -44,11 +44,10 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
-        searchToolbar.setNavigationIcon(R.drawable.arrow_back)
         initTagLayout()
 
         searchRecycleView.run {
-            layoutManager = LinearLayoutManager(this@SearchActivity)
+            layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10)))
 
         }
@@ -56,8 +55,8 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         searchRefreshLayout.setOnRefreshListener { refresh() }
 
         searchView.run {
-            isIconified = false
-            onActionViewExpanded()
+//            isIconified = false
+//            onActionViewExpanded()
             setOnQueryTextListener(onQueryTextListener)
         }
     }
@@ -72,7 +71,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
             setOnItemClickListener { _, _, position ->
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to searchAdapter.data[position].link)
             }
-            onItemChildClickListener = this@SearchActivity.onItemChildClickListener
+            onItemChildClickListener = this@SearchFragment.onItemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
@@ -88,7 +87,7 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
     }
 
     override fun initData() {
-        searchToolbar.setNavigationOnClickListener { onBackPressed() }
+//        searchToolbar.setNavigationOnClickListener { onBackPressed() }
         mViewModel.getHotSearch()
         mViewModel.getWebSites()
     }
@@ -156,35 +155,6 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
         mViewModel.searchHot(true, key)
     }
 
-//    private fun searchHot(articleList: ArticleList) {
-//
-//        searchAdapter.run {
-//
-//            if (articleList.datas.isEmpty()) {
-//                searchRefreshLayout.isRefreshing = false
-//                if (currentPage == 0) {
-//                    data.clear()
-//                    notifyItemRangeRemoved(0, data.size)
-//                }
-//                loadMoreEnd()
-//                return
-//            }
-//            if (articleList.offset >= articleList.total) {
-//                loadMoreEnd()
-//                return
-//            }
-//
-//            if (searchRefreshLayout.isRefreshing) replaceData(articleList.datas)
-//            else addData(articleList.datas)
-//            setEnableLoadMore(true)
-//            loadMoreComplete()
-//
-//            searchRefreshLayout.isRefreshing = false
-//        }
-//
-//
-//    }
-
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {
 
         override fun onQueryTextChange(newText: String?) = false
@@ -196,15 +166,6 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
             }
             return true
         }
-    }
-
-    override fun onBackPressed() {
-        if (hotContent.visibility == View.GONE) {
-            hotContent.visibility = View.VISIBLE
-            searchRecycleView.visibility = View.GONE
-            searchAdapter.setNewData(null)
-        } else
-            finish()
     }
 
     override fun startObserve() {
@@ -239,23 +200,5 @@ class SearchActivity : BaseVMActivity<SearchViewModel>() {
 
         })
 
-//        mViewModel.apply {
-//            mArticleList.observe(this@SearchActivity, Observer {
-//                hotContent.visibility = View.GONE
-//                searchRecycleView.visibility = View.VISIBLE
-//                searchHot(it)
-//            })
-//
-//            mWebSiteHot.observe(this@SearchActivity, Observer {
-//                it?.run {
-//
-//                }
-//            })
-//
-//            mHotSearch.observe(this@SearchActivity, Observer {
-//                it?.run {
-//
-//                }
-//            })
     }
 }

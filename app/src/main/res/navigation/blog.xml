@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blog"
+    app:startDestination="@+id/navigation_blog">
+
+    <fragment
+        android:id="@+id/navigation_blog"
+        android:name="luyao.wanandroid.ui.project.BlogFragment"
+        android:label="@string/blog"
+        tools:layout="@layout/activity_project" />
+
+
+</navigation>

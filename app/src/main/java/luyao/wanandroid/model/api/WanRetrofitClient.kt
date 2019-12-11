@@ -49,7 +49,6 @@ object WanRetrofitClient : BaseRetrofitClient() {
                                 .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
                                 .build()
                     }
-
                     response
                 }
     }

@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".App"
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.NewMainActivity">
+        <activity android:name=".ui.BottomNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,17 +26,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SplashNormalActivity" />
-        <activity android:name=".ui.BrowserNormalActivity"
-            android:process=":tbs"/>
+        <activity
+            android:name=".ui.BrowserNormalActivity"
+            android:process=":tbs" />
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
-        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.search.SearchFragment" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity android:name=".ui.about.AboutActivity" />
-        <activity android:name=".ui.project.ProjectActivity" />
-        <activity android:name=".ui.share.ShareActivity"
+        <activity
+            android:name=".ui.share.ShareActivity"
             android:theme="@style/Theme_ShareActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
