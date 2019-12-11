@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SplashNormalActivity" />
         <activity
             android:name=".ui.BrowserNormalActivity"
             android:process=":tbs" />

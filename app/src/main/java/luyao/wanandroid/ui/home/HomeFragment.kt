@@ -62,8 +62,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
         }
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-//                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
-                androidx.navigation.Navigation.findNavController(homeRecycleView).navigate(R.id.to_browser)
+                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
 //            addHeaderView(banner)

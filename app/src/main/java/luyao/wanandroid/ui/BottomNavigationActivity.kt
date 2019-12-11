@@ -1,56 +1,79 @@
 package luyao.wanandroid.ui
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
+import kotlinx.android.synthetic.main.activity_new_main.*
+import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
-import luyao.wanandroid.util.setupWithNavController
+import luyao.wanandroid.ui.main.MainFragment
+import luyao.wanandroid.ui.project.BlogFragment
+import luyao.wanandroid.ui.project.ProjectFragment
+import luyao.wanandroid.ui.search.SearchFragment
 
-class BottomNavigationActivity : AppCompatActivity() {
+class BottomNavigationActivity : BaseActivity() {
 
-    private var currentNavController: LiveData<NavController>? = null
+    private val fragmentList = arrayListOf<Fragment>()
+    private val mainFragment by lazy { MainFragment() }
+    private val blogFragment by lazy { BlogFragment() }
+    private val searchFragment by lazy { SearchFragment() }
+    private val projectFragment by lazy { ProjectFragment() }
+    private var currentFragment: Fragment? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bottom_navigation)
-
-        if (savedInstanceState == null)
-            setupBottomNavigationBar()
-        // Else, need to wait for onRestoreInstanceState
+    init {
+        fragmentList.run {
+            add(mainFragment)
+            add(blogFragment)
+            add(searchFragment)
+            add(projectFragment)
+        }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        // Now that BottomNavigationBar has restored its instance state
-        // and its selectedItemId, we can proceed with setting up the
-        // BottomNavigationBar with Navigation
-        setupBottomNavigationBar()
+    override fun getLayoutResId() = R.layout.activity_bottom_navigation
+
+    override fun initView() {
+        initViewPager()
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelected)
+    }
+
+    override fun initData() {
     }
 
 
-    private fun setupBottomNavigationBar() {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navGraphIds = listOf(R.navigation.home, R.navigation.blog, R.navigation.search, R.navigation.project)
-
-        val controller = navView.setupWithNavController(
-                navGraphIds = navGraphIds,
-                fragmentManager = supportFragmentManager,
-                containerId = R.id.nav_host_container,
-                intent = intent
-        )
-
-        controller.observe(this, Observer {
-//           setupActionBarWithNavController(it)
-        })
-
-        currentNavController = controller
+    private val onNavigationItemSelected = BottomNavigationView.OnNavigationItemSelectedListener {
+        when (it.itemId) {
+            R.id.home -> {
+                switchFragment(0)
+            }
+            R.id.blog -> {
+                switchFragment(1)
+            }
+            R.id.search -> {
+                switchFragment(2)
+            }
+            R.id.project -> {
+                switchFragment(3)
+            }
+        }
+        true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: false
+    private fun switchFragment(position: Int): Boolean {
+        mainViewpager.currentItem = position
+        return true
     }
+
+    private fun initViewPager() {
+        mainViewpager.isUserInputEnabled = false
+        mainViewpager.offscreenPageLimit = 2
+        mainViewpager.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int) = fragmentList[position]
+
+            override fun getItemCount() = fragmentList.size
+        }
+    }
+
+
 }
