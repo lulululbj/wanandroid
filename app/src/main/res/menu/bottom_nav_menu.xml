@@ -20,5 +20,9 @@
         android:id="@+id/project"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/project_type" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/me" />
 
 </menu>

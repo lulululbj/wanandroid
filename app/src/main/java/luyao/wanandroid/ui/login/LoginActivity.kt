@@ -17,22 +17,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : BaseVMActivity<LoginViewModel>() {
+class LoginActivity : BaseVMActivity<LoginViewModel>(useBinding = true) {
 
     private val binding by contentView<LoginActivity, ActivityLoginBinding>(R.layout.activity_login)
 
     private val mViewModel: LoginViewModel by viewModel()
 
-    override fun getLayoutResId() = R.layout.activity_login
-
     override fun initView() {
-        mToolbar.setTitle(R.string.login)
-        mToolbar.setNavigationIcon(R.drawable.arrow_back)
-
         binding.lifecycleOwner = this
         binding.viewModel = mViewModel
-
-        startObserve()
+        mToolbar.setTitle(R.string.login)
+        mToolbar.setNavigationIcon(R.drawable.arrow_back)
     }
 
     override fun initData() {

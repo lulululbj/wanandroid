@@ -8,9 +8,6 @@ import kotlinx.android.synthetic.main.activity_new_main.*
 import luyao.util.ktx.base.BaseFragment
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
-import luyao.wanandroid.ui.BrowserNormalActivity
-import luyao.wanandroid.ui.about.AboutActivity
-import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.navigation.NavigationFragment
@@ -19,7 +16,6 @@ import luyao.wanandroid.ui.share.ShareActivity
 import luyao.wanandroid.ui.square.SquareFragment
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
-import luyao.wanandroid.util.TOOL_URL
 
 /**
  * Created by luyao
@@ -28,7 +24,6 @@ import luyao.wanandroid.util.TOOL_URL
 class MainFragment : BaseFragment() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
-    private var userJson by Preference(Preference.USER_GSON, "")
 
     private val titleList = arrayOf("首页", "广场", "最新项目", "体系", "导航")
     private val fragmentList = arrayListOf<Fragment>()
@@ -37,7 +32,7 @@ class MainFragment : BaseFragment() {
     private val lastedProjectFragment by lazy { ProjectTypeFragment.newInstance(0, true) } // 最新项目
     private val systemFragment by lazy { SystemFragment() } // 体系
     private val navigationFragment by lazy { NavigationFragment() } // 导航
-    private  var mOnPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
+    private var mOnPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
     override fun getLayoutResId() = R.layout.activity_new_main
 
@@ -81,7 +76,7 @@ class MainFragment : BaseFragment() {
                 if (position == 1) addFab.show() else addFab.hide()
             }
         }
-       mOnPageChangeCallback?.let { viewPager.registerOnPageChangeCallback(it) }
+        mOnPageChangeCallback?.let { viewPager.registerOnPageChangeCallback(it) }
     }
 
     override fun onStop() {

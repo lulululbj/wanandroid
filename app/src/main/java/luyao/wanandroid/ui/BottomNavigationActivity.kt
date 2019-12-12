@@ -3,12 +3,11 @@ package luyao.wanandroid.ui
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
-import kotlinx.android.synthetic.main.activity_new_main.*
 import luyao.util.ktx.base.BaseActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.MainFragment
+import luyao.wanandroid.ui.profile.ProfileFragment
 import luyao.wanandroid.ui.project.BlogFragment
 import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.search.SearchFragment
@@ -20,7 +19,7 @@ class BottomNavigationActivity : BaseActivity() {
     private val blogFragment by lazy { BlogFragment() }
     private val searchFragment by lazy { SearchFragment() }
     private val projectFragment by lazy { ProjectFragment() }
-    private var currentFragment: Fragment? = null
+    private val profileFragment by lazy { ProfileFragment() }
 
     init {
         fragmentList.run {
@@ -28,6 +27,7 @@ class BottomNavigationActivity : BaseActivity() {
             add(blogFragment)
             add(searchFragment)
             add(projectFragment)
+            add(profileFragment)
         }
     }
 
@@ -55,6 +55,9 @@ class BottomNavigationActivity : BaseActivity() {
             }
             R.id.project -> {
                 switchFragment(3)
+            }
+            R.id.profile -> {
+                switchFragment(4)
             }
         }
         true

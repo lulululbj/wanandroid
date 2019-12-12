@@ -9,8 +9,8 @@
     android:paddingTop="20dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:src="@drawable/qrcode"/>
 
 
@@ -20,6 +20,6 @@
         android:textColor="@color/black"
         android:textSize="14sp"
         android:layout_marginTop="20dp"
-        android:text="秉心说，专注 Java/Android 原创知识分享，欢迎扫码关注！\n有任何问题可私信我反馈！"/>
+        android:text="我是秉心说，有任何问题可扫码私信，\n或者添加微信 bingxinshuo_ 向我反馈！"/>
 
 </LinearLayout>
