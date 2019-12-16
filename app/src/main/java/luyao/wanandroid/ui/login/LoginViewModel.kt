@@ -81,14 +81,12 @@ class LoginViewModel(val repository: LoginRepository) : BaseViewModel() {
         val uiModel = LoginUiModel(showProgress, showError, showSuccess, enableLoginButton,needLogin)
         _uiState.value = uiModel
     }
-
-    data class LoginUiModel(
-            val showProgress: Boolean,
-            val showError: String?,
-            val showSuccess: User?,
-            val enableLoginButton: Boolean,
-            val needLogin:Boolean
-    )
-
-
 }
+
+data class LoginUiModel(
+        val showProgress: Boolean,
+        val showError: String?,
+        val showSuccess: User?,
+        val enableLoginButton: Boolean,
+        val needLogin:Boolean
+)
