@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,6 +33,11 @@ class BottomNavigationActivity : BaseActivity() {
     }
 
     override fun getLayoutResId() = R.layout.activity_bottom_navigation
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initView() {
         initViewPager()
