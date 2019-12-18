@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -27,7 +28,9 @@
                 android:id="@+id/userNameEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="@={viewModel.userName}"
+                binding:afterTextChanged="@{viewModel.verifyInput}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +46,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="@={viewModel.passWord}"
+                binding:afterTextChanged="@{viewModel.verifyInput}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +64,8 @@
             android:text="@string/login"
             android:enabled="@{viewModel.uiState.enableLoginButton}"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="@{() -> viewModel.login()}"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,7 +86,8 @@
             android:text="@string/register"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:enabled="@{viewModel.uiState.enableLoginButton}"/>
+            android:enabled="@{viewModel.uiState.enableLoginButton}"
+            android:onClick="@{() -> viewModel.register()}"/>
 
     </LinearLayout>
 

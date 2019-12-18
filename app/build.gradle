@@ -77,4 +77,5 @@ dependencies {
 
 //    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha02'
     implementation project(path: ':ktx')
+    implementation project(path: ':mvvmcore')
 }

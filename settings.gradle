@@ -1,1 +1,1 @@
-include ':app', ':ktx'
+include ':app', ':ktx', ':mvvmcore'
