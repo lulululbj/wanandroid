@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "luyao.wanandroid"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -78,4 +78,9 @@ dependencies {
 //    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.7-alpha02'
     implementation project(path: ':ktx')
     implementation project(path: ':mvvmcore')
+
+
+    // test
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
+
 }

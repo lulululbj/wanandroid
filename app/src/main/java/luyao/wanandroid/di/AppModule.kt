@@ -1,5 +1,6 @@
 package luyao.wanandroid.di
 
+import luyao.wanandroid.CoroutinesDispatcherProvider
 import luyao.wanandroid.model.repository.*
 import luyao.wanandroid.ui.login.LoginViewModel
 import luyao.wanandroid.ui.navigation.NavigationViewModel
@@ -16,7 +17,7 @@ import org.koin.dsl.module
  */
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(),get()) }
     viewModel { ArticleViewModel(get(), get(), get(), get(), get()) }
     viewModel { SystemViewModel(get(), get()) }
     viewModel { NavigationViewModel(get()) }
@@ -25,6 +26,7 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
+    single { CoroutinesDispatcherProvider() }
     single { LoginRepository() }
     single { SquareRepository() }
     single { HomeRepository() }
