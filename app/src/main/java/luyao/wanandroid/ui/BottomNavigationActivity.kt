@@ -70,7 +70,8 @@ class BottomNavigationActivity : BaseActivity() {
     }
 
     private fun switchFragment(position: Int): Boolean {
-        mainViewpager.currentItem = position
+//        mainViewpager.currentItem = position
+        mainViewpager.setCurrentItem(position,false)
         return true
     }
 

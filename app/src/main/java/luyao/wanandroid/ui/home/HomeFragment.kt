@@ -65,7 +65,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
                 startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
-//            addHeaderView(banner)
+            addHeaderView(banner)
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }

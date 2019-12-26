@@ -1,6 +1,8 @@
 package luyao.wanandroid.di
 
 import luyao.wanandroid.CoroutinesDispatcherProvider
+import luyao.wanandroid.model.api.WanRetrofitClient
+import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.repository.*
 import luyao.wanandroid.ui.login.LoginViewModel
 import luyao.wanandroid.ui.navigation.NavigationViewModel
@@ -26,8 +28,9 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
+    single { WanRetrofitClient.getService(WanService::class.java, WanService.BASE_URL) }
     single { CoroutinesDispatcherProvider() }
-    single { LoginRepository() }
+    single { LoginRepository(get()) }
     single { SquareRepository() }
     single { HomeRepository() }
     single { ProjectRepository() }

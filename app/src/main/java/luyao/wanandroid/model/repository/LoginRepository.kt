@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import luyao.wanandroid.App
 import luyao.wanandroid.core.Result
 import luyao.wanandroid.model.api.BaseRepository
-import luyao.wanandroid.model.api.WanRetrofitClient
+import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.util.Preference
 
@@ -12,7 +12,7 @@ import luyao.wanandroid.util.Preference
  * Created by luyao
  * on 2019/4/10 9:42
  */
-class LoginRepository : BaseRepository() {
+class LoginRepository(val service:WanService) : BaseRepository() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
@@ -25,7 +25,7 @@ class LoginRepository : BaseRepository() {
 
     // TODO Move into DataSource Layer ?
     private suspend fun requestLogin(userName: String, passWord: String): Result<User> {
-        val response = WanRetrofitClient.service.login(userName, passWord)
+        val response = service.login(userName, passWord)
 
         return executeResponse(response, {
             val user = response.data
@@ -40,7 +40,7 @@ class LoginRepository : BaseRepository() {
     }
 
     private suspend fun requestRegister(userName: String, passWord: String): Result<User> {
-        val response = WanRetrofitClient.service.register(userName, passWord, passWord)
+        val response = service.register(userName, passWord, passWord)
         return executeResponse(response, { requestLogin(userName, passWord) })
     }
 
