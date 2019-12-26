@@ -15,7 +15,7 @@ import luyao.wanandroid.R
  * Created by Lu
  * on 2018/3/25 21:47
  */
-class BrowserNormalActivity : BaseActivity() {
+class BrowserActivity : BaseActivity() {
 
     companion object {
         const val URL = "url"

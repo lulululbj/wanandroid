@@ -1,7 +1,9 @@
 package luyao.wanandroid.ui.project
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_projecttype.*
@@ -13,7 +15,7 @@ import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.Article
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
@@ -66,7 +68,7 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
         projectRefreshLayout.setOnRefreshListener { refresh() }
         projectAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to projectAdapter.data[position].link)
+                Navigation.findNavController(projectRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to projectAdapter.data[position].link))
             }
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)

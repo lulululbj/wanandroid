@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
-import luyao.util.ktx.base.BaseActivity
+import luyao.util.ktx.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.MainFragment
 import luyao.wanandroid.ui.profile.ProfileFragment
@@ -13,7 +13,7 @@ import luyao.wanandroid.ui.project.BlogFragment
 import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.search.SearchFragment
 
-class BottomNavigationActivity : BaseActivity() {
+class TabFragment : BaseFragment() {
 
     private val fragmentList = arrayListOf<Fragment>()
     private val mainFragment by lazy { MainFragment() }
@@ -33,11 +33,6 @@ class BottomNavigationActivity : BaseActivity() {
     }
 
     override fun getLayoutResId() = R.layout.activity_bottom_navigation
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun initView() {
         initViewPager()
@@ -71,7 +66,7 @@ class BottomNavigationActivity : BaseActivity() {
 
     private fun switchFragment(position: Int): Boolean {
 //        mainViewpager.currentItem = position
-        mainViewpager.setCurrentItem(position,false)
+        mainViewpager.setCurrentItem(position, false)
         return true
     }
 

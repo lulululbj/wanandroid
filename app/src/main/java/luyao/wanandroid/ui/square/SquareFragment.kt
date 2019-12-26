@@ -11,7 +11,7 @@ import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.Article
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.share.ShareActivity
 import luyao.wanandroid.view.CustomLoadMoreView
@@ -43,7 +43,7 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
     private fun initRecycleView() {
         squareAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to squareAdapter.data[position].link)
+                startKtxActivity<BrowserActivity>(value = BrowserActivity.URL to squareAdapter.data[position].link)
             }
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, squareRecycleView)

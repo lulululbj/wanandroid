@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zhy.view.flowlayout.FlowLayout
@@ -18,7 +20,7 @@ import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.Hot
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
@@ -69,7 +71,7 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
     private fun initAdapter() {
         searchAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to searchAdapter.data[position].link)
+                Navigation.findNavController(searchRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to searchAdapter.data[position].link))
             }
             onItemChildClickListener = this@SearchFragment.onItemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
@@ -144,7 +146,7 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
             }
 
             setOnTagClickListener { _, position, parent ->
-                parent.context.startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to webSitesList[position].link)
+                parent.context.startKtxActivity<BrowserActivity>(value = BrowserActivity.URL to webSitesList[position].link)
                 true
             }
         }

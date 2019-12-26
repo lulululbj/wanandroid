@@ -2,10 +2,13 @@ package luyao.wanandroid.ui.home
 
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
+import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
@@ -14,8 +17,7 @@ import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.model.bean.Banner
-import luyao.wanandroid.model.bean.Navigation
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.GlideImageLoader
@@ -62,9 +64,11 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
         }
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to homeArticleAdapter.data[position].link)
+                val bundle = bundleOf(BrowserActivity.URL to homeArticleAdapter.data[position].link)
+                androidx.navigation.Navigation.findNavController(homeRecycleView).navigate(R.id.action_tab_to_browser,bundle)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
+//            if(headerLayoutCount>0) removeAllHeaderView()
             addHeaderView(banner)
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
@@ -102,7 +106,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->
                 run {
-                    startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to bannerUrls[position])
+                    Navigation.findNavController(banner).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to bannerUrls[position]))
                 }
             }
         }

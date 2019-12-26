@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/tabFragment">
+
+    <fragment
+        android:id="@+id/tabFragment"
+        android:name="luyao.wanandroid.ui.TabFragment"
+        android:label="fragment_tab"
+        tools:layout="activity_bottom_navigation">
+        <action
+            android:id="@+id/action_tab_to_browser"
+            app:destination="@id/browserActivity"/>
+    </fragment>
+
+    <activity
+        android:id="@+id/browserActivity"
+        android:name="luyao.wanandroid.ui.BrowserActivity"
+        android:label="activity_browser"
+        tools:layout="@layout/activity_browser">
+
+        <argument android:name="url"
+            app:argType="string"
+            android:defaultValue="www.wanandroid.com"/>
+
+    </activity>
+
+</navigation>

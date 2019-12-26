@@ -3,16 +3,16 @@ package luyao.wanandroid.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import com.zhy.view.flowlayout.TagFlowLayout
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.Navigation
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 
 
 /**
@@ -38,8 +38,8 @@ class NavigationAdapter(layoutResId: Int = R.layout.item_navigation) : BaseQuick
                 }
             }
 
-            setOnTagClickListener { _, position, parent ->
-                parent.context.startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to item.articles[position].link)
+            setOnTagClickListener { view, position, _ ->
+                androidx.navigation.Navigation.findNavController(view).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to item.articles[position].link))
                 true
             }
         }

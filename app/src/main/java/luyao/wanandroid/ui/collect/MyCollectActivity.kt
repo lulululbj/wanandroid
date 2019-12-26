@@ -1,6 +1,8 @@
 package luyao.wanandroid.ui.collect
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.activity_collect.*
@@ -11,7 +13,7 @@ import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
@@ -59,7 +61,7 @@ class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
         articleAdapter.run {
             //            showStar(false)
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to articleAdapter.data[position].link)
+                Navigation.findNavController(collectRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to articleAdapter.data[position].link))
             }
             onItemChildClickListener = itemChildClickListener
             setLoadMoreView(CustomLoadMoreView())

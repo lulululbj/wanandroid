@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.BottomNavigationActivity"
+        <activity android:name=".ui.NavigationActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.BrowserNormalActivity" />
+            android:name=".ui.BrowserActivity" />
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
         <activity android:name=".ui.search.SearchFragment" />
         <activity android:name=".ui.login.LoginActivity" />

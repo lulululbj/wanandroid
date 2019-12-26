@@ -17,7 +17,10 @@ import luyao.wanandroid.R
  */
 class BrowserFragment : BaseFragment() {
 
-    val url = "http://www.baidu.com"
+
+    companion object {
+        const val URL = "url"
+    }
 
     override fun getLayoutResId() = R.layout.activity_browser
 
@@ -28,7 +31,7 @@ class BrowserFragment : BaseFragment() {
     }
 
     override fun initData() {
-
+        val url = arguments?.getString(URL)?:""
         webView.loadUrl(url)
     }
 

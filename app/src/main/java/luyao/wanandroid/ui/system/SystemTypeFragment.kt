@@ -2,7 +2,9 @@ package luyao.wanandroid.ui.system
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_systemtype.*
@@ -12,7 +14,7 @@ import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.ui.BrowserNormalActivity
+import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
@@ -62,7 +64,7 @@ class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
         typeRefreshLayout.setOnRefreshListener { refresh() }
         systemTypeAdapter.run {
             setOnItemClickListener { _, _, position ->
-                startKtxActivity<BrowserNormalActivity>(value = BrowserNormalActivity.URL to systemTypeAdapter.data[position].link)
+                Navigation.findNavController(typeRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to systemTypeAdapter.data[position].link))
             }
             onItemChildClickListener = this@SystemTypeFragment.onItemChildClickListener
 

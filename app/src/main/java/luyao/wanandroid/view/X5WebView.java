@@ -11,19 +11,21 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 public class X5WebView extends WebView {
 
-    private WebViewClient client = new WebViewClient() {
-        /**
-         * 防止加载网页时调起系统浏览器
-         */
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    };
-
     @SuppressLint("SetJavaScriptEnabled")
     public X5WebView(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
+        /**
+         * 防止加载网页时调起系统浏览器
+         */
+        WebViewClient client = new WebViewClient() {
+            /**
+             * 防止加载网页时调起系统浏览器
+             */
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        };
         this.setWebViewClient(client);
         // this.setWebChromeClient(chromeClient);
         // WebStorage webStorage = WebStorage.getInstance();
