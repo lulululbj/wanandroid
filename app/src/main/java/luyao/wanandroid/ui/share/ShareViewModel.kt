@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.share
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,22 +17,26 @@ import luyao.wanandroid.model.repository.ShareRepository
  */
 class ShareViewModel(private val repository: ShareRepository) : BaseViewModel() {
 
+    val title = ObservableField<String>("")
+    val url = ObservableField<String>("")
+
     private val _uiState = MutableLiveData<ShareUiModel>()
     val uiState: LiveData<ShareUiModel>
         get() = _uiState
 
 
-    fun shareDataChanged(title: String, url: String) {
-        enableShare(title.isNotBlank() && url.isNotBlank())
+    val verifyInput: (String) -> Unit = { shareDataChanged() }
+
+    private fun shareDataChanged() {
+        enableShare((title.get()?.isNotBlank() ?: false) && (url.get()?.isNotBlank() ?:false))
     }
 
-    fun shareArticle(title: String, url: String) {
+    fun shareArticle() {
         viewModelScope.launch(Dispatchers.Default) {
-           if(title.isBlank() || url.isBlank()) return@launch
 
             withContext(Dispatchers.Main){ emitUiState(showProgress = true)}
 
-            val result = repository.shareArticle(title, url)
+            val result = repository.shareArticle(title.get()?:"", url.get()?:"")
 
 
             withContext(Dispatchers.Main){
@@ -41,9 +46,6 @@ class ShareViewModel(private val repository: ShareRepository) : BaseViewModel() 
                     emitUiState(showProgress = false,showError = result.exception.message,enableShareButton = true)
                 }
             }
-
-
-
         }
     }
 

@@ -110,7 +110,7 @@ class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    activity?.startKtxActivity<LoginActivity>()
+                    Navigation.findNavController(projectRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }

@@ -3,29 +3,32 @@ package luyao.wanandroid.ui.login
 import android.app.ProgressDialog
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityLoginBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : luayo.mvvm.core.base.BaseVMActivity<LoginViewModel, ActivityLoginBinding>() {
+class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
-    val mViewModel: LoginViewModel by viewModel()
 
     override fun getLayoutResId() = R.layout.activity_login
 
+    override fun initVM(): LoginViewModel = getViewModel()
+
     override fun initView() {
         mBinding.lifecycleOwner = this
-        mBinding.viewModel = mViewModel
+        (mBinding as ActivityLoginBinding).viewModel = mViewModel
         mToolbar.setTitle(R.string.login)
         mToolbar.setNavigationIcon(R.drawable.arrow_back)
     }
 
     override fun initData() {
+        mViewModel = getViewModel()
         mToolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
@@ -43,7 +46,6 @@ class LoginActivity : luayo.mvvm.core.base.BaseVMActivity<LoginViewModel, Activi
 
                 it.showSuccess?.let {
                     dismissProgressDialog()
-//                    startKtxActivity<MainFragment>()
                     finish()
                 }
 

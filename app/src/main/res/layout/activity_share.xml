@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
@@ -56,7 +57,9 @@
                     android:hint="@string/please_input_title"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true"
-                    android:textColorHighlight="#b303a9f4" />
+                    android:textColorHighlight="#b303a9f4"
+                    android:text="@={viewModel.title}"
+                    binding:afterTextChanged="@{viewModel.verifyInput}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,7 +79,9 @@
                     android:hint="@string/please_input_url"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true"
-                    android:textColorHighlight="#b303a9f4" />
+                    android:textColorHighlight="#b303a9f4"
+                    android:text="@={viewModel.url}"
+                    binding:afterTextChanged="@{viewModel.verifyInput}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:enabled="@{viewModel.uiState.enableShareButton}"
-                    android:text="确定" />
+                    android:text="@string/confirm"
+                    android:onClick="@{() -> viewModel.shareArticle()}"/>
 
             </FrameLayout>
 

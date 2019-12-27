@@ -68,7 +68,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
                 androidx.navigation.Navigation.findNavController(homeRecycleView).navigate(R.id.action_tab_to_browser,bundle)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
-//            if(headerLayoutCount>0) removeAllHeaderView()
+            if(headerLayoutCount>0) removeAllHeaderView()
             addHeaderView(banner)
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
@@ -88,7 +88,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    activity?.startKtxActivity<LoginActivity>()
+                    Navigation.findNavController(homeRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }

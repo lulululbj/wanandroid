@@ -1,4 +1,4 @@
-package luayo.mvvm.core
+package luyao.mvvm.core
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,8 +10,8 @@ import androidx.databinding.BindingAdapter
  * on 2019/12/18 16:16
  */
 @BindingAdapter(value = ["afterTextChanged"])
-fun EditText.afterTextChanged(action:(String) -> Unit){
-    addTextChangedListener(object: TextWatcher{
+fun EditText.afterTextChanged(action: (String) -> Unit) {
+    addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
 

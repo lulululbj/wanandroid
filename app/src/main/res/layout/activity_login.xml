@@ -34,7 +34,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        afterTextChanged
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pswLayout"
             style="@style/TextInputLayout"

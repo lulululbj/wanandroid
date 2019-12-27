@@ -1,18 +1,16 @@
 package luyao.wanandroid.ui.main
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_new_main.*
 import luyao.util.ktx.base.BaseFragment
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.home.HomeFragment
-import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.navigation.NavigationFragment
 import luyao.wanandroid.ui.project.ProjectTypeFragment
-import luyao.wanandroid.ui.share.ShareActivity
 import luyao.wanandroid.ui.square.SquareFragment
 import luyao.wanandroid.ui.system.SystemFragment
 import luyao.wanandroid.util.Preference
@@ -47,8 +45,8 @@ class MainFragment : BaseFragment() {
     override fun initView() {
         initViewPager()
         addFab.setOnClickListener {
-            if (!isLogin) startKtxActivity<LoginActivity>()
-            else startKtxActivity<ShareActivity>()
+            if (!isLogin)  Navigation.findNavController(viewPager).navigate(R.id.action_tab_to_login)
+            else Navigation.findNavController(viewPager).navigate(R.id.action_tab_to_share)
         }
     }
 

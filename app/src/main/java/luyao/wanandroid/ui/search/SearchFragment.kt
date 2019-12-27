@@ -106,7 +106,7 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    startKtxActivity<LoginActivity>()
+                    Navigation.findNavController(searchRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }

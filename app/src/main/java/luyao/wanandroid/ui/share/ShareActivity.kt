@@ -1,14 +1,14 @@
 package luyao.wanandroid.ui.share
 
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_share.*
-import luyao.util.ktx.base.BaseVMActivity
-import luyao.util.ktx.core.util.contentView
+import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.listener.textWatcher
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityShareBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * Created by luyao
@@ -16,28 +16,26 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class ShareActivity : BaseVMActivity<ShareViewModel>() {
 
-    private val binding by contentView<ShareActivity, ActivityShareBinding>(R.layout.activity_share)
 
-    private val mViewModel: ShareViewModel by viewModel()
+    override fun initVM(): ShareViewModel = getViewModel()
 
     override fun getLayoutResId() = R.layout.activity_share
 
     override fun initView() {
-        binding.lifecycleOwner = this
-        binding.viewModel = mViewModel
+        mBinding.lifecycleOwner = this
+        (mBinding as ActivityShareBinding).viewModel = mViewModel
     }
 
     override fun initData() {
-        inputTitle.textWatcher { afterTextChanged { mViewModel.shareDataChanged(inputTitle.text.toString(), inputUrl.text.toString()) } }
-        inputUrl.textWatcher { afterTextChanged { mViewModel.shareDataChanged(inputTitle.text.toString(), inputUrl.text.toString()) } }
-        shareBt.setOnClickListener { mViewModel.shareArticle(inputTitle.text.toString(), inputUrl.text.toString()) }
     }
 
 
     override fun startObserve() {
         mViewModel.uiState.observe(this, Observer {
 
-            it.showSuccess?.let { finish() }
+            it.showSuccess?.let {
+                Navigation.findNavController(shareBt).navigateUp()
+            }
 
             it.showError?.let { err -> toast(err) }
         })

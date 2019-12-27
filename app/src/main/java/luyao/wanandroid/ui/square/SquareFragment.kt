@@ -1,6 +1,7 @@
 package luyao.wanandroid.ui.square
 
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_square.*
 import luyao.util.ktx.base.BaseVMFragment
@@ -12,8 +13,6 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
-import luyao.wanandroid.ui.login.LoginActivity
-import luyao.wanandroid.ui.share.ShareActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -81,8 +80,8 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
             if (it.showEnd) squareAdapter.loadMoreEnd()
 
             it.needLogin?.let { needLogin ->
-                if (needLogin) startKtxActivity<LoginActivity>()
-                else startKtxActivity<ShareActivity>()
+                if (needLogin) Navigation.findNavController(squareRecycleView).navigate(R.id.action_tab_to_login)
+                else Navigation.findNavController(squareRecycleView).navigate(R.id.action_tab_to_share)
             }
 
             it.showError?.let { message ->

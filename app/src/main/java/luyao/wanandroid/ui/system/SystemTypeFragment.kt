@@ -90,7 +90,7 @@ class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
                         notifyDataSetChanged()
                     }
                 } else {
-                    Intent(activity, LoginActivity::class.java).run { startActivity(this) }
+                    Navigation.findNavController(typeRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }
