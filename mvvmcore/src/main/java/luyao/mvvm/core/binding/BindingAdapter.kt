@@ -1,4 +1,4 @@
-package luyao.mvvm.core
+package luyao.mvvm.core.binding
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,3 +23,4 @@ fun EditText.afterTextChanged(action: (String) -> Unit) {
         }
     })
 }
+

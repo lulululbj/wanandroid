@@ -25,18 +25,6 @@
     </fragment>
 
     <activity
-        android:id="@+id/browserActivity"
-        android:name="luyao.wanandroid.ui.BrowserActivity"
-        android:label="activity_browser"
-        tools:layout="@layout/activity_browser">
-
-        <argument android:name="url"
-            app:argType="string"
-            android:defaultValue="www.wanandroid.com"/>
-
-    </activity>
-
-    <activity
         android:id="@+id/loginActivity"
         android:name="luyao.wanandroid.ui.login.LoginActivity"
         android:label="activity_login"
@@ -53,12 +41,27 @@
     </activity>
 
     <activity
+        android:id="@+id/browserActivity"
+        android:name="luyao.wanandroid.ui.BrowserActivity"
+        android:label="activity_browser"
+        tools:layout="@layout/activity_browser">
+
+        <argument android:name="url"
+            app:argType="string"
+            android:defaultValue="www.wanandroid.com"/>
+
+    </activity>
+
+    <activity
         android:id="@+id/collectActivity"
         android:name="luyao.wanandroid.ui.collect.MyCollectActivity"
         android:label="activity_collect"
         tools:layout="@layout/activity_collect">
 
-    </activity>
+        <action
+            android:id="@+id/action_collect_to_browser"
+            app:destination="@id/browserActivity"/>
 
+    </activity>
 
 </navigation>

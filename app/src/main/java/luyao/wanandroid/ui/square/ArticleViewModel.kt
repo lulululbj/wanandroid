@@ -49,6 +49,10 @@ class ArticleViewModel(
         }
     }
 
+
+    val refreshSquare: () -> Unit = { getSquareArticleList(true)}
+    val refreshCollect: () -> Unit = { getCollectArticleList(true)}
+
     fun getHomeArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Home, isRefresh)
     fun getSquareArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Square, isRefresh)
     fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject, isRefresh)

@@ -19,9 +19,11 @@ abstract class BaseVMActivity<VM : BaseViewModel>(useDataBinding: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel = initVM()
+
         startObserve()
         if (_useBinding) {
             mBinding = DataBindingUtil.setContentView<ViewDataBinding>(this, getLayoutResId())
+            mBinding.lifecycleOwner =this
         } else setContentView(getLayoutResId())
         initView()
         initData()

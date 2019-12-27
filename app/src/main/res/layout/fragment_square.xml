@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/squareRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/squareRecycleView"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="luyao.wanandroid.ui.square.ArticleViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/squareRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        binding:isRefresh="@{viewModel.uiState.showLoading}"
+        binding:onRefresh="@{viewModel.refreshCollect}">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/squareRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
 

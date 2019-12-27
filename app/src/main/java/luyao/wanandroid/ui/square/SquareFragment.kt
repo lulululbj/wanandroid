@@ -4,35 +4,36 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_square.*
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
+import luyao.wanandroid.databinding.FragmentSquareBinding
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * Created by luyao
  * on 2019/10/15 10:18
  */
-class SquareFragment : BaseVMFragment<ArticleViewModel>() {
+class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
+
+    override fun initVM(): ArticleViewModel = getViewModel()
 
     private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square, BR.article) }
-
-    private val mViewModel: ArticleViewModel by viewModel()
 
     override fun getLayoutResId() = R.layout.fragment_square
 
 
     override fun initView() {
+        mBinding.lifecycleOwner = this
+        (mBinding as FragmentSquareBinding).viewModel = mViewModel
         initRecycleView()
-        squareRefreshLayout.setOnRefreshListener { refresh() }
     }
 
     override fun initData() {
@@ -59,17 +60,15 @@ class SquareFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     fun refresh() {
-        squareAdapter.setEnableLoadMore(false)
         mViewModel.getSquareArticleList(true)
     }
 
     override fun startObserve() {
         mViewModel.uiState.observe(this, Observer {
 
-            squareRefreshLayout.isRefreshing = it.showLoading
-
             it.showSuccess?.let { list ->
                 squareAdapter.run {
+                    setEnableLoadMore(false)
                     if (it.isRefresh) replaceData(list.datas)
                     else addData(list.datas)
                     setEnableLoadMore(true)

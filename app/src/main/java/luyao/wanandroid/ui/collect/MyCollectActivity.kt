@@ -13,25 +13,30 @@ import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.ActivityCollectBinding
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
+class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>() {
 
-    private val mViewModel: ArticleViewModel by viewModel()
+    override fun initVM(): ArticleViewModel  = getViewModel()
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
 
     override fun getLayoutResId() = R.layout.activity_collect
 
     override fun initView() {
+
+        (mBinding as ActivityCollectBinding).viewModel = mViewModel
+
         mToolbar.title = getString(R.string.my_collect)
         mToolbar.setNavigationIcon(R.drawable.arrow_back)
 
@@ -42,9 +47,6 @@ class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
 
         initAdapter()
 
-        collectRefreshLayout.run {
-            setOnRefreshListener { refresh() }
-        }
     }
 
     override fun initData() {
@@ -53,7 +55,6 @@ class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
     }
 
     private fun refresh() {
-        articleAdapter.setEnableLoadMore(false)
         mViewModel.getCollectArticleList(true)
     }
 
@@ -61,7 +62,7 @@ class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
         articleAdapter.run {
             //            showStar(false)
             setOnItemClickListener { _, _, position ->
-                Navigation.findNavController(collectRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to articleAdapter.data[position].link))
+//                Navigation.findNavController(collectRecycleView).navigate(R.id.action_collect_to_browser, bundleOf(BrowserActivity.URL to articleAdapter.data[position].link))
             }
             onItemChildClickListener = itemChildClickListener
             setLoadMoreView(CustomLoadMoreView())
@@ -93,9 +94,9 @@ class MyCollectActivity : BaseVMActivity<ArticleViewModel>() {
         mViewModel.apply {
 
             uiState.observe(this@MyCollectActivity, Observer {
-                collectRefreshLayout.isRefreshing = it.showLoading
 
                 it.showSuccess?.let { list ->
+                    articleAdapter.setEnableLoadMore(false)
                     list.datas.forEach { it.collect = true }
                     articleAdapter.run {
                         if (it.isRefresh) replaceData(list.datas)
