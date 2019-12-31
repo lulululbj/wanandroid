@@ -51,13 +51,13 @@ class BrowserFragment : BaseFragment() {
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(p0: WebView?, p1: Int) {
                     super.onProgressChanged(p0, p1)
-                    progressBar.progress = p1
+                    progressBar?.progress = p1
                     Log.e("browser",p1.toString())
                 }
 
                 override fun onReceivedTitle(p0: WebView?, p1: String?) {
                     super.onReceivedTitle(p0, p1)
-                    p1?.let { mToolbar.title = p1 }
+                    p1?.let { mToolbar?.title = p1 }
                 }
 
             }
