@@ -58,9 +58,9 @@
         android:label="activity_collect"
         tools:layout="@layout/activity_collect">
 
-        <action
-            android:id="@+id/action_collect_to_browser"
-            app:destination="@id/browserActivity"/>
+<!--        <action-->
+<!--            android:id="@+id/action_collect_to_browser"-->
+<!--            app:destination="@id/browserActivity"/>-->
 
     </activity>
 
