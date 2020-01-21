@@ -21,14 +21,12 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     override fun initVM(): LoginViewModel = getViewModel()
 
     override fun initView() {
-        mBinding.lifecycleOwner = this
         (mBinding as ActivityLoginBinding).viewModel = mViewModel
         mToolbar.setTitle(R.string.login)
         mToolbar.setNavigationIcon(R.drawable.arrow_back)
     }
 
     override fun initData() {
-        mViewModel = getViewModel()
         mToolbar.setNavigationOnClickListener { onBackPressed() }
     }
 

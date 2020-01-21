@@ -34,7 +34,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        afterTextChanged
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pswLayout"
             style="@style/TextInputLayout"
@@ -67,21 +67,13 @@
             android:textSize="16sp"
             android:onClick="@{() -> viewModel.login()}"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="@string/or"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
             android:text="@string/register"
             android:textColor="@color/white"

@@ -50,4 +50,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="me">我</string>
     <string name="confirm">确定</string>
+
+    <string name="executing_nth_iteration">%1$d / %2$d</string>
+
 </resources>

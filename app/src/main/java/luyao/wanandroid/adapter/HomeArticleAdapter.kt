@@ -1,5 +1,8 @@
 package luyao.wanandroid.adapter
 
+import android.util.Log
+import luyao.mvvm.core.util.Timer
+import luyao.wanandroid.APP_START
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
@@ -8,7 +11,7 @@ import luyao.wanandroid.model.bean.Article
  * Created by luyao
  * on 2018/3/14 15:52
  */
-class HomeArticleAdapter(layoutResId: Int = R.layout.item_article) : BaseBindAdapter<Article>(layoutResId, BR.article) {
+class HomeArticleAdapter(layoutResId: Int = R.layout.item_article_constraint) : BaseBindAdapter<Article>(layoutResId, BR.article) {
 
     private var showStar = true
 
@@ -28,5 +31,6 @@ class HomeArticleAdapter(layoutResId: Int = R.layout.item_article) : BaseBindAda
         else helper.setVisible(R.id.articleStar, false)
 
         helper.setText(R.id.articleAuthor,if (item.author.isBlank()) "分享者: ${item.shareUser}" else item.author)
+        Timer.stop(APP_START)
     }
 }

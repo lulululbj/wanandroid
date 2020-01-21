@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.tencent.smtt.sdk.QbSdk
+import luyao.mvvm.core.util.Timer
 import luyao.wanandroid.di.appModule
 import luyao.wanandroid.model.bean.User
 import org.koin.android.ext.koin.androidContext
@@ -19,6 +20,11 @@ class App : Application() {
     companion object {
         var CONTEXT: Context by Delegates.notNull()
         lateinit var CURRENT_USER: User
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        Timer.start(APP_START)
     }
 
     override fun onCreate() {

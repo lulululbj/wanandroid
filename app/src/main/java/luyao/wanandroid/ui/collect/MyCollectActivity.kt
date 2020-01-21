@@ -1,13 +1,10 @@
 package luyao.wanandroid.ui.collect
 
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.util.ktx.base.BaseVMActivity
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
@@ -19,7 +16,6 @@ import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
@@ -27,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>() {
 
-    override fun initVM(): ArticleViewModel  = getViewModel()
+    override fun initVM(): ArticleViewModel = getViewModel()
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
 

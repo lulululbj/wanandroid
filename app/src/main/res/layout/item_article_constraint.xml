@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="article"
+            type="luyao.wanandroid.model.bean.Article" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/articleImg"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/home_hot"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/articleAuthor"
+            style="@style/Article_text"
+            tools:text="luyao"
+            android:text="@{article.author}"
+            app:layout_constraintTop_toTopOf="@+id/articleImg"
+            app:layout_constraintBottom_toBottomOf="@+id/articleImg"
+            app:layout_constraintLeft_toRightOf="@+id/articleImg"/>
+
+        <TextView
+            android:id="@+id/articleTag"
+            android:layout_marginLeft="15dp"
+            style="@style/Article_text"
+            tools:text="Android"
+            android:text="@{article.superChapterName+`/`+article.chapterName}"
+            app:layout_constraintTop_toTopOf="@id/articleAuthor"
+            app:layout_constraintBottom_toBottomOf="@id/articleAuthor"
+            app:layout_constraintLeft_toRightOf="@id/articleAuthor"/>
+
+
+        <TextView
+            android:id="@+id/articleTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#1c1c1e"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            app:htmlText="@{article.title}"
+            app:layout_constraintTop_toBottomOf="@id/articleAuthor"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <ImageView
+            android:id="@+id/articleAuthorImg"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_time"
+            app:layout_constraintTop_toBottomOf="@id/articleTitle"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/articleTime"
+            style="@style/Article_text"
+            tools:text="1小时前"
+            android:text="@{article.niceDate}"
+            app:layout_constraintLeft_toRightOf="@+id/articleAuthorImg"
+            app:layout_constraintTop_toTopOf="@id/articleAuthorImg"
+            app:layout_constraintBottom_toBottomOf="@id/articleAuthorImg"/>
+
+        <ImageView
+            android:id="@+id/articleStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:clickable="true"
+            android:src="@drawable/timeline_like_normal"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintLeft_toRightOf="@+id/articleTime"
+            app:layout_constraintTop_toTopOf="@id/articleTime"
+            app:layout_constraintBottom_toBottomOf="@id/articleTime"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

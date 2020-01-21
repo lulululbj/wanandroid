@@ -21,6 +21,7 @@ import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.visible
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.User
+import luyao.wanandroid.test.ConstraintLayoutTest
 import luyao.wanandroid.ui.collect.MyCollectActivity
 import luyao.wanandroid.util.GITHUB_PAGE
 import luyao.wanandroid.util.ISSUE_URL
@@ -48,6 +49,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun initData() {
 
+        versionName.setOnClickListener { startKtxActivity<ConstraintLayoutTest>() }
         license.setOnClickListener { showOwnLicense() }
         source.setOnClickListener { activity?.openBrowser(GITHUB_PAGE) }
         feedback.setOnClickListener { showFeedBackMenu() }

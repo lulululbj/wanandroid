@@ -36,6 +36,7 @@
             android:name=".ui.share.ShareActivity"
             android:theme="@style/Theme_ShareActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".test.ConstraintLayoutTest" />
     </application>
 
 </manifest>

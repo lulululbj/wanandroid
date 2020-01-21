@@ -26,7 +26,6 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
         get() = _uiState
 
     val mRegisterUser: MutableLiveData<User> = MutableLiveData()
-//    private val repository by lazy { LoginRepository() }
 
     private fun isInputValid(userName: String, passWord: String) = userName.isNotBlank() && passWord.isNotBlank()
 
@@ -47,12 +46,6 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
             val result = repository.login(userName.get() ?: "", passWord.get() ?: "")
 
             withContext(provider.main) {
-//                if (result is Result.Success) {
-//                    emitUiState(showSuccess = result.data, enableLoginButton = true)
-//                } else if (result is Result.Error) {
-//                    emitUiState(showError = result.exception.message, enableLoginButton = true)
-//                }
-
                 checkResult(result,{
                     emitUiState(showSuccess = it, enableLoginButton = true)
                 },{

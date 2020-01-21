@@ -44,5 +44,10 @@ dependencies {
     api 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     api 'androidx.navigation:navigation-ui-ktx:2.1.0'
 
+    // ConstraintLayout
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+
+
     implementation project(path: ':ktx')
+
 }
