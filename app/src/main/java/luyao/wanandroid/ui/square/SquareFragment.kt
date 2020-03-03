@@ -25,13 +25,12 @@ class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
 
     override fun initVM(): ArticleViewModel = getViewModel()
 
-    private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square, BR.article) }
+    private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square_constraint, BR.article) }
 
     override fun getLayoutResId() = R.layout.fragment_square
 
 
     override fun initView() {
-        mBinding.lifecycleOwner = this
         (mBinding as FragmentSquareBinding).viewModel = mViewModel
         initRecycleView()
     }
@@ -64,7 +63,7 @@ class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
     }
 
     override fun startObserve() {
-        mViewModel.uiState.observe(this, Observer {
+        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
 
             it.showSuccess?.let { list ->
                 squareAdapter.run {

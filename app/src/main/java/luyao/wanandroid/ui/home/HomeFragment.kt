@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.FragmentHomeBinding
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
@@ -21,16 +21,17 @@ import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
 /**
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseVMFragment<ArticleViewModel>() {
+class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
 
-    private val mViewModel: ArticleViewModel by viewModel()
+    override fun initVM(): ArticleViewModel = getViewModel()
+
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
     private val bannerImages = mutableListOf<String>()
@@ -41,13 +42,9 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_home
 
     override fun initView() {
-
+        (mBinding as FragmentHomeBinding).viewModel = mViewModel
         initRecycleView()
         initBanner()
-
-        homeRefreshLayout.run {
-            setOnRefreshListener { refresh() }
-        }
     }
 
     override fun initData() {
@@ -110,7 +107,6 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     fun refresh() {
-        homeArticleAdapter.setEnableLoadMore(false)
         mViewModel.getHomeArticleList(true)
     }
 
@@ -122,10 +118,9 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
 
             uiState.observe(this@HomeFragment, Observer {
 
-                homeRefreshLayout.isRefreshing = it.showLoading
-
                 it.showSuccess?.let { list ->
                     homeArticleAdapter.run {
+                        homeArticleAdapter.setEnableLoadMore(false)
                         if (it.isRefresh) replaceData(list.datas)
                         else addData(list.datas)
                         setEnableLoadMore(true)

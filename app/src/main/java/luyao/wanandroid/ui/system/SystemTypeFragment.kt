@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.system
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
@@ -8,30 +7,28 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.FragmentSystemtypeBinding
 import luyao.wanandroid.ui.BrowserActivity
-import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * 体系下文章列表
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
+class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
 
-    private val mViewModel: ArticleViewModel by viewModel()
+    override fun initVM(): ArticleViewModel = getViewModel()
 
     private val cid by lazy { arguments?.getInt(CID) }
     private val isBlog by lazy { arguments?.getBoolean(BLOG) ?: false } // 区分是体系下的文章列表还是公众号下的文章列表
@@ -53,6 +50,7 @@ class SystemTypeFragment : BaseVMFragment<ArticleViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_systemtype
 
     override fun initView() {
+        (mBinding as FragmentSystemtypeBinding).viewModel = mViewModel
         initRecycleView()
     }
 

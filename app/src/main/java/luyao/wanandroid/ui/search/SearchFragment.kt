@@ -12,40 +12,41 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.FragmentSearchBinding
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
-import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
 /**
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchFragment : BaseVMFragment<SearchViewModel>() {
+class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
 
-    private val mViewModel: SearchViewModel by viewModel()
+    override fun initVM(): SearchViewModel = getViewModel()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var key = ""
+    private lateinit var mEmptyView : View
 
-    override fun getLayoutResId() = R.layout.activity_search
+    override fun getLayoutResId() = R.layout.fragment_search
 
     private val hotList = mutableListOf<Hot>()
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
+        (mBinding as FragmentSearchBinding).viewModel = mViewModel
         initTagLayout()
 
         searchRecycleView.run {
@@ -57,7 +58,7 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
         searchRefreshLayout.setOnRefreshListener { refresh() }
 
         searchView.run {
-//            isIconified = false
+            //            isIconified = false
 //            onActionViewExpanded()
             setOnQueryTextListener(onQueryTextListener)
         }
@@ -78,10 +79,9 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
         searchRecycleView.adapter = searchAdapter
-        val emptyView = layoutInflater.inflate(R.layout.empty_view, searchRecycleView.parent as ViewGroup, false)
-        val emptyTv = emptyView.findViewById<TextView>(R.id.emptyTv)
+        mEmptyView = layoutInflater.inflate(R.layout.empty_view, searchRecycleView.parent as ViewGroup, false)
+        val emptyTv = mEmptyView.findViewById<TextView>(R.id.emptyTv)
         emptyTv.text = getString(R.string.try_another_key)
-        searchAdapter.emptyView = emptyView
     }
 
     private fun loadMore() {
@@ -179,6 +179,7 @@ class SearchFragment : BaseVMFragment<SearchViewModel>() {
 
             it.showSuccess?.let { list ->
                 searchAdapter.run {
+                    emptyView = mEmptyView
                     if (it.isRefresh) replaceData(list.datas)
                     else addData(list.datas)
                     setEnableLoadMore(true)

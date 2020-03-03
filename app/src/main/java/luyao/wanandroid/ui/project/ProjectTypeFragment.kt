@@ -8,30 +8,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
-import luyao.wanandroid.ui.login.LoginActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
 import luyao.wanandroid.view.SpaceItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
  * 最新项目/项目分类
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
+class ProjectTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>(useDataBinding = false) {
+
+    override fun initVM(): ArticleViewModel = getViewModel()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-    private val mViewModel: ArticleViewModel by viewModel()
     private val cid by lazy { arguments?.getInt(CID) }
     private val isLasted by lazy { arguments?.getBoolean(LASTED) } // 区分是最新项目 还是项目分类
     private val projectAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_project, BR.article) }

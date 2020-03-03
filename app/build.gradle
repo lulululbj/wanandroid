@@ -42,15 +42,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
@@ -64,8 +64,8 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
-    implementation 'com.afollestad.material-dialogs:input:3.1.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
+    implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Koin for Android

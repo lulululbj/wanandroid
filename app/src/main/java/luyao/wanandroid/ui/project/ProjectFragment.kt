@@ -5,18 +5,14 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_project.*
-import luyao.util.ktx.base.BaseVMActivity
-import luyao.util.ktx.base.BaseVMFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.system.SystemTypeFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-open class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
+open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ProjectViewModel>(useDataBinding = false) {
 
-
-
-    private val mViewModel: ProjectViewModel by viewModel()
+    override fun initVM(): ProjectViewModel = getViewModel()
 
     private val mProjectTypeList = mutableListOf<SystemParent>()
     open var isBlog = false // 区分是公众号还是项目分类
@@ -28,11 +24,8 @@ open class ProjectFragment : BaseVMFragment<ProjectViewModel>() {
     }
 
     override fun initData() {
-//        projectToolbar.setNavigationOnClickListener { onBackPressed() }
-
         if (isBlog) mViewModel.getBlogType()
         else mViewModel.getProjectTypeList()
-
     }
 
     private fun initViewPager() {
