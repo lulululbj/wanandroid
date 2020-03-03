@@ -172,7 +172,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
 
     override fun startObserve() {
 
-        mViewModel.uiState.observe(this, Observer {
+        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
             searchRecycleView.visibility = if (it.showHot) View.GONE else View.VISIBLE
             hotContent.visibility = if (!it.showHot) View.GONE else View.VISIBLE
             searchRefreshLayout.isRefreshing = it.showLoading

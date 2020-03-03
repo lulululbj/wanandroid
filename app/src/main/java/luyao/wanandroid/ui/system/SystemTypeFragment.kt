@@ -114,7 +114,7 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
     }
 
     override fun startObserve() {
-        mViewModel.uiState.observe(this, Observer {
+        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
             typeRefreshLayout.isRefreshing = it.showLoading
 
             it.showSuccess?.let { list ->

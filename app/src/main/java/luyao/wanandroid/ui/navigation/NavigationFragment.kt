@@ -75,7 +75,7 @@ class NavigationFragment : luyao.mvvm.core.base.BaseVMFragment<NavigationViewMod
 
     override fun startObserve() {
         mViewModel.run {
-            navigationListState.observe(this@NavigationFragment, Observer {
+            navigationListState.observe(viewLifecycleOwner, Observer {
                 it?.run { getNavigation(it) }
             })
         }

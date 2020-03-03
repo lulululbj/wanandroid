@@ -54,7 +54,7 @@ open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ProjectViewMode
     }
 
     override fun startObserve() {
-        mViewModel.systemData.observe(this, Observer {
+        mViewModel.systemData.observe(viewLifecycleOwner, Observer {
             it?.run { getProjectTypeList(it) }
         })
     }
