@@ -26,10 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.BrowserActivity" />
+        <activity android:name=".ui.BrowserActivity" />
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
-        <activity android:name=".ui.search.SearchFragment" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity

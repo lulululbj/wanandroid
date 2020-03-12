@@ -11,6 +11,9 @@ import luyao.wanandroid.ui.project.BlogFragment
 import luyao.wanandroid.ui.project.ProjectFragment
 import luyao.wanandroid.ui.search.SearchFragment
 
+/**
+ * 这是首页 Tab
+ */
 class TabFragment : luyao.mvvm.core.base.BaseFragment() {
 
     private val fragmentList = arrayListOf<Fragment>()

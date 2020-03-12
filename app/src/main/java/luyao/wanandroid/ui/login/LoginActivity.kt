@@ -33,12 +33,6 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     override fun startObserve() {
         mViewModel.apply {
 
-            mRegisterUser.observe(this@LoginActivity, Observer {
-                it?.run {
-                    mViewModel.login()
-                }
-            })
-
             uiState.observe(this@LoginActivity, Observer {
                 if (it.showProgress) showProgressDialog()
 

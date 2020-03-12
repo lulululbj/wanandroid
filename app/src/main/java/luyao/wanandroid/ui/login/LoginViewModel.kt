@@ -25,8 +25,6 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
     val uiState: LiveData<LoginUiModel>
         get() = _uiState
 
-    val mRegisterUser: MutableLiveData<User> = MutableLiveData()
-
     private fun isInputValid(userName: String, passWord: String) = userName.isNotBlank() && passWord.isNotBlank()
 
     fun loginDataChanged() {
@@ -35,23 +33,41 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
 
     // ViewModel 只处理视图逻辑，数据仓库 Repository 负责业务逻辑
     fun login() {
-        viewModelScope.launch(provider.computation) {
+//        viewModelScope.launch(provider.computation) {
+//            if (userName.get().isNullOrBlank() || passWord.get().isNullOrBlank()) {
+//                emitUiState(enableLoginButton = false)
+//                return@launch
+//            }
+//
+//            withContext(provider.main) { showLoading() }
+//
+//            val result = repository.login(userName.get() ?: "", passWord.get() ?: "")
+//
+//            withContext(provider.main) {
+//                checkResult(result,{
+//                    emitUiState(showSuccess = it, enableLoginButton = true)
+//                },{
+//                    emitUiState(showError = it , enableLoginButton = true)
+//                })
+//            }
+//        }
+
+        // retrofit 会自动切线程，好像也不用我切来切去
+        viewModelScope.launch {
             if (userName.get().isNullOrBlank() || passWord.get().isNullOrBlank()) {
                 emitUiState(enableLoginButton = false)
                 return@launch
             }
 
-            withContext(provider.main) { showLoading() }
+            showLoading()
 
             val result = repository.login(userName.get() ?: "", passWord.get() ?: "")
 
-            withContext(provider.main) {
-                checkResult(result,{
-                    emitUiState(showSuccess = it, enableLoginButton = true)
-                },{
-                    emitUiState(showError = it , enableLoginButton = true)
-                })
-            }
+            checkResult(result,{
+                emitUiState(showSuccess = it, enableLoginButton = true)
+            },{
+                emitUiState(showError = it , enableLoginButton = true)
+            })
         }
     }
 
