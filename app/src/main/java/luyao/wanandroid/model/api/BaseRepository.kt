@@ -2,7 +2,7 @@ package luyao.wanandroid.model.api
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.bean.WanResponse
 import java.io.IOException
 

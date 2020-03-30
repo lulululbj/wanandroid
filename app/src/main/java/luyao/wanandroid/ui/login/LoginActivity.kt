@@ -34,14 +34,14 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
         mViewModel.apply {
 
             uiState.observe(this@LoginActivity, Observer {
-                if (it.showProgress) showProgressDialog()
+                if (it.isLoading) showProgressDialog()
 
-                it.showSuccess?.let {
+                it.isSuccess?.let {
                     dismissProgressDialog()
                     finish()
                 }
 
-                it.showError?.let { err ->
+                it.isError?.let { err ->
                     dismissProgressDialog()
                     toast(err)
                 }

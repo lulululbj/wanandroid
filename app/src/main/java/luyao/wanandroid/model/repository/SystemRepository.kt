@@ -1,6 +1,6 @@
 package luyao.wanandroid.model.repository
 
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList

@@ -2,7 +2,7 @@ package luyao.wanandroid.model.repository
 
 import com.google.gson.Gson
 import luyao.wanandroid.App
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.bean.User

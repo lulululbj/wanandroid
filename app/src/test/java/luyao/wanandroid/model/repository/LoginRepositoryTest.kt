@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.model.bean.WanResponse

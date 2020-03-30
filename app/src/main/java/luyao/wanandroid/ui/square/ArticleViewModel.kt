@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.util.ktx.base.BaseViewModel
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.base.BaseViewModel
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.model.repository.*
@@ -63,7 +63,7 @@ class ArticleViewModel(
     fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.Blog, isRefresh, cid)
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
-        launch {
+        launchOnUI {
             withContext(Dispatchers.IO) {
                 if (boolean) collectRepository.collectArticle(articleId)
                 else collectRepository.unCollectArticle(articleId)

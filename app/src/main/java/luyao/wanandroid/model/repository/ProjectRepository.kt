@@ -1,6 +1,6 @@
 package luyao.wanandroid.model.repository
 
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
@@ -31,7 +31,7 @@ class ProjectRepository : BaseRepository() {
     private suspend fun requestProjectTypeDetailList(page: Int, cid: Int) =
             executeResponse(WanRetrofitClient.service.getProjectTypeDetail(page, cid))
 
-    private suspend fun requestLastedProject(page: Int):Result<ArticleList> =
+    private suspend fun requestLastedProject(page: Int): Result<ArticleList> =
             executeResponse(WanRetrofitClient.service.getLastedProject(page))
 
     private suspend fun requestProjectTypeList() =

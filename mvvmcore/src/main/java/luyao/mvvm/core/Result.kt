@@ -1,4 +1,4 @@
-package luyao.wanandroid.core
+package luyao.mvvm.core
 
 /**
  * Created by luyao

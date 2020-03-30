@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.util.ktx.base.BaseViewModel
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.base.BaseViewModel
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SystemRepository
@@ -39,7 +39,7 @@ class SystemViewModel(
     }
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
-        launch {
+        launchOnUI {
             withContext(Dispatchers.IO) {
                 if (boolean) collectRepository.collectArticle(articleId)
                 else collectRepository.unCollectArticle(articleId)

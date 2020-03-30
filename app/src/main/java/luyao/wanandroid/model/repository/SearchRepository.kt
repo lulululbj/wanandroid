@@ -1,6 +1,6 @@
 package luyao.wanandroid.model.repository
 
-import luyao.wanandroid.core.Result
+import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
@@ -23,12 +23,12 @@ class SearchRepository : BaseRepository() {
         return safeApiCall(call = {requestHotSearch()},errorMessage = "网络错误")
     }
 
-    private suspend fun requestWebSites():Result<List<Hot>> =
+    private suspend fun requestWebSites(): Result<List<Hot>> =
             executeResponse(WanRetrofitClient.service.getWebsites())
 
-    private suspend fun requestHotSearch():Result<List<Hot>> =
+    private suspend fun requestHotSearch(): Result<List<Hot>> =
             executeResponse(WanRetrofitClient.service.getHot())
 
-    private suspend fun requestSearch(page: Int, key: String):Result<ArticleList> =
+    private suspend fun requestSearch(page: Int, key: String): Result<ArticleList> =
             executeResponse(WanRetrofitClient.service.searchHot(page, key))
 }
