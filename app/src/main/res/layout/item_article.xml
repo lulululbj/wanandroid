@@ -25,12 +25,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:src="@drawable/home_hot" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/articleAuthor"
                     style="@style/Article_text"
                     tools:text="luyao"
@@ -43,7 +43,7 @@
                 <!--android:layout_marginLeft="15dp"-->
                 <!--android:src="@drawable/home_hot" />-->
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/articleTag"
                     android:layout_marginLeft="15dp"
                     style="@style/Article_text"
@@ -52,7 +52,7 @@
 
             </LinearLayout>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/articleTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                     android:layout_height="14dp"
                     android:src="@drawable/ic_time" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/articleTime"
                     style="@style/Article_text"
                     tools:text="1小时前"

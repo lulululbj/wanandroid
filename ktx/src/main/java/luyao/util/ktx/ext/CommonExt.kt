@@ -2,9 +2,11 @@ package luyao.util.ktx.ext
 
 import android.content.ClipData
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.View
 import androidx.annotation.RequiresApi
 
@@ -63,6 +65,9 @@ fun View.dp2px(dp: Int): Int {
     return (dp * scale + 0.5f).toInt()
 }
 
+val Int.dp
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics)
+
 fun View.px2dp(px: Int): Int {
     val scale = resources.displayMetrics.density
     return (px / scale + 0.5f).toInt()
@@ -81,10 +86,10 @@ fun Context.copyToClipboard(text: String, label: String = "KTX") {
  */
 fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
     val settingValue =
-        Settings.Secure.getString(
-            applicationContext.contentResolver,
-            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        )
+            Settings.Secure.getString(
+                    applicationContext.contentResolver,
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+            )
     return settingValue.notNull({
         var result = false
         val splitter = TextUtils.SimpleStringSplitter(':')

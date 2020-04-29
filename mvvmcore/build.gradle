@@ -36,13 +36,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Navigation
-    api 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    api 'androidx.navigation:navigation-ui-ktx:2.2.1'
+    api 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    api 'androidx.navigation:navigation-ui-ktx:2.2.2'
 
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Article_text">
+    <style name="Article_text" parent="@style/Widget.MaterialComponents.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#8e9dac</item>
@@ -8,7 +8,7 @@
         <item name="android:layout_marginLeft">2dp</item>
     </style>
 
-    <style name="TextInputLayout" parent="@style/Widget.Design.TextInputLayout">
+    <style name="TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">20dp</item>

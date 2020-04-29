@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="article"
             type="luyao.wanandroid.model.bean.Article" />
@@ -21,7 +20,7 @@
         android:paddingRight="20dp"
         android:paddingBottom="10dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/shareTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +40,7 @@
                 android:layout_height="14dp"
                 android:src="@drawable/home_hot" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/shareAuthor"
                 style="@style/Article_text"
                 android:text="@{article.shareUser}"
@@ -53,7 +52,7 @@
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/ic_time" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/shareTime"
                 style="@style/Article_text"
                 android:text="@{article.niceShareDate}"

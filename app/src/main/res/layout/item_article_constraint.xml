@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/articleAuthor"
             style="@style/Article_text"
             tools:text="luyao"
@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/articleImg"
             app:layout_constraintLeft_toRightOf="@+id/articleImg"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/articleTag"
             android:layout_marginLeft="15dp"
             style="@style/Article_text"
@@ -46,13 +46,14 @@
             app:layout_constraintLeft_toRightOf="@id/articleAuthor"/>
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/articleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#1c1c1e"
             android:textSize="16sp"
-            android:layout_marginTop="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="8dp"
             app:htmlText="@{article.title}"
             app:layout_constraintTop_toBottomOf="@id/articleAuthor"
             app:layout_constraintLeft_toLeftOf="parent"/>
@@ -65,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/articleTitle"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/articleTime"
             style="@style/Article_text"
             tools:text="1小时前"

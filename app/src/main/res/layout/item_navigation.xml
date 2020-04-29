@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/navigationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

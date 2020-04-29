@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_home.*
+import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
@@ -54,7 +55,7 @@ class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
     private fun initRecycleView() {
         homeRecycleView.run {
             layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(homeRecycleView.dp2px(10)))
+            addItemDecoration(SpaceItemDecoration(10.dp.toInt()))
         }
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->

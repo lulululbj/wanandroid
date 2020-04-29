@@ -10,7 +10,7 @@
             type="luyao.wanandroid.model.bean.Article" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
@@ -33,7 +33,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/projectName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                     tools:text="音乐播放器"
                     app:htmlText="@{article.title}"/>
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/projectDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/projectTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         android:textSize="12sp"
                         android:text="@{article.niceDate}"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/projectAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,5 +87,5 @@
 
             </RelativeLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -92,7 +92,7 @@
                 android:layout_marginTop="16dp"
                 app:goneUnless="@{viewModel.uiState.showProgress}">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/shareBt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

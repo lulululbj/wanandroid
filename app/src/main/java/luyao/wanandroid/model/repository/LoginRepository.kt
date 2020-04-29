@@ -3,6 +3,7 @@ package luyao.wanandroid.model.repository
 import com.google.gson.Gson
 import luyao.wanandroid.App
 import luyao.mvvm.core.Result
+import luyao.wanandroid.R
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.bean.User
@@ -20,7 +21,7 @@ class LoginRepository(val service:WanService) : BaseRepository() {
 
     suspend fun login(userName: String, passWord: String): Result<User> {
         return safeApiCall(call = { requestLogin(userName, passWord) },
-                errorMessage = "登录失败!")
+                errorMessage = App.CONTEXT.getString(R.string.about))
     }
 
     // TODO Move into DataSource Layer ?

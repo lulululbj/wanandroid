@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/titleTv"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -31,7 +31,7 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_dynamic_user" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/loginTv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/collect"
         style="@style/About_Tv"
         android:layout_marginTop="20dp"
@@ -52,35 +52,35 @@
 
     <View style="@style/Line" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/license"
         style="@style/About_Tv"
         android:text="@string/license" />
 
     <View style="@style/Line" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/source"
         style="@style/About_Tv"
         android:text="@string/source_url" />
 
     <View style="@style/Line" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/feedback"
         style="@style/About_Tv"
         android:text="@string/feedback" />
 
     <View style="@style/Line" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/thirdLib"
         style="@style/About_Tv"
         android:text="@string/third_lib" />
 
     <View style="@style/Line" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/developer"
         style="@style/About_Tv"
         android:text="@string/developer" />
@@ -90,7 +90,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/versionName"
         android:layout_width="match_parent"
         android:layout_height="40dp"

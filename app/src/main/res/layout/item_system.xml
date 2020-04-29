@@ -9,7 +9,7 @@
             type="luyao.wanandroid.model.bean.SystemParent" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,7 +19,7 @@
             android:gravity="center_vertical"
             android:padding="10dp">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/systemParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 tools:text="Parent"
                 android:text="@{systemParent.name}"/>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/systemChild"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,5 +46,5 @@
                 android:src="@drawable/arrow_back" />
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
