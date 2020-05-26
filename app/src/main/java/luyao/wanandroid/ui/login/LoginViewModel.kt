@@ -3,13 +3,16 @@ package luyao.wanandroid.ui.login
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.mvvm.core.Result
 import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.CoroutinesDispatcherProvider
+import luyao.wanandroid.R
 import luyao.wanandroid.checkResult
+import luyao.wanandroid.model.bean.Title
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.model.repository.LoginRepository
 

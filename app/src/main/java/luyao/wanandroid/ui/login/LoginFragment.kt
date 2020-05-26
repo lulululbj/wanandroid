@@ -1,48 +1,49 @@
 package luyao.wanandroid.ui.login
 
 import android.app.ProgressDialog
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
-import luyao.mvvm.core.base.BaseVMActivity
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.title_layout.*
+import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
-import luyao.wanandroid.model.bean.Title
+import luyao.wanandroid.databinding.ActivityLoginBinding
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
- * Created by Lu
- * on 2018/4/5 07:56
+ * Created by luyao
+ * on 2020/5/25 16:36
  */
-class LoginActivity : BaseVMActivity<LoginViewModel>() {
+class LoginFragment : BaseVMFragment<LoginViewModel>() {
 
     override fun getLayoutResId() = R.layout.activity_login
 
     override fun initVM(): LoginViewModel = getViewModel()
 
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel, mViewModel)
-            setVariable(BR.title, Title(R.string.login, R.drawable.arrow_back) { onBackPressed() })
-        }
+        (mBinding as ActivityLoginBinding).viewModel = mViewModel
+        mToolbar.setTitle(R.string.login)
+        mToolbar.setNavigationIcon(R.drawable.arrow_back)
     }
 
     override fun initData() {
+        mToolbar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     override fun startObserve() {
         mViewModel.apply {
 
-            uiState.observe(this@LoginActivity, Observer {
+            uiState.observe(viewLifecycleOwner, Observer {
                 if (it.isLoading) showProgressDialog()
 
                 it.isSuccess?.let {
                     dismissProgressDialog()
-                    finish()
+                    findNavController().navigateUp()
                 }
 
                 it.isError?.let { err ->
                     dismissProgressDialog()
-                    toast(err)
+                    activity?.toast(err)
                 }
             })
         }
@@ -51,12 +52,11 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     private var progressDialog: ProgressDialog? = null
     private fun showProgressDialog() {
         if (progressDialog == null)
-            progressDialog = ProgressDialog(this)
+            progressDialog = ProgressDialog(context)
         progressDialog?.show()
     }
 
     private fun dismissProgressDialog() {
         progressDialog?.dismiss()
     }
-
 }

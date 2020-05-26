@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.login.LoginViewModel" />
+
+        <variable
+            name="title"
+            type="luyao.wanandroid.model.bean.Title" />
     </data>
 
 
@@ -16,7 +20,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/title_layout" />
+        <include layout="@layout/title_layout"
+            app:title="@{title}"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userNameLayout"
