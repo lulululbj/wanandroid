@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_new_main.*
+import luyao.mvvm.core.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.home.HomeFragment
 import luyao.wanandroid.ui.navigation.NavigationFragment
@@ -18,7 +19,7 @@ import luyao.wanandroid.util.Preference
  * Created by luyao
  * on 2019/5/7 15:36
  */
-class MainFragment : luyao.mvvm.core.base.BaseFragment() {
+class MainFragment : BaseFragment() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
 

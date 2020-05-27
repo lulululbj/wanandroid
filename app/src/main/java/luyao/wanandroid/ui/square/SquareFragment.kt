@@ -2,19 +2,15 @@ package luyao.wanandroid.ui.square
 
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_square.*
-import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
-import luyao.wanandroid.databinding.FragmentSquareBinding
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -31,7 +27,10 @@ class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
 
 
     override fun initView() {
-        (mBinding as FragmentSquareBinding).viewModel = mViewModel
+        mBinding.run {
+            setVariable(BR.viewModel, mViewModel)
+            setVariable(BR.adapter, squareAdapter)
+        }
         initRecycleView()
     }
 
@@ -46,11 +45,6 @@ class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
             }
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, squareRecycleView)
-        }
-        squareRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(squareRecycleView.dp2px(10)))
-            adapter = squareAdapter
         }
     }
 

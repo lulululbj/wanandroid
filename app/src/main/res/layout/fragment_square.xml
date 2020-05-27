@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.square.ArticleViewModel" />
+
+        <variable
+            name="adapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,7 +23,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/squareRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            binding:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            itemBottomPadding="10dp"
+            adapter="@{adapter}"/>
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

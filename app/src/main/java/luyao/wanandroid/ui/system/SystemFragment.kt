@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_system.*
+import luyao.mvvm.core.view.SpaceItemDecoration
+import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
@@ -12,7 +14,6 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.databinding.FragmentSystemBinding
 import luyao.wanandroid.model.bean.SystemParent
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -29,7 +30,10 @@ class SystemFragment : luyao.mvvm.core.base.BaseVMFragment<SystemViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_system
 
     override fun initView() {
-        (mBinding as FragmentSystemBinding).viewModel = mViewModel
+        mBinding.run {
+            setVariable(BR.viewModel,mViewModel)
+            setVariable(BR.adapter,systemAdapter)
+        }
         initRecycleView()
     }
 
@@ -38,11 +42,6 @@ class SystemFragment : luyao.mvvm.core.base.BaseVMFragment<SystemViewModel>() {
     }
 
     private fun initRecycleView() {
-        systemRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(systemRecycleView.dp2px(10)))
-            adapter = systemAdapter
-        }
 
         systemAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
             startKtxActivity<SystemTypeNormalActivity>(value = SystemTypeNormalActivity.ARTICLE_LIST to systemAdapter.data[position])

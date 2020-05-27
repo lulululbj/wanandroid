@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.search.SearchViewModel" />
+
+        <variable
+            name="adapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
     </data>
 
     <LinearLayout
@@ -34,7 +38,10 @@
                     android:id="@+id/searchRecycleView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    itemBottomPadding="10dp"
+                    adapter="@{adapter}">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

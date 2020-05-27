@@ -3,25 +3,24 @@ package luyao.wanandroid.ui.home
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.NavHostFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.ext.dp
+import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.databinding.FragmentHomeBinding
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -29,7 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
+class HomeFragment : BaseVMFragment<ArticleViewModel>() {
 
     override fun initVM(): ArticleViewModel = getViewModel()
 
@@ -43,7 +42,10 @@ class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_home
 
     override fun initView() {
-        (mBinding as FragmentHomeBinding).viewModel = mViewModel
+        mBinding.run {
+            setVariable(BR.viewModel, mViewModel)
+            setVariable(BR.adapter,homeArticleAdapter)
+        }
         initRecycleView()
         initBanner()
     }
@@ -53,14 +55,10 @@ class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
     }
 
     private fun initRecycleView() {
-        homeRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(10.dp.toInt()))
-        }
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
                 val bundle = bundleOf(BrowserActivity.URL to homeArticleAdapter.data[position].link)
-                androidx.navigation.Navigation.findNavController(homeRecycleView).navigate(R.id.action_tab_to_browser, bundle)
+                NavHostFragment.findNavController(this@HomeFragment).navigate(R.id.action_tab_to_browser, bundle)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
             if (headerLayoutCount > 0) removeAllHeaderView()
@@ -68,7 +66,6 @@ class HomeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
-        homeRecycleView.adapter = homeArticleAdapter
     }
 
     private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->

@@ -2,12 +2,14 @@ package luyao.wanandroid.ui.system
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.util.ktx.ext.dp2px
+import luyao.mvvm.core.view.SpaceItemDecoration
+import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
@@ -16,7 +18,6 @@ import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -50,7 +51,10 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
     override fun getLayoutResId() = R.layout.fragment_systemtype
 
     override fun initView() {
-        (mBinding as FragmentSystemtypeBinding).viewModel = mViewModel
+        mBinding.run {
+            setVariable(BR.viewModel,mViewModel)
+            setVariable(BR.adapter,systemTypeAdapter)
+        }
         initRecycleView()
     }
 
@@ -68,11 +72,6 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
 
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
-        }
-        typeRecycleView.run {
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(SpaceItemDecoration(typeRecycleView.dp2px(10)))
-            adapter = systemTypeAdapter
         }
     }
 

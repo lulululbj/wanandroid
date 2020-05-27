@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigationRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <q.rorbin.verticaltablayout.VerticalTabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="visible"
-        app:indicator_color="#FFFFFF"
-        app:indicator_corners="5dp"
-        app:indicator_gravity="right"
-        app:tab_height="50dp"
-        app:tab_mode="scrollable" />
+    <data>
+        <variable
+            name="adapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
+    </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/navigationRecycleView"
+    <LinearLayout
+        android:id="@+id/navigationRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <q.rorbin.verticaltablayout.VerticalTabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:indicator_color="#FFFFFF"
+            app:indicator_corners="5dp"
+            app:indicator_gravity="right"
+            app:tab_height="50dp"
+            app:tab_mode="scrollable" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/navigationRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            itemTopPadding="20dp"
+            adapter="@{adapter}">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

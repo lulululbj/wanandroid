@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
-import luyao.util.ktx.ext.dp2px
+import luyao.mvvm.core.view.SpaceItemDecoration
+import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
@@ -14,7 +15,6 @@ import luyao.wanandroid.databinding.ActivityCollectBinding
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -38,7 +38,7 @@ class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>(
 
         collectRecycleView.run {
             layoutManager = LinearLayoutManager(this@MyCollectActivity)
-            addItemDecoration(SpaceItemDecoration(collectRecycleView.dp2px(10)))
+            addItemDecoration(SpaceItemDecoration(bottom = 20.dp.toInt()))
         }
 
         initAdapter()

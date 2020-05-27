@@ -6,24 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import luyao.util.ktx.ext.dp2px
+import kotlinx.android.synthetic.main.fragment_search.*
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
-import luyao.wanandroid.databinding.FragmentSearchBinding
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -38,7 +35,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var key = ""
-    private lateinit var mEmptyView : View
+    private lateinit var mEmptyView: View
 
     override fun getLayoutResId() = R.layout.fragment_search
 
@@ -46,20 +43,15 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
-        (mBinding as FragmentSearchBinding).viewModel = mViewModel
-        initTagLayout()
-
-        searchRecycleView.run {
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(SpaceItemDecoration(searchRecycleView.dp2px(10)))
-
+        mBinding.run {
+            setVariable(BR.viewModel, mViewModel)
+            setVariable(BR.adapter, searchAdapter)
         }
+        initTagLayout()
         initAdapter()
         searchRefreshLayout.setOnRefreshListener { refresh() }
 
         searchView.run {
-            //            isIconified = false
-//            onActionViewExpanded()
             setOnQueryTextListener(onQueryTextListener)
         }
     }
@@ -78,7 +70,6 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, homeRecycleView)
         }
-        searchRecycleView.adapter = searchAdapter
         mEmptyView = layoutInflater.inflate(R.layout.empty_view, searchRecycleView.parent as ViewGroup, false)
         val emptyTv = mEmptyView.findViewById<TextView>(R.id.emptyTv)
         emptyTv.text = getString(R.string.try_another_key)

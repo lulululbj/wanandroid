@@ -14,6 +14,7 @@ import de.psdev.licensesdialog.LicensesDialog
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20
 import de.psdev.licensesdialog.model.Notice
 import kotlinx.android.synthetic.main.fragmnet_profile.*
+import luyao.mvvm.core.base.BaseFragment
 import luyao.util.ktx.ext.gone
 import luyao.util.ktx.ext.openBrowser
 import luyao.util.ktx.ext.startKtxActivity
@@ -29,7 +30,7 @@ import luyao.wanandroid.util.Preference
  * Created by luyao
  * on 2019/12/12 14:12
  */
-class ProfileFragment : luyao.mvvm.core.base.BaseFragment() {
+class ProfileFragment : BaseFragment() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")

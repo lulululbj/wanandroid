@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
+import luyao.mvvm.core.base.BaseVMFragment
+import luyao.mvvm.core.view.SpaceItemDecoration
+import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.dp2px
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
@@ -17,7 +20,6 @@ import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import luyao.wanandroid.view.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -25,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
  * Created by Lu
  * on 2018/4/1 17:06
  */
-class ProjectTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>(useDataBinding = false) {
+class ProjectTypeFragment : BaseVMFragment<ArticleViewModel>() {
 
     override fun initVM(): ArticleViewModel = getViewModel()
 
@@ -50,6 +52,9 @@ class ProjectTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel
     }
 
     override fun initView() {
+        mBinding.run {
+            setVariable(BR.adapter,projectAdapter)
+        }
         initRecycleView()
     }
 
@@ -71,11 +76,6 @@ class ProjectTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, typeRecycleView)
             onItemChildClickListener = this@ProjectTypeFragment.onItemChildClickListener
-        }
-        projectRecycleView.run {
-            layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItemDecoration(projectRecycleView.dp2px(10)))
-            adapter = projectAdapter
         }
     }
 
