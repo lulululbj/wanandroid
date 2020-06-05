@@ -78,7 +78,7 @@ fun View.px2dp(px: Int): Int {
  */
 fun Context.copyToClipboard(text: String, label: String = "KTX") {
     val clipData = ClipData.newPlainText(label, text)
-    clipboardManager?.primaryClip = clipData
+    clipboardManager?.setPrimaryClip(clipData)
 }
 
 /**

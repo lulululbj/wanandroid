@@ -1,18 +1,20 @@
+import luyao.dependencies.Deps
+import luyao.dependencies.Versions
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
-
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -25,29 +27,27 @@ android {
         }
     }
 
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding = true
     }
 
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation Deps.kotlin_stdlib
+    implementation Deps.appcompat
+    implementation Deps.core_ktx
+
+    // Navigation
+    api Deps.navigation_fragment_ktx
+    api Deps.navigation_ui_ktx
+    implementation Deps.constraintlayout
+    implementation project(path: ':ktx')
+
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // Navigation
-    api 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    api 'androidx.navigation:navigation-ui-ktx:2.2.2'
-
-    // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
-
-
-    implementation project(path: ':ktx')
 
 }
