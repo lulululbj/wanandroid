@@ -1,19 +1,25 @@
 package luyao.wanandroid.ui.login
 
 import android.app.ProgressDialog
+import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Title
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
  * on 2018/4/5 07:56
  */
+@AndroidEntryPoint
 class LoginActivity : BaseVMActivity<LoginViewModel>() {
+
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun getLayoutResId() = R.layout.activity_login
 
@@ -21,7 +27,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     override fun initView() {
         mBinding.run {
-            setVariable(BR.viewModel, mViewModel)
+            setVariable(BR.viewModel, loginViewModel)
             setVariable(BR.title, Title(R.string.login, R.drawable.arrow_back) { onBackPressed() })
         }
     }
@@ -30,7 +36,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     }
 
     override fun startObserve() {
-        mViewModel.apply {
+        loginViewModel.apply {
 
             uiState.observe(this@LoginActivity, Observer {
                 if (it.isLoading) showProgressDialog()

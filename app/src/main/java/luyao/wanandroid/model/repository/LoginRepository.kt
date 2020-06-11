@@ -8,12 +8,15 @@ import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanService
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.util.Preference
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by luyao
  * on 2019/4/10 9:42
  */
-class LoginRepository(val service:WanService) : BaseRepository() {
+@Singleton
+class LoginRepository @Inject constructor(val service:WanService) : BaseRepository() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")

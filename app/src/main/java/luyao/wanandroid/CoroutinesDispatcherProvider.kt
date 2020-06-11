@@ -21,15 +21,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import javax.inject.Inject
 
 /**
  * Provide coroutines context.
  */
-data class CoroutinesDispatcherProvider(
+data class CoroutinesDispatcherProvider  (
         val main: CoroutineDispatcher = Dispatchers.Main,
         val computation: CoroutineDispatcher = Dispatchers.Default,
         val io: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    constructor() : this(Main, Default, IO)
+   @Inject constructor() : this(Main, Default, IO)
 }
