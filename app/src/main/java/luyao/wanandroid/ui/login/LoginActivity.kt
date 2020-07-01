@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import androidx.activity.viewModels
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
-import dagger.hilt.android.AndroidEntryPoint
 import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
@@ -16,7 +15,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Created by Lu
  * on 2018/4/5 07:56
  */
-@AndroidEntryPoint
 class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     private val loginViewModel by viewModels<LoginViewModel>()

@@ -1,7 +1,6 @@
 package luyao.wanandroid.ui.login
 
 import androidx.databinding.ObservableField
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,7 @@ import luyao.wanandroid.model.repository.LoginRepository
  * Created by luyao
  * on 2019/4/2 16:36
  */
-class LoginViewModel @ViewModelInject constructor(val repository: LoginRepository, val provider: CoroutinesDispatcherProvider) : BaseViewModel() {
+class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDispatcherProvider) : BaseViewModel() {
 
     val userName = ObservableField<String>("")
     val passWord = ObservableField<String>("")
