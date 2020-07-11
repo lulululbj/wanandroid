@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_constraint_test.*
 import luyao.util.ktx.ext.invisible
-import luyao.util.ktx.ext.visible
 import luyao.wanandroid.R
 import java.lang.ref.WeakReference
 

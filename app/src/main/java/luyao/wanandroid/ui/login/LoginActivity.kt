@@ -1,32 +1,27 @@
 package luyao.wanandroid.ui.login
 
 import android.app.ProgressDialog
-import androidx.activity.viewModels
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
+import luyao.wanandroid.databinding.ActivityLoginBinding
 import luyao.wanandroid.model.bean.Title
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
  * on 2018/4/5 07:56
  */
-class LoginActivity : BaseVMActivity<LoginViewModel>() {
+class LoginActivity : BaseVMActivity() {
 
-    private val loginViewModel by viewModels<LoginViewModel>()
-
-    override fun getLayoutResId() = R.layout.activity_login
-
-    override fun initVM(): LoginViewModel = getViewModel()
+    private val loginViewModel by viewModel<LoginViewModel>()
+    private val binding by binding<ActivityLoginBinding>(R.layout.activity_login)
 
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel, loginViewModel)
-            setVariable(BR.title, Title(R.string.login, R.drawable.arrow_back) { onBackPressed() })
+        binding.run {
+            viewModel = loginViewModel
+            title =  Title(R.string.login, R.drawable.arrow_back) { onBackPressed() }
         }
     }
 

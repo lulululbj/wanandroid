@@ -2,14 +2,11 @@ package luyao.wanandroid.ui.system
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_systemtype.*
-import luyao.mvvm.core.view.SpaceItemDecoration
-import luyao.util.ktx.ext.dp
+import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
@@ -18,19 +15,17 @@ import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系下文章列表
  * Created by Lu
  * on 2018/3/27 21:36
  */
-class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
+class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fragment_systemtype) {
 
+    private val articleViewModel by viewModel<ArticleViewModel>()
     private val isLogin by Preference(Preference.IS_LOGIN, false)
-
-    override fun initVM(): ArticleViewModel = getViewModel()
-
     private val cid by lazy { arguments?.getInt(CID) }
     private val isBlog by lazy { arguments?.getBoolean(BLOG) ?: false } // 区分是体系下的文章列表还是公众号下的文章列表
     private val systemTypeAdapter by lazy { HomeArticleAdapter() }
@@ -48,12 +43,10 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
         }
     }
 
-    override fun getLayoutResId() = R.layout.fragment_systemtype
-
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel,mViewModel)
-            setVariable(BR.adapter,systemTypeAdapter)
+        binding.run {
+            viewModel = articleViewModel
+            adapter = systemTypeAdapter
         }
         initRecycleView()
     }
@@ -82,7 +75,7 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
                     systemTypeAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id, collect)
+                            articleViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }
@@ -106,14 +99,14 @@ class SystemTypeFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>
     private fun loadData(isRefresh: Boolean) {
         cid?.let {
             if (this.isBlog)
-                mViewModel.getBlogArticleList(isRefresh, it)
+                articleViewModel.getBlogArticleList(isRefresh, it)
             else
-                mViewModel.getSystemTypeArticleList(isRefresh, it)
+                articleViewModel.getSystemTypeArticleList(isRefresh, it)
         }
     }
 
     override fun startObserve() {
-        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
+        articleViewModel.uiState.observe(viewLifecycleOwner, Observer {
             typeRefreshLayout.isRefreshing = it.showLoading
 
             it.showSuccess?.let { list ->

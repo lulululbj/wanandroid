@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
+import luyao.mvvm.core.base.BaseVMActivity
 import luyao.mvvm.core.view.SpaceItemDecoration
 import luyao.util.ktx.ext.dp
 import luyao.util.ktx.ext.startKtxActivity
@@ -15,23 +16,22 @@ import luyao.wanandroid.databinding.ActivityCollectBinding
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
  * on 2018/4/10 22:09
  */
-class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>() {
+class MyCollectActivity : BaseVMActivity() {
 
-    override fun initVM(): ArticleViewModel = getViewModel()
+    private val articleViewModel by viewModel<ArticleViewModel>()
+    private val binding by binding<ActivityCollectBinding>(R.layout.activity_collect)
 
     private val articleAdapter by lazy { HomeArticleAdapter() }
 
-    override fun getLayoutResId() = R.layout.activity_collect
-
     override fun initView() {
 
-        (mBinding as ActivityCollectBinding).viewModel = mViewModel
+        binding.viewModel = articleViewModel
 
         mToolbar.title = getString(R.string.my_collect)
         mToolbar.setNavigationIcon(R.drawable.arrow_back)
@@ -51,7 +51,7 @@ class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>(
     }
 
     private fun refresh() {
-        mViewModel.getCollectArticleList(true)
+        articleViewModel.getCollectArticleList(true)
     }
 
     private fun initAdapter() {
@@ -74,7 +74,7 @@ class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>(
                 articleAdapter.run {
                     data[position].run {
                         collect = !collect
-                        mViewModel.collectArticle(originId, collect)
+                        articleViewModel.collectArticle(originId, collect)
                     }
                     notifyItemRemoved(position)
                 }
@@ -83,12 +83,12 @@ class MyCollectActivity : luyao.mvvm.core.base.BaseVMActivity<ArticleViewModel>(
     }
 
     private fun loadMore() {
-        mViewModel.getCollectArticleList(false)
+        articleViewModel.getCollectArticleList(false)
     }
 
     override fun startObserve() {
 
-        mViewModel.apply {
+        articleViewModel.apply {
 
             uiState.observe(this@MyCollectActivity, Observer {
 

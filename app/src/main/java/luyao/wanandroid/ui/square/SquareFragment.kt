@@ -3,33 +3,32 @@ package luyao.wanandroid.ui.square
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_square.*
+import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.BR
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
+import luyao.wanandroid.databinding.FragmentSquareBinding
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
  * on 2019/10/15 10:18
  */
-class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
+class SquareFragment : BaseVMFragment<FragmentSquareBinding>(R.layout.fragment_square) {
 
-    override fun initVM(): ArticleViewModel = getViewModel()
+    private val articleViewModel by viewModel<ArticleViewModel>()
 
     private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square_constraint, BR.article) }
 
-    override fun getLayoutResId() = R.layout.fragment_square
-
-
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel, mViewModel)
-            setVariable(BR.adapter, squareAdapter)
+        binding.run {
+            viewModel = articleViewModel
+            adapter = squareAdapter
         }
         initRecycleView()
     }
@@ -49,15 +48,15 @@ class SquareFragment : luyao.mvvm.core.base.BaseVMFragment<ArticleViewModel>() {
     }
 
     private fun loadMore() {
-        mViewModel.getSquareArticleList(false)
+        articleViewModel.getSquareArticleList(false)
     }
 
     fun refresh() {
-        mViewModel.getSquareArticleList(true)
+        articleViewModel.getSquareArticleList(true)
     }
 
     override fun startObserve() {
-        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
+        articleViewModel.uiState.observe(viewLifecycleOwner, Observer {
 
             it.showSuccess?.let { list ->
                 squareAdapter.run {

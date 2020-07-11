@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.base.BaseViewModel
 import luyao.mvvm.core.Result
+import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.model.repository.ShareRepository
 
 /**

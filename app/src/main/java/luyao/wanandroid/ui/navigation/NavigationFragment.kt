@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.navigation
 
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_navigation.*
@@ -11,7 +10,7 @@ import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
 import luyao.wanandroid.databinding.FragmentNavigationBinding
 import luyao.wanandroid.model.bean.Navigation
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 
@@ -20,18 +19,16 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by Lu
  * on 2018/3/28 21:26
  */
-class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
+class NavigationFragment : BaseVMFragment<FragmentNavigationBinding>(R.layout.fragment_navigation) {
 
-    override fun initVM(): NavigationViewModel = getViewModel()
+    private val navigationViewModel by viewModel<NavigationViewModel>()
 
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }
     private val navigationAdapter by lazy { NavigationAdapter() }
 
-    override fun getLayoutResId() = R.layout.fragment_navigation
-
     override fun initView() {
-        mBinding.setVariable(BR.adapter,navigationAdapter)
+        binding.adapter = navigationAdapter
         initTabLayout()
     }
 
@@ -47,7 +44,7 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     }
 
     private fun scrollToPosition(position: Int) {
-        val mLayoutManager = (mBinding as FragmentNavigationBinding).navigationRecycleView.layoutManager as LinearLayoutManager
+        val mLayoutManager = binding.navigationRecycleView.layoutManager as LinearLayoutManager
         val firstPotion = mLayoutManager.findFirstVisibleItemPosition()
         val lastPosition = mLayoutManager.findLastVisibleItemPosition()
         when {
@@ -59,7 +56,7 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.getNavigation()
+        navigationViewModel.getNavigation()
     }
 
     private fun getNavigation(navigationList: List<Navigation>) {
@@ -71,7 +68,7 @@ class NavigationFragment : BaseVMFragment<NavigationViewModel>() {
     }
 
     override fun startObserve() {
-        mViewModel.run {
+        navigationViewModel.run {
             uiState.observe(viewLifecycleOwner, Observer {
                 it?.let { getNavigation(it) }
             })

@@ -14,7 +14,6 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResId())
         initView()
-//        setSupportActionBar(mToolbar)
         initData()
     }
 

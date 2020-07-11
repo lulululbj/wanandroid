@@ -6,26 +6,26 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_project.*
 import luyao.wanandroid.R
+import luyao.wanandroid.databinding.ActivityProjectBinding
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.system.SystemTypeFragment
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ProjectViewModel>(useDataBinding = false) {
+open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ActivityProjectBinding>(R.layout.activity_project) {
 
-    override fun initVM(): ProjectViewModel = getViewModel()
+    private val projectViewModel by viewModel<ProjectViewModel>()
 
     private val mProjectTypeList = mutableListOf<SystemParent>()
     open var isBlog = false // 区分是公众号还是项目分类
 
-    override fun getLayoutResId() = R.layout.activity_project
 
     override fun initView() {
         initViewPager()
     }
 
     override fun initData() {
-        if (isBlog) mViewModel.getBlogType()
-        else mViewModel.getProjectTypeList()
+        if (isBlog) projectViewModel.getBlogType()
+        else projectViewModel.getProjectTypeList()
     }
 
     private fun initViewPager() {
@@ -54,7 +54,7 @@ open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ProjectViewMode
     }
 
     override fun startObserve() {
-        mViewModel.systemData.observe(viewLifecycleOwner, Observer {
+        projectViewModel.systemData.observe(viewLifecycleOwner, Observer {
             it?.run { getProjectTypeList(it) }
         })
     }

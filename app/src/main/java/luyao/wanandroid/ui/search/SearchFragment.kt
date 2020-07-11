@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -17,35 +16,34 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.FragmentSearchBinding
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
  * Created by Lu
  * on 2018/4/2 22:00
  */
-class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
+class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    override fun initVM(): SearchViewModel = getViewModel()
+    private val searchViewModel by viewModel<SearchViewModel>()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val searchAdapter by lazy { HomeArticleAdapter() }
     private var key = ""
     private lateinit var mEmptyView: View
 
-    override fun getLayoutResId() = R.layout.fragment_search
-
     private val hotList = mutableListOf<Hot>()
     private val webSitesList = mutableListOf<Hot>()
 
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel, mViewModel)
-            setVariable(BR.adapter, searchAdapter)
+        binding.run {
+            viewModel = searchViewModel
+            adapter = searchAdapter
         }
         initTagLayout()
         initAdapter()
@@ -58,7 +56,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
 
     private fun refresh() {
         searchAdapter.setEnableLoadMore(false)
-        mViewModel.searchHot(true, key)
+        searchViewModel.searchHot(true, key)
     }
 
     private fun initAdapter() {
@@ -76,13 +74,13 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
     }
 
     private fun loadMore() {
-        mViewModel.searchHot(false, key)
+        searchViewModel.searchHot(false, key)
     }
 
     override fun initData() {
 //        searchToolbar.setNavigationOnClickListener { onBackPressed() }
-        mViewModel.getHotSearch()
-        mViewModel.getWebSites()
+        searchViewModel.getHotSearch()
+        searchViewModel.getWebSites()
     }
 
     private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
@@ -92,7 +90,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
                     searchAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id, collect)
+                            searchViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }
@@ -145,7 +143,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
 
     private fun startSearch(key: String) {
         searchView.clearFocus()
-        mViewModel.searchHot(true, key)
+        searchViewModel.searchHot(true, key)
     }
 
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {
@@ -163,7 +161,7 @@ class SearchFragment : luyao.mvvm.core.base.BaseVMFragment<SearchViewModel>() {
 
     override fun startObserve() {
 
-        mViewModel.uiState.observe(viewLifecycleOwner, Observer {
+        searchViewModel.uiState.observe(viewLifecycleOwner, Observer {
             searchRecycleView.visibility = if (it.showHot) View.GONE else View.VISIBLE
             hotContent.visibility = if (!it.showHot) View.GONE else View.VISIBLE
             searchRefreshLayout.isRefreshing = it.showLoading

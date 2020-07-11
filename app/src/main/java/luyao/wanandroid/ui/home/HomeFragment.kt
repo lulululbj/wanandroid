@@ -3,7 +3,6 @@ package luyao.wanandroid.ui.home
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -15,22 +14,23 @@ import luyao.util.ktx.ext.dp2px
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
+import luyao.wanandroid.databinding.FragmentHomeBinding
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
  * Created by luyao
  * on 2018/3/13 14:15
  */
-class HomeFragment : BaseVMFragment<ArticleViewModel>() {
+class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    override fun initVM(): ArticleViewModel = getViewModel()
+    private val articleViewModel by viewModel<ArticleViewModel>()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
@@ -39,12 +39,10 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     private val bannerUrls = mutableListOf<String>()
     private val banner by lazy { com.youth.banner.Banner(activity) }
 
-    override fun getLayoutResId() = R.layout.fragment_home
-
     override fun initView() {
-        mBinding.run {
-            setVariable(BR.viewModel, mViewModel)
-            setVariable(BR.adapter,homeArticleAdapter)
+        binding.run {
+            viewModel = articleViewModel
+            adapter = homeArticleAdapter
         }
         initRecycleView()
         initBanner()
@@ -75,7 +73,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
                     homeArticleAdapter.run {
                         data[position].run {
                             collect = !collect
-                            mViewModel.collectArticle(id, collect)
+                            articleViewModel.collectArticle(id, collect)
                         }
                         notifyDataSetChanged()
                     }
@@ -87,7 +85,7 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     private fun loadMore() {
-        mViewModel.getHomeArticleList(false)
+        articleViewModel.getHomeArticleList(false)
     }
 
     private fun initBanner() {
@@ -105,11 +103,11 @@ class HomeFragment : BaseVMFragment<ArticleViewModel>() {
     }
 
     fun refresh() {
-        mViewModel.getHomeArticleList(true)
+        articleViewModel.getHomeArticleList(true)
     }
 
     override fun startObserve() {
-        mViewModel.apply {
+        articleViewModel.apply {
             mBanners.observe(viewLifecycleOwner, Observer { it ->
                 it?.let { setBanner(it) }
             })

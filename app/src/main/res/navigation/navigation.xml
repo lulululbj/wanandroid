@@ -24,12 +24,6 @@
             app:destination="@id/collectActivity" />
     </fragment>
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="luyao.wanandroid.ui.login.LoginFragment"
-        android:label="loginFragment"
-        tools:layout="@layout/activity_login" />
-
     <activity
         android:id="@+id/loginActivity"
         android:name="luyao.wanandroid.ui.login.LoginActivity"

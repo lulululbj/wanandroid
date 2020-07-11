@@ -4,26 +4,22 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_share.*
 import luyao.mvvm.core.base.BaseVMActivity
-import luyao.util.ktx.ext.listener.textWatcher
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityShareBinding
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
  * on 2019/10/15 15:21
  */
-class ShareActivity : BaseVMActivity<ShareViewModel>() {
+class ShareActivity : BaseVMActivity() {
 
-
-    override fun initVM(): ShareViewModel = getViewModel()
-
-    override fun getLayoutResId() = R.layout.activity_share
+    private val shareViewModel by viewModel<ShareViewModel>()
+    private val binding by binding<ActivityShareBinding>(R.layout.activity_share)
 
     override fun initView() {
-        mBinding.lifecycleOwner = this
-        (mBinding as ActivityShareBinding).viewModel = mViewModel
+        binding.viewModel = shareViewModel
     }
 
     override fun initData() {
@@ -31,7 +27,7 @@ class ShareActivity : BaseVMActivity<ShareViewModel>() {
 
 
     override fun startObserve() {
-        mViewModel.uiState.observe(this, Observer {
+        shareViewModel.uiState.observe(this, Observer {
 
             it.showSuccess?.let {
                 Navigation.findNavController(shareBt).navigateUp()

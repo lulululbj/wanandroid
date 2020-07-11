@@ -1,13 +1,14 @@
 package luyao.wanandroid.ui
 
 import android.os.Bundle
+import luyao.mvvm.core.base.BaseActivity
 import luyao.wanandroid.R
 
 /**
  * Created by luyao
  * on 2019/12/26 15:24
  */
-class NavigationActivity : luyao.mvvm.core.base.BaseActivity() {
+class NavigationActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_navigation
 

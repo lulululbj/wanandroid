@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
+import luyao.mvvm.core.base.BaseFragment
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.main.MainFragment
 import luyao.wanandroid.ui.profile.ProfileFragment
@@ -14,7 +15,7 @@ import luyao.wanandroid.ui.search.SearchFragment
 /**
  * 这是首页 Tab
  */
-class TabFragment : luyao.mvvm.core.base.BaseFragment() {
+class TabFragment : BaseFragment() {
 
     private val fragmentList = arrayListOf<Fragment>()
     private val mainFragment by lazy { MainFragment() }

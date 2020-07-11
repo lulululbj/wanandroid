@@ -8,13 +8,14 @@ import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 import kotlinx.android.synthetic.main.activity_browser.*
 import kotlinx.android.synthetic.main.activity_system_detail.*
+import luyao.mvvm.core.base.BaseActivity
 import luyao.wanandroid.R
 
 /**
  * Created by Lu
  * on 2018/3/25 21:47
  */
-class BrowserActivity : luyao.mvvm.core.base.BaseActivity() {
+class BrowserActivity : BaseActivity() {
 
     companion object {
         const val URL = "url"
