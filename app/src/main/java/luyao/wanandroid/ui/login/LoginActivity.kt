@@ -2,6 +2,7 @@ package luyao.wanandroid.ui.login
 
 import android.app.ProgressDialog
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
@@ -28,6 +29,7 @@ class LoginActivity : BaseVMActivity() {
     override fun initData() {
     }
 
+    @ExperimentalCoroutinesApi
     override fun startObserve() {
         loginViewModel.apply {
 
@@ -43,6 +45,8 @@ class LoginActivity : BaseVMActivity() {
                     dismissProgressDialog()
                     toast(err)
                 }
+
+                if (it.needLogin) loginViewModel.login()
             })
         }
     }

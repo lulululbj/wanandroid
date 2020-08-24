@@ -3,12 +3,10 @@ package luyao.wanandroid.ui.login
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.CoroutinesDispatcherProvider
-import luyao.wanandroid.checkResult
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.model.repository.LoginRepository
 
@@ -32,41 +30,24 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
                 ?: "", passWord.get() ?: ""))
     }
 
+    @ExperimentalCoroutinesApi
     fun login() {
-
         launchOnUI {
-            if (userName.get().isNullOrBlank() || passWord.get().isNullOrBlank()) {
-                _uiState.value = LoginUiState(enableLoginButton = false)
-                return@launchOnUI
-            }
-
-            _uiState.value = LoginUiState(isLoading = true)
-
-            val result = repository.login(userName.get() ?: "", passWord.get() ?: "")
-
-            result.checkResult(
-                    onSuccess = {
-                        _uiState.value = LoginUiState(isSuccess = it, enableLoginButton = true)
-                    },
-                    onError = {
-                        _uiState.value = LoginUiState(isError = it, enableLoginButton = true)
-                    })
+            // repo 返回的是一个 flow
+            repository.loginFlow(userName.get() ?: "", passWord.get() ?: "")
+                    .collect {
+                        _uiState.postValue(it)
+                    }
         }
     }
 
+    @ExperimentalCoroutinesApi
     fun register() {
-        viewModelScope.launch(provider.computation) {
-            if (userName.get().isNullOrBlank() || passWord.get().isNullOrBlank()) return@launch
-
-            withContext(provider.main) { _uiState.value = LoginUiState(isLoading = true) }
-
-            val result = repository.register(userName.get() ?: "", passWord.get() ?: "")
-
-            result.checkResult({
-                _uiState.value = LoginUiState(isSuccess = it, enableLoginButton = true)
-            }, {
-                _uiState.value = LoginUiState(isError = it, enableLoginButton = true)
-            })
+        launchOnUI {
+            repository.registerFlow(userName.get() ?: "", passWord.get() ?: "")
+                    .collect {
+                        _uiState.postValue(it)
+                    }
         }
     }
 
