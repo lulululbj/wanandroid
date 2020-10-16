@@ -40,7 +40,7 @@ class LoginRepository(val service: WanService) : BaseRepository() {
             App.CURRENT_USER = user
             emit(LoginUiState(isSuccess = user, enableLoginButton = true))
         }.doError { errorMsg ->
-            emit(LoginUiState(isError = errorMsg, enableLoginButton = true))
+            emit(LoginUiState<User>(isError = errorMsg, enableLoginButton = true))
         }
     }.onStart {
         emit(LoginUiState(isLoading = true))
