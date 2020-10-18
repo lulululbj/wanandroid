@@ -21,6 +21,7 @@ class AsmClassVisitor(cv:ClassVisitor) : ClassVisitor(Opcodes.ASM5,cv) {
         super.visit(version, access, name, signature, superName, interfaces)
         this.className = name
         this.superName = superName
+        println("ClassVisitor visit , super name is $superName, class name is $className")
     }
 
     override fun visitMethod(
@@ -30,9 +31,10 @@ class AsmClassVisitor(cv:ClassVisitor) : ClassVisitor(Opcodes.ASM5,cv) {
         signature: String?,
         exceptions: Array<out String>?
     ): MethodVisitor {
-        println("ClassVisitor visitMethod $name , super name is $superName")
+//        println("ClassVisitor visitMethod $name , super name is $superName, class name is $className")
         val mv = cv.visitMethod(access, name, descriptor, signature, exceptions)
-        if (superName == "androidx/appcompat/app/AppCompatActivity"){
+        if (className == "luyao/mvvm/core/base/BaseActivity" ||
+                className == "luyao/mvvm/core/base/BaseVMActivity"){
             if (name.startsWith("onCreate"))
                 return AsmMethodVisitor(mv,className,name)
         }

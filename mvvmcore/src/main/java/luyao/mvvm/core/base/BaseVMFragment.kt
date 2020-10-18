@@ -31,7 +31,6 @@ abstract class BaseVMFragment<T:ViewDataBinding>(@LayoutRes val layoutId: Int) :
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.lifecycleOwner = this
         startObserve()
         initView()
         initData()

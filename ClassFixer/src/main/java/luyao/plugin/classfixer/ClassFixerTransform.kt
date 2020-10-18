@@ -37,7 +37,7 @@ class ClassFixerTransform(val project: Project) : Transform() {
     }
 
     private fun handleDirectoryInput(directoryInput: DirectoryInput, outputProvider: TransformOutputProvider) {
-        println("directory: ${directoryInput.file.path} ${directoryInput.file.isFile}")
+//        println("directory: ${directoryInput.file.path} ${directoryInput.file.isFile}")
         val dir = directoryInput.file
         dir.walk().filter { it.name.endsWith(".class") }.forEach { file ->
             println("find class: ${file.name}")
@@ -59,7 +59,7 @@ class ClassFixerTransform(val project: Project) : Transform() {
     }
 
     private fun handleJarInput(jarInput: JarInput, outputProvider: TransformOutputProvider) {
-        println("jar: ${jarInput.file.path} ${jarInput.file.isFile}")
+//        println("jar: ${jarInput.file.path} ${jarInput.file.isFile}")
         var jarName = jarInput.name
         val md5Name = DigestUtils.md5Hex(jarName)
         if (jarName.endsWith(".jar"))

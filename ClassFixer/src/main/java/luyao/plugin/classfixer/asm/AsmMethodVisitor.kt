@@ -9,7 +9,7 @@ class AsmMethodVisitor(mv: MethodVisitor, val className: String, val methodName:
 
     override fun visitCode() {
         super.visitCode()
-        println("MethodVisitor visitCode ===")
+//        println("MethodVisitor visitCode ===")
 
         mv.visitLdcInsn("TAG")
         mv.visitLdcInsn("$className --> $methodName")

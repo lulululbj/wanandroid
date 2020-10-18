@@ -16,7 +16,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
         classpath "luyao.plugin.classfixer:classfixer:1.0.0"
