@@ -37,10 +37,10 @@ class ClassFixerTransform(val project: Project) : Transform() {
     }
 
     private fun handleDirectoryInput(directoryInput: DirectoryInput, outputProvider: TransformOutputProvider) {
-//        println("directory: ${directoryInput.file.path} ${directoryInput.file.isFile}")
+        println("directory: ${directoryInput.file.path} ${directoryInput.file.isFile}")
         val dir = directoryInput.file
         dir.walk().filter { it.name.endsWith(".class") }.forEach { file ->
-            println("find class: ${file.name}")
+//            println("find class: ${file.name}")
             val classReader = ClassReader(file.readBytes())
             val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
             val classVisitor = AsmClassVisitor(classWriter)
@@ -59,13 +59,13 @@ class ClassFixerTransform(val project: Project) : Transform() {
     }
 
     private fun handleJarInput(jarInput: JarInput, outputProvider: TransformOutputProvider) {
-//        println("jar: ${jarInput.file.path} ${jarInput.file.isFile}")
+        println("jar: ${jarInput.file.path} ${jarInput.file.isFile}")
         var jarName = jarInput.name
         val md5Name = DigestUtils.md5Hex(jarName)
         if (jarName.endsWith(".jar"))
             jarName = jarName.substring(0, jarName.length - 4)
         val out = outputProvider.getContentLocation("$jarName$md5Name", jarInput.contentTypes, jarInput.scopes, Format.JAR)
-        println("jar: out = $out")
+//        println("jar: out = $out")
         FileUtils.copyFile(jarInput.file, out)
     }
 }

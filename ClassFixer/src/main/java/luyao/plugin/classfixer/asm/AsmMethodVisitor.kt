@@ -1,4 +1,4 @@
-package luyao.autotrack.plugin.asm
+package luyao.plugin.classfixer.asm
 
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes

@@ -1,6 +1,5 @@
 package luyao.plugin.classfixer.asm
 
-import luyao.autotrack.plugin.asm.AsmMethodVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
@@ -21,7 +20,7 @@ class AsmClassVisitor(cv:ClassVisitor) : ClassVisitor(Opcodes.ASM5,cv) {
         super.visit(version, access, name, signature, superName, interfaces)
         this.className = name
         this.superName = superName
-        println("ClassVisitor visit , super name is $superName, class name is $className")
+//        println("ClassVisitor visit , super name is $superName, class name is $className")
     }
 
     override fun visitMethod(
