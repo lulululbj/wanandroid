@@ -1,105 +1,57 @@
-> 添加微信 **bingxinshuo_** ，加入技术交流群 。
+之前的 README 文件（在这里可以看到 [真香！Kotlin+MVVM+LiveData+协程 打造 Wanandroid！](https://blog.csdn.net/sunluyao_/article/details/101318799)) 和现有代码其实已经有较大出入，也包含了一些不正确的观点，回来更新一下。
 
-![](http://cdn.luyao.tech/wechat/green.png)
+翻一下提交记录，第一次 commit 是在 **13 Mar 2018** ，没记错的话当时是基于 MVP 模式搭建的基础框架，到现在经过 100 多次 commit，整个框架已经完全更新。最新的代码在 **mvvm-kotlin** 分支。
 
-[Wanandroid](https://www.wanandroid.com/) 是鸿洋鸿大大的安卓开源知识网站，包含最新博文，最新项目，常用工具，公众号文章收录等等功能，同时也开源了所有 API 接口，方便大家打造自己的 Wanandroid 客户端。Github 上关于 Wanandroid 的客户端也层出不穷，Java的，Kotlin 的，Flutter 的，Mvp 的，MVMM 的，各种各样，但是还没看到 **Kotlin+MVVM+LiveData+协程** 版本的，加上最近正在看 MVVM 和 LiveData，就着手把我之前写的 Mvp 版本的 Wanandroid 改造成 MVVM，[项目地址](https://github.com/lulululbj/wanandroid) 。注意，`mater` 分支是年久失修的 `Mvp` 版本，不一定保证可以运行。`mvvm-kotlin
-` 分支是最新代码。
+刚从 MVP 过渡到 MVVM ，挺兴奋的，一股脑刷刷的写，其实犯了很多错误。第一次认识到关于 MVVM 的一些错误理解是通过这篇文章 [关于MVC/MVP/MVVM的一些错误认识](https://juejin.im/post/6844903938873901064) ，大家可以仔细阅读这篇文章。
 
-关于 MVVM，大家应该也比较熟悉了，上一张 MVVM 经典架构图：
+随着对架构的逐步深入认识，对 MVVM 的概念又逐渐模糊起来。在 Android 开发中，到底什么是 MVVM 架构？
+
+> 数据驱动 UI ？
+>
+> ViewModel + LiveData ？
+>
+> 不使用 Databinding 是不是 MVVM ？
+>
+> 不使用双向绑定是不是 MVVM ？
+
+一时之间好像遍地都是 Jetpack MVVM 的相关文章和开源项目，但我却愈发觉得这算不上真正的 MVVM 。我更愿意称之为 **变种 MVP** ，或者它就是 **Jetpack 架构** 。
 
 ![](https://user-gold-cdn.xitu.io/2019/4/15/16a21016df9c76c5?w=960&h=720&f=webp&s=15382)
 
-`Model-View-ViewModel`，`View` 指绿色的 `Activity/Fragment`，主要负责界面显示，不负责任何业务逻辑和数据处理。`Model` 指的是 `Repository` 包含的部分，主要负责数据获取，来组本地数据库或者远程服务器。`ViewModel` 指的是图中蓝色部分，主要负责业务逻辑和数据处理，本身不持有 `View` 层引用，通过 `LiveData` 向 `View` 层发送数据。`Repository` 统一了数据入口，不管来自数据库，还是服务器，统一打包给 `ViewModel` ，我在项目中并没有使用数据库，而是使用缓存代替。
+上面这张图就可以清晰的表达它的架构，**它不是 MVP，也不是 MVVM** 。
 
-除了 `MMVM` 以外，我用 `协程` 代替了 `RxJava`。这里先不论协程和 RxJava 孰优孰劣，只是用惯了 RxJava，协程的确会给你耳目一新的感觉，用同步的方式写异步代码。在 Java 中并没有协程的概念，Kotlin 中在编译期实现了协程，通过类似状态机的实现。协程可以看做是轻量级的线程，不会存在上下文切换的带来的性能损耗，理论上是比线程效率更高的。
+当然，每个人心中都有自己的架构，欢迎到 issue 区表达自己的看法。
 
-下面以登录页面 `LoginActivity` 为例，看一下数据流程。
+最后简单罗列一下项目的技术点：
 
-## Model
+* LiveData 作为数据容器，由 ViewModel 进行保存
+* Databinding 负责数据绑定工作
+* 使用 Kotlin Coroutines 完成网络请求等耗时异步任务，其中登录页面尝试使用了 flow 
+* koin 负责依赖注入工作
+* ......
 
-```java
-@POST("/user/login")
-fun login(@Field("username") userName: String, @Field("password") passWord: String): Deferred<WanResponse<User>>
-```
+作为一个试错项目，后续可能继续引入各种新奇类库或者 gradle 插件，欢迎继续关注。
 
-这是登录 Api 接口。
+最后给我的专栏打个广告：
 
-```java
-class LoginRepository : BaseRepository() {
-
-    suspend fun login(userName: String, passWord: String): WanResponse<User> {
-        return apiCall { WanRetrofitClient.service.login(userName, passWord).await() }
-    }
-    
-}
-```
-
-`LoginRepository` 中定义具体的登录逻辑，通过 `Retrofit` 调用登录接口，返回 `WanResponse<User>`。注意，要在协程中使用，所以定义为 `suspend` 方法。
-
-## ViewModel
-
-```java
-class LoginViewModel : BaseViewModel() {
-    val mLoginUser: MutableLiveData<User> = MutableLiveData()
-    val errMsg: MutableLiveData<String> = MutableLiveData()
-    private val repository by lazy { LoginRepository() }
-
-    fun login(userName: String, passWord: String) {
-        launch {
-            val response = withContext(Dispatchers.IO) { repository.login(userName, passWord) }
-            executeResponse(response, { mLoginUser.value = response.data }, { errMsg.value = response.errorMsg })
-        }
-    }
-}
-```
-
-`LoginViewModel` 持有 `LoginRepository`，并通过它执行具体登录逻辑，这一块使用协程执行。返回结果通过 `executeResponse()` 方法处理，这是我自己封装的方法：
-
-```java
-suspend fun executeResponse(response: WanResponse<Any>, successBlock: suspend CoroutineScope.() -> Unit,
-                                errorBlock: suspend CoroutineScope.() -> Unit) {
-        coroutineScope {
-            if (response.errorCode == -1) errorBlock()
-            else successBlock()
-        }
-    }
-```
-
-Kotlin 的一些函数式编程语言特性会给我们的开发带来一些便利。`executeResponse()` 提供了统一的响应错误处理。
-
-## View
-
-```java
- mViewModel.apply {
-        mLoginUser.observe(this@LoginActivity, Observer {
-            dismissProgressDialog()
-            startActivity(MainNormalActivity::class.java)
-            finish()
-        })
-
-        errMsg.observe(this@LoginActivity, Observer {
-            dismissProgressDialog()
-            it?.run { toast(it) }
-        })
-    }
-```
-
-最后就是 `LoginActivity` 代表的 View 层了，View 层和 ViewModel 层通过 LiveData 进行绑定，上面代码中的 `mLoginUser` 和 `errMsg` 就是 ViewModel 层 “发射” 过来的数据。关于数据绑定，我并没有使用 `DataBinding`，这个纯粹是个人喜好了，我只是不喜欢 DataBinding 带来的代码不易读。
-
-相对 Mvp 繁多的接口来说，个人感觉 Mvvm 的数据流更加清晰。搭配 Kotlin 和协程的使用，进一步简化代码。下面是一些项目截图：
+> Android 面试进阶指南目录
+>
+> **计算机网络**
+> 1. [http 速查](https://blog.csdn.net/sunluyao_/article/details/109267554)
+>
+> **Android**
+> 1. [唠唠任务栈，返回栈和启动模式](https://blog.csdn.net/sunluyao_/article/details/107948153)
+> 2. [唠唠 Activity 的生命周期](https://blog.csdn.net/sunluyao_/article/details/108067935)
+> 3. [扒一扒 Context](https://blog.csdn.net/sunluyao_/article/details/108162604)
+> 4. [面试官：为什么不能使用 Application Context 显示 Dialog？](https://blog.csdn.net/sunluyao_/article/details/108373573)
+> 5. [面试官：OOM 可以被 try catch 吗？](https://blog.csdn.net/sunluyao_/article/details/108656480)
+> 6. [面试官：Activity.finish() 之后十秒才回调 onDestroy ？](https://blog.csdn.net/sunluyao_/article/details/109110737)
+> 7. [面试官：如何监测应用的 FPS ？](https://blog.csdn.net/sunluyao_/article/details/109440338)
 
 
-![](https://user-gold-cdn.xitu.io/2019/4/15/16a21b0a4a933a9e?w=1115&h=660&f=png&s=215236)
 
 
-![](https://user-gold-cdn.xitu.io/2019/4/15/16a21b2e9540185d?w=1118&h=658&f=png&s=238495)
 
-项目地址点这个： [传送门](https://github.com/lulululbj/wanandroid)，记得切换到 `mvvm-kotlin` 分支 ，欢迎带来 star 和 issue 丢过来 ！
+> 添加微信 **bingxinshuo_** ，加入技术交流群 。
 
-推荐一下我的另一个应用，[Box —— 我的开发助手](https://juejin.im/post/5c8a52606fb9a04a05408c94)，添加了查看 logcat 的功能。
-
-最后，也欢迎大家关注我的公众号 **秉心说TM**，话说公号关注人数还没掘金多，后续会继续 《走进 JDK 系列》以及 Android 相关知识的分享，欢迎大家扫码关注！
-
-> 文章首发微信公众号： **`秉心说TM`** ， 专注 Java 、 Android 原创知识分享，LeetCode 题解，欢迎关注！
-
-![](https://user-gold-cdn.xitu.io/2019/3/30/169cf046d9579e78?w=258&h=258&f=jpeg&s=27711)
+![](http://cdn.luyao.tech/wechat/green.png)
