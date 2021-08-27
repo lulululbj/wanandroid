@@ -5,18 +5,18 @@ import luyao.dependencies.Versions
 buildscript {
 
     ext {
-        kotlin_version = '1.4.10'
+        kotlin_version = '1.5.30'
     }
     repositories {
         google()
         jcenter()
-
+        mavenCentral()
         maven {
             url uri('./repo')
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
 //        classpath "luyao.plugin.classfixer:classfixer:1.0.0"
@@ -30,6 +30,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         maven { url uri('./repo') }
 

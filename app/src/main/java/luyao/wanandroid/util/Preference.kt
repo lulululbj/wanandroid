@@ -3,6 +3,7 @@ package luyao.wanandroid.util
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.tencent.mmkv.MMKV
 import luyao.wanandroid.App
 import java.io.*
 import kotlin.properties.ReadWriteProperty
@@ -19,8 +20,8 @@ class Preference<T>(val name: String, private val default: T) : ReadWritePropert
         const val USER_GSON = "user_gson"
     }
 
-    private val prefs: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(App.CONTEXT)
+    private val prefs: MMKV by lazy {
+        MMKV.defaultMMKV()
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {

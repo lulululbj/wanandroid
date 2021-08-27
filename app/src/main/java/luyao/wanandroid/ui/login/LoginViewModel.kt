@@ -30,7 +30,6 @@ class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDi
                 ?: "", passWord.get() ?: ""))
     }
 
-    @ExperimentalCoroutinesApi
     fun login() {
         launchOnUI {
             // repo 返回的是一个 flow

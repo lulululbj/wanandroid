@@ -25,7 +25,6 @@ class LoginRepository(val service: WanService) : BaseRepository() {
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
 
-    @ExperimentalCoroutinesApi
     suspend fun loginFlow(userName: String, passWord: String) = flow {
 
         // 输入不能为空
@@ -48,7 +47,6 @@ class LoginRepository(val service: WanService) : BaseRepository() {
             .catch { emit(LoginUiState(isError = it.message, enableLoginButton = true)) }
 
 
-    @ExperimentalCoroutinesApi
     suspend fun registerFlow(userName: String, passWord: String) = flow<LoginUiState<User>> {
 
         // 输入不能为空

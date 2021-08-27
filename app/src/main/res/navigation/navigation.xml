@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/tabFragment"
-        android:name="luyao.wanandroid.ui.TabFragment"
+        android:name="luyao.wanandroid.ui.HomeTabFragment"
         android:label="fragment_tab"
         tools:layout="activity_bottom_navigation">
         <action
@@ -24,13 +24,13 @@
             app:destination="@id/collectActivity" />
     </fragment>
 
-    <activity
+    <fragment
         android:id="@+id/loginActivity"
         android:name="luyao.wanandroid.ui.login.LoginActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login">
+        tools:layout="@layout/fragment_login">
 
-    </activity>
+    </fragment>
 
     <activity
         android:id="@+id/shareActivity"

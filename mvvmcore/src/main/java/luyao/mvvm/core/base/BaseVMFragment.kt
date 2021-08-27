@@ -15,18 +15,19 @@ import androidx.fragment.app.Fragment
  */
 abstract class BaseVMFragment<T:ViewDataBinding>(@LayoutRes val layoutId: Int) : Fragment(layoutId) {
 
-    lateinit var binding:T
+    private  var _binding: T? = null
+    protected val binding get() = _binding!!
 
-    protected  fun < T : ViewDataBinding> binding(
-            inflater: LayoutInflater,
-            @LayoutRes layoutId: Int,
-            container: ViewGroup?
-    ): T =   DataBindingUtil.inflate<T>(inflater,layoutId, container,false).apply {
+    private fun <T : ViewDataBinding> binding(
+        inflater: LayoutInflater,
+        @LayoutRes layoutId: Int,
+        container: ViewGroup?
+    ): T = DataBindingUtil.inflate<T>(inflater, layoutId, container, false).apply {
         lifecycleOwner = this@BaseVMFragment
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = binding(inflater,layoutId,container)
+        _binding = binding(inflater,layoutId,container)
         return binding.root
     }
 
@@ -35,6 +36,11 @@ abstract class BaseVMFragment<T:ViewDataBinding>(@LayoutRes val layoutId: Int) :
         initView()
         initData()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding  = null
     }
 
     abstract fun initView()

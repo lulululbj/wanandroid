@@ -8,9 +8,9 @@ import luyao.wanandroid.R
  * Created by luyao
  * on 2019/12/26 15:24
  */
-class NavigationActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun getLayoutResId() = R.layout.activity_navigation
+    override fun getLayoutResId() = R.layout.activity_main
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
