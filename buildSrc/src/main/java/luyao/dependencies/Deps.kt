@@ -1,14 +1,14 @@
 package luyao.dependencies
 
 object Versions {
-    const val compileSdk = 29
+    const val compileSdk = 32
     const val buildTools = "29.0.3"
     const val minSdk = 21
     const val targetSdk = 29
     const val versionCode = 1
     const val versionName = "1.0"
 
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.7.0"
     const val coroutines = "1.3.9"
     const val coroutines_android = "1.3.9"
     const val androidxArch = "2.0.0"

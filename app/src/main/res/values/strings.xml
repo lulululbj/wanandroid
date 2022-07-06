@@ -31,7 +31,6 @@
     <string name="send_email">发邮件</string>
     <string name="sendto">mailto:sunluyao1993x@gmail.com</string>
     <string name="mail_topic">Wanandroid 反馈</string>
-    <string name="license">开源协议</string>
     <string name="source_url">源代码地址</string>
     <string name="feedback">意见反馈</string>
     <string name="third_lib">第三方库</string>
@@ -52,5 +51,6 @@
     <string name="confirm">确定</string>
 
     <string name="executing_nth_iteration">%1$d / %2$d</string>
+    <string name="open_license">开源协议</string>
 
 </resources>

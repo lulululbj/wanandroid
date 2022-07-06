@@ -1,6 +1,7 @@
 package luyao.util.ktx.ext
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
@@ -25,14 +26,14 @@ val Context.versionCode: Long
  */
 fun Context.getAppInfo(apkPath: String): AppInfo {
     val packageInfo = packageManager.getPackageArchiveInfo(apkPath, PackageManager.GET_META_DATA)
-    packageInfo.applicationInfo.sourceDir = apkPath
-    packageInfo.applicationInfo.publicSourceDir = apkPath
+    packageInfo?.applicationInfo?.sourceDir = apkPath
+    packageInfo?.applicationInfo?.publicSourceDir = apkPath
 
-    val packageName = packageInfo.packageName
-    val appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString()
-    val versionName = packageInfo.versionName
-    val versionCode = packageInfo.versionCode
-    val icon = packageManager.getApplicationIcon(packageInfo.applicationInfo)
+    val packageName = packageInfo?.packageName ?: ""
+    val appName = packageManager.getApplicationLabel(packageInfo?.applicationInfo?: ApplicationInfo()).toString()
+    val versionName = packageInfo?.versionName ?: ""
+    val versionCode = packageInfo?.versionCode ?: 0
+    val icon = packageManager.getApplicationIcon(packageInfo?.applicationInfo ?: ApplicationInfo())
     return AppInfo(apkPath, packageName, versionName, versionCode.toLong(), appName, icon)
 }
 

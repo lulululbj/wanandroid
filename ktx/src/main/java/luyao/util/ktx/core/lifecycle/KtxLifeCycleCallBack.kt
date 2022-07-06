@@ -35,7 +35,8 @@ class KtxLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
         KtxManager.popActivity(activity)
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        "onActivitySaveInstanceState : ${activity.localClassName}".loge()
     }
 
     override fun onActivityStopped(activity: Activity) {
