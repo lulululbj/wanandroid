@@ -16,10 +16,10 @@ object Versions {
 
     const val appcompat = "1.1.0"
     const val constraintLayout = "1.1.3"
-    const val retrofit = "2.7.1"
-    const val retrofit_converter_gson = "2.6.2"
-    const val okhttp_logging_interceptor = "4.0.0"
-    const val swipeRefreshLayout = "1.1.0-rc01"
+    const val retrofit = "2.9.0"
+    const val retrofit_converter_gson = "2.9.0"
+    const val okhttp_logging_interceptor = "4.10.0"
+    const val swipeRefreshLayout = "1.1.0"
     const val material = "1.2.0-beta01"
     const val circleImageview = "2.2.0"
     const val leakcanary = "2.0-alpha-3"
@@ -37,10 +37,11 @@ object Versions {
     const val viewPager2 = "1.0.0"
     const val koin = "2.0.1"
     const val core_ktx = "1.3.0"
-    const val navigation = "2.2.2"
+    const val navigation = "2.5.0"
     const val recyclerView = "1.1.0"
     const val viewmodel_ktx = "2.2.0"
     const val lifecycle_extension = "2.2.0"
+    const val coil_compose = "2.1.0"
 }
 
 object Deps {
@@ -85,5 +86,6 @@ object Deps {
     const val koin_android = "org.koin:koin-android:${Versions.koin}"
     const val koin_androidx_scope = "org.koin:koin-androidx-scope:${Versions.koin}"
     const val koin_androidx_viewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    const val coil_compose = "io.coil-kt:coil-compose:${Versions.coil_compose}"
 
 }

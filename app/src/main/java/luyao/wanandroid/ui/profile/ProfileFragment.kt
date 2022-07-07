@@ -2,15 +2,21 @@ package luyao.wanandroid.ui.profile
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.Navigation
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.bumptech.glide.Glide
@@ -28,9 +36,7 @@ import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20
 import de.psdev.licensesdialog.model.Notice
 import kotlinx.android.synthetic.main.fragmnet_profile.*
 import luyao.mvvm.core.base.BaseFragment
-import luyao.util.ktx.ext.gone
 import luyao.util.ktx.ext.openBrowser
-import luyao.util.ktx.ext.visible
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.util.GITHUB_PAGE
@@ -43,70 +49,44 @@ import luyao.wanandroid.view.compose.Line
  */
 class ProfileFragment : BaseFragment() {
 
-    private var isLogin by Preference(Preference.IS_LOGIN, false)
+    private var hasLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
+    private var user: User? = null
 
     override fun getLayoutResId() = R.layout.fragmnet_profile
 
     override fun initView() {
-        titleTv.text = getString(R.string.me)
 
         composeView.setContent {
-            MdcTheme {
-                Column {
-                    Menu(stringResource(R.string.open_license)) {
-                        showOwnLicense()
-                    }
-                    Line()
-                    Menu(stringResource(R.string.source_url)) {
-                        activity?.openBrowser(GITHUB_PAGE)
-                    }
-                    Line()
-                    Menu(stringResource(R.string.feedback)) {
-                        showFeedBackMenu()
-                    }
-                    Line()
-                    Menu(stringResource(R.string.third_lib)) {
-                        showLicenseDialog()
-                    }
-                    Line()
-                    Menu(stringResource(R.string.developer)) {
-                        showMe()
-                    }
-                    Line()
-                    VersionTv()
-                }
 
+            val isLogin by remember {
+                mutableStateOf(hasLogin)
             }
-        }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        refreshData()
+            if (isLogin) {
+                user = Gson().fromJson(userJson, User::class.java)
+            }
+
+            ProfileScreen(
+                isLogin,
+                user,
+                onLogin = {
+                    if (!isLogin) Navigation.findNavController(composeView)
+                        .navigate(R.id.action_tab_to_login)
+                },
+                showMyCollect = {
+                    Navigation.findNavController(composeView)
+                        .navigate(R.id.action_tab_to_colect)
+                },
+                showOwnLicense = { showOwnLicense() },
+                browserGithub = { activity?.openBrowser(GITHUB_PAGE) },
+                showFeedBack = { showFeedBackMenu() },
+                showLicenseDialog = { showLicenseDialog() },
+                showMe = { showMe() })
+        }
     }
 
     override fun initData() {
-        loginLayout.setOnClickListener {
-            if (!isLogin) Navigation.findNavController(loginLayout)
-                .navigate(R.id.action_tab_to_login)
-        }
-        collect.setOnClickListener {
-            if (isLogin) Navigation.findNavController(loginLayout)
-                .navigate(R.id.action_tab_to_colect)
-        }
-    }
-
-    private fun refreshData() {
-        if (isLogin) {
-            val user = Gson().fromJson<User>(userJson, User::class.java)
-            Glide.with(icon).load(user.icon).error(R.drawable.ic_dynamic_user).into(icon)
-            loginTv.text = user.username
-            collect.visible()
-        } else {
-            loginTv.text = "登录/注册"
-            collect.gone()
-        }
     }
 
     private fun showOwnLicense() {
@@ -146,6 +126,42 @@ class ProfileFragment : BaseFragment() {
 }
 
 @Composable
+fun ProfileScreen(
+    isLogin: Boolean,
+    user: User?,
+    onLogin: () -> Unit,
+    showMyCollect: () -> Unit,
+    showOwnLicense: () -> Unit,
+    browserGithub: () -> Unit,
+    showFeedBack: () -> Unit,
+    showLicenseDialog: () -> Unit,
+    showMe: () -> Unit
+) {
+    MdcTheme {
+        Column {
+            TitleTv(text = stringResource(R.string.me))
+            LoginMenu(isLogin = isLogin, user, clickLogin = onLogin)
+            if (isLogin) {
+                Line()
+                Menu(stringResource(R.string.my_collect), showMyCollect)
+            }
+            Line()
+            Menu(stringResource(R.string.open_license), showOwnLicense)
+            Line()
+            Menu(stringResource(R.string.source_url), browserGithub)
+            Line()
+            Menu(stringResource(R.string.feedback), showFeedBack)
+            Line()
+            Menu(stringResource(R.string.third_lib), showLicenseDialog)
+            Line()
+            Menu(stringResource(R.string.developer), showMe)
+            Line()
+            VersionTv()
+        }
+    }
+}
+
+@Composable
 fun Menu(text: String, onClick: () -> Unit) {
     Column(
         modifier = Modifier
@@ -175,13 +191,80 @@ fun VersionTv() {
     }
 }
 
+@Composable
+fun TitleTv(text: String) {
+    Box(
+        contentAlignment = Alignment.Center, modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .background(color = MaterialTheme.colors.primary)
+    ) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            color = Color.White
+        )
+    }
+}
+
+@Composable
+fun LoginMenu(isLogin: Boolean, user: User? = null, clickLogin: () -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        .padding(10.dp)
+        .fillMaxWidth()
+        .height(80.dp)
+        .clickable {
+            clickLogin()
+        }) {
+
+        if (isLogin) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(user?.icon)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.luyao),
+                error = painterResource(R.drawable.luyao),
+                contentDescription = stringResource(R.string.login),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .width(48.dp)
+                    .height(48.dp)
+            )
+        } else {
+            Image(
+                painter = painterResource(R.drawable.luyao),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .width(48.dp)
+                    .height(48.dp)
+            )
+        }
+
+        Text(
+            text = if (isLogin) user?.username ?: "" else "登录/注册", color = Color.Black,
+            fontSize = 18.sp,
+            modifier = Modifier.padding(start = 24.dp)
+        )
+
+
+    }
+}
+
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Menu(stringResource(R.string.open_license)) {
-
-        }
-        Spacer(modifier = Modifier.background(colorResource(R.color.light_gray)))
+    ProfileScreen(
+        false,
+        null,
+        onLogin = {},
+        showMyCollect = { },
+        showOwnLicense = { },
+        browserGithub = { },
+        showFeedBack = { },
+        showLicenseDialog = { }) {
     }
 }

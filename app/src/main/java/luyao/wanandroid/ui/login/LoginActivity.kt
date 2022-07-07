@@ -2,6 +2,8 @@ package luyao.wanandroid.ui.login
 
 import android.app.ProgressDialog
 import androidx.lifecycle.Observer
+import androidx.navigation.NavHostController
+import androidx.navigation.fragment.findNavController
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
@@ -35,6 +37,7 @@ class LoginActivity : BaseVMFragment<FragmentLoginBinding>(R.layout.fragment_log
 
                 it.isSuccess?.let {
                     dismissProgressDialog()
+                    findNavController().popBackStack()
                 }
 
                 it.isError?.let { err ->

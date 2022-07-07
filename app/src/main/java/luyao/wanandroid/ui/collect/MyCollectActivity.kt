@@ -13,9 +13,11 @@ import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.adapter.HomeArticleAdapter
 import luyao.wanandroid.databinding.ActivityCollectBinding
+import luyao.wanandroid.model.bean.Title
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -32,9 +34,8 @@ class MyCollectActivity : BaseVMActivity() {
     override fun initView() {
 
         binding.viewModel = articleViewModel
+        binding.title = Title(R.string.my_collect, R.drawable.arrow_back) { onBackPressed() }
 
-        mToolbar.title = getString(R.string.my_collect)
-        mToolbar.setNavigationIcon(R.drawable.arrow_back)
 
         collectRecycleView.run {
             layoutManager = LinearLayoutManager(this@MyCollectActivity)
@@ -68,19 +69,20 @@ class MyCollectActivity : BaseVMActivity() {
         collectRecycleView.adapter = articleAdapter
     }
 
-    private val itemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
-        when (view.id) {
-            R.id.articleStar -> {
-                articleAdapter.run {
-                    data[position].run {
-                        collect = !collect
-                        articleViewModel.collectArticle(originId, collect)
+    private val itemChildClickListener =
+        BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+            when (view.id) {
+                R.id.articleStar -> {
+                    articleAdapter.run {
+                        data[position].run {
+                            collect = !collect
+                            articleViewModel.collectArticle(originId, collect)
+                        }
+                        notifyItemRemoved(position)
                     }
-                    notifyItemRemoved(position)
                 }
             }
         }
-    }
 
     private fun loadMore() {
         articleViewModel.getCollectArticleList(false)

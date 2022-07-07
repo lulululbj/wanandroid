@@ -45,6 +45,7 @@ dependencies {
     api Deps.viewmodel_ktx
     api Deps.lifecycle_extension
     api Deps.recyclerView
+    api Deps.coil_compose
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

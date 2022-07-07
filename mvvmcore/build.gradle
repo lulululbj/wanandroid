@@ -41,6 +41,7 @@ dependencies {
     api Deps.navigation_fragment_ktx
     api Deps.navigation_ui_ktx
     implementation Deps.constraintlayout
+    implementation Deps.swiperefreshlayout
     implementation project(path: ':ktx')
 
     testImplementation 'junit:junit:4.13'

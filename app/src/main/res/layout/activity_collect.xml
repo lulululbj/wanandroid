@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:binding="http://schemas.android.com/apk/res-auto">
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.square.ArticleViewModel" />
+        <variable
+            name="title"
+            type="luyao.wanandroid.model.bean.Title" />
     </data>
 
     <LinearLayout
@@ -13,7 +17,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/title_layout" />
+        <include layout="@layout/title_layout"
+            app:title="@{title}"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/collectRefreshLayout"
