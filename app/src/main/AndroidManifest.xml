@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".ui.BrowserActivity" />
         <activity android:name=".ui.system.SystemTypeNormalActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.login.LoginFragment" />
         <activity android:name=".ui.collect.MyCollectActivity" />
         <activity
             android:name=".ui.share.ShareActivity"

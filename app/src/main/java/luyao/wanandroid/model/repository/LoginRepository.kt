@@ -56,7 +56,7 @@ class LoginRepository(val service: WanService) : BaseRepository() {
         }
 
         service.register(userName, passWord, passWord).doSuccess {
-            emit(LoginUiState(needLogin = true))
+            loginFlow(userName,passWord)
         }.doError { errorMsg ->
             emit(LoginUiState(isError = errorMsg, enableLoginButton = true))
         }

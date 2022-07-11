@@ -118,6 +118,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
     // When using a MDC theme
     implementation "com.google.android.material:compose-theme-adapter:1.1.14"
+    implementation "androidx.compose.runtime:runtime-livedata:1.1.1"
     // When using a AppCompat theme
 //    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
 

@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/loginActivity"
-        android:name="luyao.wanandroid.ui.login.LoginActivity"
+        android:name="luyao.wanandroid.ui.login.LoginFragment"
         android:label="activity_login"
         tools:layout="@layout/fragment_login">
 

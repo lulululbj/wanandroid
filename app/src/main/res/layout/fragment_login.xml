@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:binding="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.login.LoginViewModel" />
@@ -20,71 +20,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/title_layout"
-            app:title="@{title}"/>
+        <include
+            layout="@layout/title_layout"
+            app:title="@{title}" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userNameLayout"
-            style="@style/TextInputLayout"
-            android:layout_marginTop="80dp"
-            android:hint="@string/username">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/userNameEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@={viewModel.userName}"
-                binding:afterTextChanged="@{viewModel.verifyInput}"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pswLayout"
-            style="@style/TextInputLayout"
-            android:hint="@string/password"
-            app:passwordToggleEnabled="true">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/passwordEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:text="@={viewModel.passWord}"
-                binding:afterTextChanged="@{viewModel.verifyInput}"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/login"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/login"
-            android:enabled="@{viewModel.uiState.enableLoginButton}"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:onClick="@{() -> viewModel.login()}"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/register"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:enabled="@{viewModel.uiState.enableLoginButton}"
-            android:onClick="@{() -> viewModel.register()}"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
