@@ -37,8 +37,10 @@ import de.psdev.licensesdialog.model.Notice
 import kotlinx.android.synthetic.main.fragmnet_profile.*
 import luyao.mvvm.core.base.BaseFragment
 import luyao.util.ktx.ext.openBrowser
+import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.User
+import luyao.wanandroid.ui.ComposeMainActivity
 import luyao.wanandroid.util.GITHUB_PAGE
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.compose.Line
@@ -71,8 +73,12 @@ class ProfileFragment : BaseFragment() {
                 isLogin,
                 user,
                 onLogin = {
-                    if (!isLogin) Navigation.findNavController(composeView)
-                        .navigate(R.id.action_tab_to_login)
+                    if (!isLogin) {
+                        Navigation.findNavController(composeView)
+                            .navigate(R.id.action_tab_to_login)
+                    } else {
+                        requireActivity().startKtxActivity<ComposeMainActivity>()
+                    }
                 },
                 showMyCollect = {
                     Navigation.findNavController(composeView)

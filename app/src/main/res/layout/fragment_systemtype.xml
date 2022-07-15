@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="luyao.wanandroid.ui.square.ArticleViewModel" />
@@ -17,13 +18,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/typeRecycleView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            itemBottomPadding="10dp"
-            adapter="@{adapter}"/>
+            android:orientation="vertical">
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/composeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/typeRecycleView"
+                adapter="@{adapter}"
+                itemBottomPadding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

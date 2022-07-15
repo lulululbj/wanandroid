@@ -1,10 +1,13 @@
 package luyao.wanandroid.ui.system
 
 import android.os.Bundle
+import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.android.material.composethemeadapter.MdcTheme
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.toast
@@ -47,6 +50,10 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
         binding.run {
             viewModel = articleViewModel
             adapter = systemTypeAdapter
+
+            composeView.setContent {
+                ArticleScreen()
+            }
         }
         initRecycleView()
     }
@@ -59,7 +66,10 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
         typeRefreshLayout.setOnRefreshListener { refresh() }
         systemTypeAdapter.run {
             setOnItemClickListener { _, _, position ->
-                Navigation.findNavController(typeRecycleView).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to systemTypeAdapter.data[position].link))
+                Navigation.findNavController(typeRecycleView).navigate(
+                    R.id.action_tab_to_browser,
+                    bundleOf(BrowserActivity.URL to systemTypeAdapter.data[position].link)
+                )
             }
             onItemChildClickListener = this@SystemTypeFragment.onItemChildClickListener
 
@@ -68,23 +78,25 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
         }
     }
 
-    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
-        when (view.id) {
-            R.id.articleStar -> {
-                if (isLogin) {
-                    systemTypeAdapter.run {
-                        data[position].run {
-                            collect = !collect
-                            articleViewModel.collectArticle(id, collect)
+    private val onItemChildClickListener =
+        BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+            when (view.id) {
+                R.id.articleStar -> {
+                    if (isLogin) {
+                        systemTypeAdapter.run {
+                            data[position].run {
+                                collect = !collect
+                                articleViewModel.collectArticle(id, collect)
+                            }
+                            notifyDataSetChanged()
                         }
-                        notifyDataSetChanged()
+                    } else {
+                        Navigation.findNavController(typeRecycleView)
+                            .navigate(R.id.action_tab_to_login)
                     }
-                } else {
-                    Navigation.findNavController(typeRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }
-    }
 
     private fun loadMore() {
         loadData(false)
@@ -125,5 +137,11 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
             }
         })
     }
+}
 
+@Composable
+fun ArticleScreen() {
+    MdcTheme {
+
+    }
 }
