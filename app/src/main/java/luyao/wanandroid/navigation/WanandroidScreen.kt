@@ -24,6 +24,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import luyao.wanandroid.R
+import luyao.wanandroid.ui.profile.ProfilePage
 
 /**
  * Description:
@@ -50,8 +51,8 @@ val items = listOf(
 @Composable
 fun BottomNavigation(navController: NavController) {
     androidx.compose.material.BottomNavigation(
-        backgroundColor = colorResource(R.color.colorAccent),
-        contentColor = Color.Black
+        backgroundColor = colorResource(R.color.colorPrimary),
+        contentColor = Color.White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -64,8 +65,8 @@ fun BottomNavigation(navController: NavController) {
                     )
                 },
                 label = { Text(text = stringResource(item.title), fontSize = 9.sp) },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                selectedContentColor = Color.White,
+                unselectedContentColor = Color.White.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
@@ -136,60 +137,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
         ) {
             HomeScreen()
         }
-        composable(
-            BottomNavItem.Blog.route,
-//            enterTransition = {
-//            if (initialState.destination.route == BottomNavItem.Home.route) {
-//                slideIntoContainer(
-//                    AnimatedContentScope.SlideDirection.Left,
-//                    animationSpec = tween(tweenDuration)
-//                )
-//            } else {
-//                slideIntoContainer(
-//                    AnimatedContentScope.SlideDirection.Right,
-//                    animationSpec = tween(tweenDuration)
-//                )
-//            }
-//        },
-//            popEnterTransition = {
-//                if (initialState.destination.route == BottomNavItem.Home.route) {
-//                    slideIntoContainer(
-//                        AnimatedContentScope.SlideDirection.Left,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                } else {
-//                    slideIntoContainer(
-//                        AnimatedContentScope.SlideDirection.Right,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                }
-//            },
-//            exitTransition = {
-//                if (targetState.destination.route == BottomNavItem.Home.route) {
-//                    slideOutOfContainer(
-//                        AnimatedContentScope.SlideDirection.Left,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                } else {
-//                    slideOutOfContainer(
-//                        AnimatedContentScope.SlideDirection.Right,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                }
-//            }, popExitTransition = {
-//                if (targetState.destination.route == BottomNavItem.Home.route) {
-//                    slideOutOfContainer(
-//                        AnimatedContentScope.SlideDirection.Right,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                } else {
-//                    slideOutOfContainer(
-//                        AnimatedContentScope.SlideDirection.Left,
-//                        animationSpec = tween(tweenDuration)
-//                    )
-//                }
-//            }
-        ) {
+        composable(BottomNavItem.Blog.route) {
             BlogScreen()
         }
         composable(BottomNavItem.Search.route) {
@@ -199,7 +147,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
             ProjectScreen()
         }
         composable(BottomNavItem.Profile.route) {
-            ProfileScreen()
+            ProfilePage()
         }
     }
 }
