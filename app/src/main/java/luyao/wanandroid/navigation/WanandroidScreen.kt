@@ -2,6 +2,7 @@ package luyao.wanandroid.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -24,6 +25,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import luyao.wanandroid.R
+import luyao.wanandroid.ui.home.HomePage
 import luyao.wanandroid.ui.profile.ProfilePage
 
 /**
@@ -35,7 +37,10 @@ import luyao.wanandroid.ui.profile.ProfilePage
 @Composable
 fun WanandroidScreen() {
     val navController = rememberAnimatedNavController()
-    Scaffold(bottomBar = { BottomNavigation(navController = navController) }) { innerPadding ->
+    Scaffold(
+        bottomBar = { BottomNavigation(navController = navController) },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
         NavigationGraph(navController = navController, innerPadding)
     }
 }
@@ -135,10 +140,10 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
 //                )
 //            }
         ) {
-            HomeScreen()
+            HomePage()
         }
         composable(BottomNavItem.Blog.route) {
-            BlogScreen()
+            BlogPage()
         }
         composable(BottomNavItem.Search.route) {
             SearchScreen()

@@ -1,6 +1,7 @@
 package luyao.wanandroid.ui
 
 import androidx.activity.compose.setContent
+import com.google.android.material.composethemeadapter.MdcTheme
 import luyao.mvvm.core.base.BaseVMActivity
 import luyao.wanandroid.navigation.WanandroidScreen
 
@@ -13,7 +14,9 @@ class ComposeMainActivity : BaseVMActivity() {
 
     override fun initView() {
         setContent {
-            WanandroidScreen()
+            MdcTheme {
+                WanandroidScreen()
+            }
         }
     }
 

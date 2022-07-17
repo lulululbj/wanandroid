@@ -50,10 +50,6 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
         binding.run {
             viewModel = articleViewModel
             adapter = systemTypeAdapter
-
-            composeView.setContent {
-                ArticleScreen()
-            }
         }
         initRecycleView()
     }
@@ -136,12 +132,5 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
                 activity?.toast(if (message.isBlank()) "网络异常" else message)
             }
         })
-    }
-}
-
-@Composable
-fun ArticleScreen() {
-    MdcTheme {
-
     }
 }
