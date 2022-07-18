@@ -50,7 +50,7 @@
             android:id="@+id/articleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#1c1c1e"
+            android:textColor="@color/color_1c1c1e"
             android:textSize="16sp"
             android:paddingTop="5dp"
             android:paddingBottom="8dp"

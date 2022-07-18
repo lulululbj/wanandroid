@@ -63,8 +63,8 @@ class SquareFragment : BaseVMFragment<FragmentSquareBinding>(R.layout.fragment_s
             it.showSuccess?.let { list ->
                 squareAdapter.run {
                     setEnableLoadMore(false)
-                    if (it.isRefresh) replaceData(list.datas)
-                    else addData(list.datas)
+                    if (it.isRefresh) replaceData(list)
+                    else addData(list)
                     setEnableLoadMore(true)
                     loadMoreComplete()
                 }

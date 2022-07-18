@@ -11,4 +11,6 @@
     <color name="text_gray">#2f2f2f</color>
     <color name="scrim">#99323232</color>
     <color name="dark_icon">#99000000</color>
+    <color name="color_8e9dac">#8e9dac</color>
+    <color name="color_1c1c1e">#1c1c1e</color>
 </resources>

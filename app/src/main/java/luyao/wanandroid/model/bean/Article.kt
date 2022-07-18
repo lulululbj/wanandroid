@@ -36,4 +36,7 @@ data class Article( val id: Int,
                     val shareUser:String,
                     val tags:Any, // Not sure
                     val userId:Int
-                    ):Serializable
+                    ):Serializable {
+
+                        fun getAuthorName() = author.ifBlank { "分享者: $shareUser" }
+                    }

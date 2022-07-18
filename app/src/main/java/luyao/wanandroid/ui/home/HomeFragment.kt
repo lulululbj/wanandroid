@@ -126,8 +126,8 @@ class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home)
                 it.showSuccess?.let { list ->
                     homeArticleAdapter.run {
                         homeArticleAdapter.setEnableLoadMore(false)
-                        if (it.isRefresh) replaceData(list.datas)
-                        else addData(list.datas)
+                        if (it.isRefresh) replaceData(list)
+                        else addData(list)
                         setEnableLoadMore(true)
                         loadMoreComplete()
                     }

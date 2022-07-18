@@ -115,8 +115,8 @@ class ProjectTypeFragment : BaseVMFragment<FragmentProjecttypeBinding>(R.layout.
 
             it.showSuccess?.let { list ->
                 projectAdapter.run {
-                    if (it.isRefresh) replaceData(list.datas)
-                    else addData(list.datas)
+                    if (it.isRefresh) replaceData(list)
+                    else addData(list)
                     setEnableLoadMore(true)
                     loadMoreComplete()
                 }

@@ -97,10 +97,10 @@ class MyCollectActivity : BaseVMActivity() {
 
                 it.showSuccess?.let { list ->
                     articleAdapter.setEnableLoadMore(false)
-                    list.datas.forEach { it.collect = true }
+                    list.forEach { it.collect = true }
                     articleAdapter.run {
-                        if (it.isRefresh) replaceData(list.datas)
-                        else addData(list.datas)
+                        if (it.isRefresh) replaceData(list)
+                        else addData(list)
                         setEnableLoadMore(true)
                         loadMoreComplete()
                     }

@@ -1,14 +1,11 @@
 package luyao.wanandroid.ui.system
 
 import android.os.Bundle
-import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.mvvm.core.base.BaseVMFragment
@@ -29,7 +26,7 @@ import luyao.wanandroid.view.CustomLoadMoreView
 @AndroidEntryPoint
 class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fragment_systemtype) {
 
-    private val articleViewModel :ArticleViewModel by viewModels()
+    private val articleViewModel: ArticleViewModel by viewModels()
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val cid by lazy { arguments?.getInt(CID) }
     private val isBlog by lazy { arguments?.getBoolean(BLOG) ?: false } // 区分是体系下的文章列表还是公众号下的文章列表
@@ -121,8 +118,8 @@ class SystemTypeFragment : BaseVMFragment<FragmentSystemtypeBinding>(R.layout.fr
 
             it.showSuccess?.let { list ->
                 systemTypeAdapter.run {
-                    if (it.isRefresh) replaceData(list.datas)
-                    else addData(list.datas)
+                    if (it.isRefresh) replaceData(list)
+                    else addData(list)
                     setEnableLoadMore(true)
                     loadMoreComplete()
                 }

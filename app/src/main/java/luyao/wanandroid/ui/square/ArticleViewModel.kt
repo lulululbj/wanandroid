@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.square
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.mvvm.core.Result
 import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.model.repository.*
@@ -21,11 +23,11 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
-        private val squareRepository: SquareRepository,
-        private val homeRepository: HomeRepository,
-        private val projectRepository: ProjectRepository,
-        private val collectRepository: CollectRepository,
-        private val systemRepository: SystemRepository
+    private val squareRepository: SquareRepository,
+    private val homeRepository: HomeRepository,
+    private val projectRepository: ProjectRepository,
+    private val collectRepository: CollectRepository,
+    private val systemRepository: SystemRepository
 ) : BaseViewModel() {
 
     sealed class ArticleType {
@@ -44,6 +46,9 @@ class ArticleViewModel @Inject constructor(
 
     private var currentPage = 0
 
+    val lazyListState = LazyListState()
+    private val allArticleList = arrayListOf<Article>()
+
 
     val mBanners: LiveData<List<Banner>> = liveData {
         kotlin.runCatching {
@@ -53,17 +58,28 @@ class ArticleViewModel @Inject constructor(
     }
 
 
-    val refreshSquare: () -> Unit = { getSquareArticleList(true)}
-    val refreshCollect: () -> Unit = { getCollectArticleList(true)}
-    val refreshHome: ()-> Unit = {getHomeArticleList(true)}
+    val refreshSquare: () -> Unit = { getSquareArticleList(true) }
+    val refreshCollect: () -> Unit = { getCollectArticleList(true) }
+    val refreshHome: () -> Unit = { getHomeArticleList(true) }
 
     fun getHomeArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Home, isRefresh)
-    fun getSquareArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Square, isRefresh)
-    fun getLatestProjectList(isRefresh: Boolean = false) = getArticleList(ArticleType.LatestProject, isRefresh)
-    fun getProjectTypeDetailList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.ProjectDetailList, isRefresh, cid)
-    fun getCollectArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Collection, isRefresh)
-    fun getSystemTypeArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.SystemType, isRefresh, cid)
-    fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) = getArticleList(ArticleType.Blog, isRefresh, cid)
+    fun getSquareArticleList(isRefresh: Boolean = false) =
+        getArticleList(ArticleType.Square, isRefresh)
+
+    fun getLatestProjectList(isRefresh: Boolean = false) =
+        getArticleList(ArticleType.LatestProject, isRefresh)
+
+    fun getProjectTypeDetailList(isRefresh: Boolean = false, cid: Int) =
+        getArticleList(ArticleType.ProjectDetailList, isRefresh, cid)
+
+    fun getCollectArticleList(isRefresh: Boolean = false) =
+        getArticleList(ArticleType.Collection, isRefresh)
+
+    fun getSystemTypeArticleList(isRefresh: Boolean = false, cid: Int) =
+        getArticleList(ArticleType.SystemType, isRefresh, cid)
+
+    fun getBlogArticleList(isRefresh: Boolean = false, cid: Int) =
+        getArticleList(ArticleType.Blog, isRefresh, cid)
 
     fun collectArticle(articleId: Int, boolean: Boolean) {
         launchOnUI {
@@ -76,14 +92,20 @@ class ArticleViewModel @Inject constructor(
 
     private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false, cid: Int = 0) {
         viewModelScope.launch(Dispatchers.Main) {
-            emitArticleUiState(true)
-            if (isRefresh) currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
+            emitArticleUiState(isRefresh, showSuccess = allArticleList)
+            if (isRefresh) {
+                allArticleList.clear()
+                currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
+            }
 
             val result = when (articleType) {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
                 ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
-                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(currentPage, cid)
+                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(
+                    currentPage,
+                    cid
+                )
                 ArticleType.Collection -> collectRepository.getCollectArticles(currentPage)
                 ArticleType.SystemType -> systemRepository.getSystemTypeDetail(cid, currentPage)
                 ArticleType.Blog -> systemRepository.getBlogArticle(cid, currentPage)
@@ -92,12 +114,18 @@ class ArticleViewModel @Inject constructor(
             if (result is Result.Success) {
                 val articleList = result.data
                 if (articleList.offset >= articleList.total) {
-                    emitArticleUiState(showLoading = false, showEnd = true)
+                    emitArticleUiState(
+                        showLoading = false,
+                        showEnd = true,
+                        showSuccess = allArticleList.apply { addAll(articleList.datas) })
                     return@launch
                 }
                 currentPage++
-                emitArticleUiState(showLoading = false, showSuccess = articleList, isRefresh = isRefresh)
-
+                emitArticleUiState(
+                    showLoading = false,
+                    showSuccess = allArticleList.apply { addAll(articleList.datas) },
+                    isRefresh = isRefresh
+                )
             } else if (result is Result.Error) {
                 emitArticleUiState(showLoading = false, showError = result.exception.message)
             }
@@ -105,25 +133,27 @@ class ArticleViewModel @Inject constructor(
     }
 
     private fun emitArticleUiState(
-            showLoading: Boolean = false,
-            showError: String? = null,
-            showSuccess: ArticleList? = null,
-            showEnd: Boolean = false,
-            isRefresh: Boolean = false,
-            needLogin: Boolean? = null
+        showLoading: Boolean = false,
+        showError: String? = null,
+        showSuccess: List<Article>? = null,
+        showEnd: Boolean = false,
+        isRefresh: Boolean = false,
+        needLogin: Boolean? = null
     ) {
-        val uiModel = ArticleUiModel(showLoading, showError, showSuccess, showEnd, isRefresh, needLogin)
+        val uiModel =
+            ArticleUiModel(showLoading, showError, showSuccess, showEnd, isRefresh, needLogin)
         _uiState.value = uiModel
     }
 
 
     data class ArticleUiModel(
-            val showLoading: Boolean,
-            val showError: String?,
-            val showSuccess: ArticleList?,
-            val showEnd: Boolean, // 加载更多
-            val isRefresh: Boolean, // 刷新
-            val needLogin: Boolean? = null
+        val showLoading: Boolean,
+        val showError: String?,
+        val showSuccess: List<Article>?,
+        val showEnd: Boolean, // 加载更多
+        val isRefresh: Boolean, // 刷新
+        val needLogin: Boolean? = null,
+        val listState: LazyListState = LazyListState()
     )
 
 
