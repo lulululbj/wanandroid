@@ -3,11 +3,13 @@ package luyao.wanandroid.ui.home
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.youth.banner.BannerConfig
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
@@ -21,16 +23,16 @@ import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.GlideImageLoader
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
  * Created by luyao
  * on 2018/3/13 14:15
  */
+@AndroidEntryPoint
 class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val articleViewModel by viewModel<ArticleViewModel>()
+    private val articleViewModel: ArticleViewModel by viewModels()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val homeArticleAdapter by lazy { HomeArticleAdapter() }
@@ -56,7 +58,8 @@ class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home)
         homeArticleAdapter.run {
             setOnItemClickListener { _, _, position ->
                 val bundle = bundleOf(BrowserActivity.URL to homeArticleAdapter.data[position].link)
-                NavHostFragment.findNavController(this@HomeFragment).navigate(R.id.action_tab_to_browser, bundle)
+                NavHostFragment.findNavController(this@HomeFragment)
+                    .navigate(R.id.action_tab_to_browser, bundle)
             }
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
             if (headerLayoutCount > 0) removeAllHeaderView()
@@ -66,23 +69,25 @@ class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home)
         }
     }
 
-    private val onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
-        when (view.id) {
-            R.id.articleStar -> {
-                if (isLogin) {
-                    homeArticleAdapter.run {
-                        data[position].run {
-                            collect = !collect
-                            articleViewModel.collectArticle(id, collect)
+    private val onItemChildClickListener =
+        BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+            when (view.id) {
+                R.id.articleStar -> {
+                    if (isLogin) {
+                        homeArticleAdapter.run {
+                            data[position].run {
+                                collect = !collect
+                                articleViewModel.collectArticle(id, collect)
+                            }
+                            notifyDataSetChanged()
                         }
-                        notifyDataSetChanged()
+                    } else {
+                        Navigation.findNavController(homeRecycleView)
+                            .navigate(R.id.action_tab_to_login)
                     }
-                } else {
-                    Navigation.findNavController(homeRecycleView).navigate(R.id.action_tab_to_login)
                 }
             }
         }
-    }
 
     private fun loadMore() {
         articleViewModel.getHomeArticleList(false)
@@ -91,12 +96,16 @@ class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home)
     private fun initBanner() {
 
         banner.run {
-            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
+            layoutParams =
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
             setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
             setImageLoader(GlideImageLoader())
             setOnBannerListener { position ->
                 run {
-                    Navigation.findNavController(banner).navigate(R.id.action_tab_to_browser, bundleOf(BrowserActivity.URL to bannerUrls[position]))
+                    Navigation.findNavController(banner).navigate(
+                        R.id.action_tab_to_browser,
+                        bundleOf(BrowserActivity.URL to bannerUrls[position])
+                    )
                 }
             }
         }
@@ -141,9 +150,9 @@ class HomeFragment : BaseVMFragment<FragmentHomeBinding>(R.layout.fragment_home)
             bannerUrls.add(banner.url)
         }
         banner.setImages(bannerImages)
-                .setBannerTitles(bannerTitles)
-                .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
-                .setDelayTime(3000)
+            .setBannerTitles(bannerTitles)
+            .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
+            .setDelayTime(3000)
         banner.start()
     }
 

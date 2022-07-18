@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -12,12 +13,14 @@ import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
 import luyao.wanandroid.model.repository.*
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/10/15 10:46
  */
-class ArticleViewModel(
+@HiltViewModel
+class ArticleViewModel @Inject constructor(
         private val squareRepository: SquareRepository,
         private val homeRepository: HomeRepository,
         private val projectRepository: ProjectRepository,

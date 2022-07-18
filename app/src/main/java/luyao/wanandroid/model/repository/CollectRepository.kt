@@ -4,12 +4,13 @@ import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/10 14:01
  */
-class CollectRepository : BaseRepository() {
+class CollectRepository  @Inject constructor(): BaseRepository() {
 
     suspend fun getCollectArticles(page: Int): Result<ArticleList> {
         return safeApiCall(call = { requestCollectArticles(page) }, errorMessage = "网络错误")

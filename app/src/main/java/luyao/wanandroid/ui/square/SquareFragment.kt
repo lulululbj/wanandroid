@@ -1,7 +1,9 @@
 package luyao.wanandroid.ui.square
 
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_square.*
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.startKtxActivity
@@ -13,15 +15,15 @@ import luyao.wanandroid.databinding.FragmentSquareBinding
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
  * on 2019/10/15 10:18
  */
+@AndroidEntryPoint
 class SquareFragment : BaseVMFragment<FragmentSquareBinding>(R.layout.fragment_square) {
 
-    private val articleViewModel by viewModel<ArticleViewModel>()
+    private val articleViewModel :ArticleViewModel by viewModels()
 
     private val squareAdapter by lazy { BaseBindAdapter<Article>(R.layout.item_square_constraint, BR.article) }
 

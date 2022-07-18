@@ -12,6 +12,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.composethemeadapter.MdcTheme
 import luyao.mvvm.core.base.BaseVMFragment
@@ -20,7 +21,6 @@ import luyao.wanandroid.R
 import luyao.wanandroid.databinding.FragmentLoginBinding
 import luyao.wanandroid.model.bean.Title
 import luyao.wanandroid.view.compose.LoadingDialog
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
@@ -28,7 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class LoginFragment : BaseVMFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
-    private val loginVM by viewModel<LoginViewModel>()
+    private val loginVM : LoginViewModel by viewModels()
 
     override fun initView() {
         binding.run {

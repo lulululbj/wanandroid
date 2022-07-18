@@ -2,9 +2,11 @@ package luyao.wanandroid.ui.project
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.chad.library.adapter.base.BaseQuickAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_projecttype.*
 import kotlinx.android.synthetic.main.fragment_systemtype.*
 import luyao.mvvm.core.base.BaseVMFragment
@@ -17,16 +19,16 @@ import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 最新项目/项目分类
  * Created by Lu
  * on 2018/4/1 17:06
  */
+@AndroidEntryPoint
 class ProjectTypeFragment : BaseVMFragment<FragmentProjecttypeBinding>(R.layout.fragment_projecttype) {
 
-    private val articleViewModel by viewModel<ArticleViewModel>()
+    private val articleViewModel : ArticleViewModel by viewModels()
 
     private val isLogin by Preference(Preference.IS_LOGIN, false)
     private val cid by lazy { arguments?.getInt(CID) }

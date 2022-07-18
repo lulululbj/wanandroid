@@ -11,12 +11,13 @@ import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SystemRepository
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/8 16:40
  */
-class SystemViewModel(
+class SystemViewModel @Inject constructor(
         private val systemRepository: SystemRepository,
         private val collectRepository: CollectRepository
 ) : BaseViewModel() {

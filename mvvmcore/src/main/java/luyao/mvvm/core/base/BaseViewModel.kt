@@ -1,6 +1,5 @@
 package luyao.mvvm.core.base
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.Result
 
 /**
  * Created by luyao
@@ -17,19 +15,19 @@ import luyao.mvvm.core.Result
 open class BaseViewModel : ViewModel() {
 
     open class UiState<T>(
-            val isLoading: Boolean = false,
-            val isRefresh: Boolean = false,
-            val isSuccess: T? = null,
-            val isError: String?= null
+        val isLoading: Boolean = false,
+        val isRefresh: Boolean = false,
+        val isSuccess: T? = null,
+        val isError: String? = null
     )
 
 
     open class BaseUiModel<T>(
-            var showLoading: Boolean = false,
-            var showError: String? = null,
-            var showSuccess: T? = null,
-            var showEnd: Boolean = false, // 加载更多
-            var isRefresh: Boolean = false // 刷新
+        var showLoading: Boolean = false,
+        var showError: String? = null,
+        var showSuccess: T? = null,
+        var showEnd: Boolean = false, // 加载更多
+        var isRefresh: Boolean = false // 刷新
 
     )
 

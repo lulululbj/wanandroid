@@ -6,16 +6,17 @@ import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.util.isSuccess
 import java.io.IOException
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/10/15 10:33
  */
-class SquareRepository :  BaseRepository(){
+class SquareRepository @Inject constructor() : BaseRepository() {
 
 
-    suspend fun getSquareArticleList(page:Int): Result<ArticleList> {
-        return safeApiCall(call = {requestSquareArticleList(page)},errorMessage = "网络异常")
+    suspend fun getSquareArticleList(page: Int): Result<ArticleList> {
+        return safeApiCall(call = { requestSquareArticleList(page) }, errorMessage = "网络异常")
     }
 
     private suspend fun requestSquareArticleList(page: Int): Result<ArticleList> {

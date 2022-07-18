@@ -1,8 +1,10 @@
 package luyao.wanandroid.ui.collect
 
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_collect.*
 import kotlinx.android.synthetic.main.title_layout.*
 import luyao.mvvm.core.base.BaseVMActivity
@@ -17,16 +19,15 @@ import luyao.wanandroid.model.bean.Title
 import luyao.wanandroid.ui.BrowserActivity
 import luyao.wanandroid.ui.square.ArticleViewModel
 import luyao.wanandroid.view.CustomLoadMoreView
-import org.koin.android.ext.android.bind
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by Lu
  * on 2018/4/10 22:09
  */
+@AndroidEntryPoint
 class MyCollectActivity : BaseVMActivity() {
 
-    private val articleViewModel by viewModel<ArticleViewModel>()
+    private val articleViewModel: ArticleViewModel by viewModels()
     private val binding by binding<ActivityCollectBinding>(R.layout.activity_collect)
 
     private val articleAdapter by lazy { HomeArticleAdapter() }

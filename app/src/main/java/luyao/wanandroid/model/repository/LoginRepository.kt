@@ -15,12 +15,13 @@ import luyao.wanandroid.model.bean.doError
 import luyao.wanandroid.model.bean.doSuccess
 import luyao.wanandroid.ui.login.LoginUiState
 import luyao.wanandroid.util.Preference
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/10 9:42
  */
-class LoginRepository(val service: WanService) : BaseRepository() {
+class LoginRepository @Inject constructor(val service: WanService) : BaseRepository() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")

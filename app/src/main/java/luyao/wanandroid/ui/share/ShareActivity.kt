@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.share
 
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_share.*
@@ -7,7 +8,6 @@ import luyao.mvvm.core.base.BaseVMActivity
 import luyao.util.ktx.ext.toast
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityShareBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by luyao
@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class ShareActivity : BaseVMActivity() {
 
-    private val shareViewModel by viewModel<ShareViewModel>()
+    private val shareViewModel: ShareViewModel by viewModels()
     private val binding by binding<ActivityShareBinding>(R.layout.activity_share)
 
     override fun initView() {

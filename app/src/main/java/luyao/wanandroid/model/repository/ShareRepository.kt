@@ -3,12 +3,13 @@ package luyao.wanandroid.model.repository
 import luyao.mvvm.core.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/10/15 16:31
  */
-class ShareRepository : BaseRepository() {
+class ShareRepository @Inject constructor(): BaseRepository() {
 
 
     suspend fun shareArticle(title: String, url: String): Result<String> {

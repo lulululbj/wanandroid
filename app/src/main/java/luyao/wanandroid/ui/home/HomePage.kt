@@ -1,7 +1,10 @@
 package luyao.wanandroid.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,6 +16,7 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.R
+import luyao.wanandroid.ui.hot.HotPage
 
 
 @OptIn(ExperimentalPagerApi::class)
@@ -80,13 +84,18 @@ fun HomePage() {
                 .fillMaxWidth()
         ) { index ->
             val page = pageMapper(index)
-            Card {
-                Box(Modifier.fillMaxSize()) {
-                    Text(
-                        text = "Page: ${pages[page]}",
-                        style = MaterialTheme.typography.h4,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+            when (page) {
+                0 -> HotPage()
+                else -> {
+                    Card {
+                        Box(Modifier.fillMaxSize()) {
+                            Text(
+                                text = "Page: ${pages[page]}",
+                                style = MaterialTheme.typography.h4,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
                 }
             }
         }

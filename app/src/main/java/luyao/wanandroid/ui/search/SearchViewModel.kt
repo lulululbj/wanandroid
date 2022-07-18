@@ -3,6 +3,7 @@ package luyao.wanandroid.ui.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -12,12 +13,14 @@ import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SearchRepository
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/8 15:29
  */
-class SearchViewModel(private val searchRepository: SearchRepository,
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository,
                       private val collectRepository: CollectRepository) : BaseViewModel() {
 
     private var currentPage = 0

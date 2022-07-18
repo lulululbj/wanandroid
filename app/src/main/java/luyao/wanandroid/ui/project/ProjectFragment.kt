@@ -1,19 +1,22 @@
 package luyao.wanandroid.ui.project
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_project.*
 import luyao.wanandroid.R
 import luyao.wanandroid.databinding.ActivityProjectBinding
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.system.SystemTypeFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-open class ProjectFragment : luyao.mvvm.core.base.BaseVMFragment<ActivityProjectBinding>(R.layout.activity_project) {
+@AndroidEntryPoint
+open class ProjectFragment :
+    luyao.mvvm.core.base.BaseVMFragment<ActivityProjectBinding>(R.layout.activity_project) {
 
-    private val projectViewModel by viewModel<ProjectViewModel>()
+    private val projectViewModel: ProjectViewModel by viewModels()
 
     private val mProjectTypeList = mutableListOf<SystemParent>()
     open var isBlog = false // 区分是公众号还是项目分类

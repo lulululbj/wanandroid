@@ -4,18 +4,21 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.mvvm.core.Result
 import luyao.mvvm.core.base.BaseViewModel
 import luyao.wanandroid.model.repository.ShareRepository
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/10/15 15:21
  */
-class ShareViewModel(private val repository: ShareRepository) : BaseViewModel() {
+@HiltViewModel
+class ShareViewModel @Inject constructor(private val repository: ShareRepository) : BaseViewModel() {
 
     val title = ObservableField<String>("")
     val url = ObservableField<String>("")

@@ -1,7 +1,9 @@
 package luyao.wanandroid.ui.navigation
 
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.dp2px
@@ -10,7 +12,6 @@ import luyao.wanandroid.adapter.NavigationAdapter
 import luyao.wanandroid.adapter.VerticalTabAdapter
 import luyao.wanandroid.databinding.FragmentNavigationBinding
 import luyao.wanandroid.model.bean.Navigation
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 
@@ -19,9 +20,10 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by Lu
  * on 2018/3/28 21:26
  */
+@AndroidEntryPoint
 class NavigationFragment : BaseVMFragment<FragmentNavigationBinding>(R.layout.fragment_navigation) {
 
-    private val navigationViewModel by viewModel<NavigationViewModel>()
+    private val navigationViewModel : NavigationViewModel by viewModels()
 
     private val navigationList = mutableListOf<Navigation>()
     private val tabAdapter by lazy { VerticalTabAdapter(navigationList.map { it.name }) }

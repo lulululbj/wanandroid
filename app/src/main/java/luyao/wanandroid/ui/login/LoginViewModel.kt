@@ -1,20 +1,19 @@
 package luyao.wanandroid.ui.login
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
+import dagger.hilt.android.lifecycle.HiltViewModel
 import luyao.mvvm.core.base.BaseViewModel
-import luyao.wanandroid.CoroutinesDispatcherProvider
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.model.repository.LoginRepository
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/2 16:36
  */
-class LoginViewModel(val repository: LoginRepository) :
+@HiltViewModel
+class LoginViewModel @Inject constructor(val repository: LoginRepository) :
     BaseViewModel() {
 
 //    val userName = ObservableField<String>("")

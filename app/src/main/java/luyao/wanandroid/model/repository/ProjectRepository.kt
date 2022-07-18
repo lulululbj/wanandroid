@@ -5,12 +5,13 @@ import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/10 14:18
  */
-class ProjectRepository : BaseRepository() {
+class ProjectRepository  @Inject constructor(): BaseRepository() {
 
     suspend fun getProjectTypeDetailList(page: Int, cid: Int): Result<ArticleList> {
         return safeApiCall(call = {requestProjectTypeDetailList(page, cid)},errorMessage = "发生未知错误")

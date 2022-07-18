@@ -1,7 +1,9 @@
 package luyao.wanandroid.ui.system
 
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.chad.library.adapter.base.BaseQuickAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_system.*
 import luyao.mvvm.core.base.BaseVMFragment
 import luyao.util.ktx.ext.startKtxActivity
@@ -11,16 +13,16 @@ import luyao.wanandroid.R
 import luyao.wanandroid.adapter.BaseBindAdapter
 import luyao.wanandroid.databinding.FragmentSystemBinding
 import luyao.wanandroid.model.bean.SystemParent
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 体系
  * Created by Lu
  * on 2018/3/26 21:11
  */
+@AndroidEntryPoint
 class SystemFragment : BaseVMFragment<FragmentSystemBinding>(R.layout.fragment_system) {
 
-    private val systemViewModel by viewModel<SystemViewModel>()
+    private val systemViewModel :SystemViewModel by viewModels()
     private val systemAdapter by lazy { BaseBindAdapter<SystemParent>(R.layout.item_system, BR.systemParent) }
 
     override fun initView() {

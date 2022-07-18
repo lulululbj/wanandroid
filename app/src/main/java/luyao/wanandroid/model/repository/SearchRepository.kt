@@ -5,12 +5,13 @@ import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
+import javax.inject.Inject
 
 /**
  * Created by luyao
  * on 2019/4/10 14:26
  */
-class SearchRepository : BaseRepository() {
+class SearchRepository @Inject constructor(): BaseRepository() {
     suspend fun searchHot(page: Int, key: String): Result<ArticleList> {
         return safeApiCall(call = {requestSearch(page, key)},errorMessage = "网络错误")
     }
