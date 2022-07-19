@@ -35,7 +35,7 @@ import luyao.wanandroid.ui.profile.ProfilePage
  */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun WanandroidScreen() {
+fun WanandroidPage() {
     val navController = rememberAnimatedNavController()
     Scaffold(
         bottomBar = { BottomNavigation(navController = navController) },
