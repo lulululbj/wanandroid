@@ -11,10 +11,10 @@ import javax.inject.Inject
  * Created by luyao
  * on 2019/4/10 14:09
  */
-class HomeRepository @Inject constructor(): BaseRepository() {
+class HomeRepository @Inject constructor() : BaseRepository() {
 
     suspend fun getBanners(): Result<List<Banner>> {
-        return safeApiCall(call = {requestBanners()},errorMessage = "")
+        return safeApiCall(call = { requestBanners() }, errorMessage = "")
     }
 
     private suspend fun requestBanners(): Result<List<Banner>> =
@@ -26,5 +26,12 @@ class HomeRepository @Inject constructor(): BaseRepository() {
     }
 
     private suspend fun requestArticleList(page: Int): Result<ArticleList> =
-            executeResponse(WanRetrofitClient.service.getHomeArticles(page))
+        executeResponse(WanRetrofitClient.service.getHomeArticles(page))
+
+    suspend fun getQuestionList(page: Int): Result<ArticleList> {
+        return safeApiCall(
+            call = { executeResponse(WanRetrofitClient.service.getQuestion(page)) },
+            errorMessage = ""
+        )
+    }
 }

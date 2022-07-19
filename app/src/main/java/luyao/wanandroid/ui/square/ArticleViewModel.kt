@@ -22,16 +22,26 @@ import javax.inject.Inject
  * on 2019/10/15 10:46
  */
 @HiltViewModel
-class ArticleViewModel @Inject constructor(
-    private val squareRepository: SquareRepository,
-    private val homeRepository: HomeRepository,
-    private val projectRepository: ProjectRepository,
-    private val collectRepository: CollectRepository,
-    private val systemRepository: SystemRepository
-) : BaseViewModel() {
+open class ArticleViewModel @Inject constructor() : BaseViewModel() {
+
+    @Inject
+    lateinit var squareRepository: SquareRepository
+
+    @Inject
+    lateinit var homeRepository: HomeRepository
+
+    @Inject
+    lateinit var projectRepository: ProjectRepository
+
+    @Inject
+    lateinit var collectRepository: CollectRepository
+
+    @Inject
+    lateinit var systemRepository: SystemRepository
 
     sealed class ArticleType {
         object Home : ArticleType()                 // 首页
+        object Question : ArticleType()                 // 首页
         object Square : ArticleType()               // 广场
         object LatestProject : ArticleType()        // 最新项目
         object ProjectDetailList : ArticleType()    // 项目列表
@@ -63,6 +73,9 @@ class ArticleViewModel @Inject constructor(
     val refreshHome: () -> Unit = { getHomeArticleList(true) }
 
     fun getHomeArticleList(isRefresh: Boolean = false) = getArticleList(ArticleType.Home, isRefresh)
+    fun getQuestionList(isRefresh: Boolean = false) =
+        getArticleList(ArticleType.Question, isRefresh)
+
     fun getSquareArticleList(isRefresh: Boolean = false) =
         getArticleList(ArticleType.Square, isRefresh)
 
@@ -100,6 +113,7 @@ class ArticleViewModel @Inject constructor(
 
             val result = when (articleType) {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
+                ArticleType.Question -> homeRepository.getQuestionList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
                 ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
                 ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(

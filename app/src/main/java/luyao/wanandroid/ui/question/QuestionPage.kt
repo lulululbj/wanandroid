@@ -1,102 +1,50 @@
-package luyao.wanandroid.ui.hot
+package luyao.wanandroid.ui.question
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.delay
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
+import luyao.wanandroid.ui.hot.ArticleRefreshList
+import luyao.wanandroid.ui.hot.ArticleText
+import luyao.wanandroid.ui.hot.TitleText
 import luyao.wanandroid.ui.square.ArticleViewModel
 
 /**
  * Description:
  * Author: luyao
- * Date: 2022/7/18 14:04
+ * Date: 2022/7/19 15:32
  */
-
 @Composable
-fun HotPage(viewModel: ArticleViewModel = hiltViewModel()) {
+fun QuestionPage(viewModel: QuestionViewModel = hiltViewModel()) {
     ArticleRefreshList(
         viewModel,
-        onRefresh = { viewModel.getHomeArticleList(true) },
-        onLoadMore = { viewModel.getHomeArticleList(false) },
+        onRefresh = { viewModel.getQuestionList(true) },
+        onLoadMore = { viewModel.getQuestionList(false) },
         itemContent = { article ->
-            ArticleItem(article)
+            QuestionItem(article)
         })
 }
 
 @Composable
-fun ArticleRefreshList(
-    viewModel: ArticleViewModel,
-    onRefresh: () -> Unit,
-    onLoadMore: () -> Unit,
-    itemContent: @Composable (Article) -> Unit,
-) {
-    val uiState by viewModel.uiState.observeAsState()
-    val listSate =
-        if (uiState?.showSuccess.isNullOrEmpty()) LazyListState() else viewModel.lazyListState
-
-    LaunchedEffect(true) {
-        onRefresh()
-    }
-
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = uiState?.showLoading ?: false),
-        onRefresh = onRefresh
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listSate
-        ) {
-            uiState?.showSuccess?.let { list ->
-                items(list, key = { item -> item.id }) { article ->
-                    Spacer(modifier = Modifier.height(6.dp))
-                    itemContent(article)
-                    Spacer(modifier = Modifier.height(6.dp))
-                }
-                item {
-                    if (list.isNotEmpty()) {
-                        LoadingItem()
-                        LaunchedEffect(Unit) {
-                            delay(500)
-                            onLoadMore()
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ArticleItem(article: Article) {
+fun QuestionItem(article: Article) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -188,46 +136,14 @@ fun ArticleItem(article: Article) {
     }
 }
 
-@Composable
-fun ArticleText(text: String, modifier: Modifier) {
-    Text(
-        text = text,
-        fontSize = 12.sp,
-        color = colorResource(R.color.color_8e9dac),
-        modifier = modifier
-    )
-}
-
-@Composable
-fun TitleText(text: String, modifier: Modifier) {
-    Text(
-        text = text,
-        fontSize = 16.sp,
-        color = colorResource(R.color.color_1c1c1e),
-        modifier = modifier
-    )
-}
-
-@Composable
-fun LoadingItem() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
 @Preview
-fun ArticleItemPreview() {
+@Composable
+fun QuestionItemPreview() {
     val article = Article(
         1, 1, "测试标题", 1, "Kotlin", "", "", "路遥",
         "origin", System.currentTimeMillis(), 10, "desc", 1, "2022-1-1 10:00", "date", 1, false,
         "", "", 1, "Android", 1, true, 1, "", 1, System.currentTimeMillis(), "shareUser",
         "", 1
     )
-    ArticleItem(article = article)
+    QuestionItem(article = article)
 }

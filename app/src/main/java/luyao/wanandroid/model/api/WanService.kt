@@ -81,4 +81,7 @@ interface WanService {
     @POST("/lg/user_article/add/json")
     suspend fun shareArticle(@Field("title") title: String, @Field("link") url: String): WanResponse<String>
 
+    @GET("/wenda/list/{page}/json")
+    suspend fun getQuestion(@Path("page") page: Int) : WanResponse<ArticleList>
+
 }

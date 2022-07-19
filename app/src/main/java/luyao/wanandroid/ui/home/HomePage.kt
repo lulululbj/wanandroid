@@ -17,6 +17,8 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.R
 import luyao.wanandroid.ui.hot.HotPage
+import luyao.wanandroid.ui.question.QuestionPage
+import luyao.wanandroid.ui.square.SquarePage
 
 
 @OptIn(ExperimentalPagerApi::class)
@@ -86,6 +88,8 @@ fun HomePage() {
             val page = pageMapper(index)
             when (page) {
                 0 -> HotPage()
+                1 -> QuestionPage()
+                2 -> SquarePage()
                 else -> {
                     Card {
                         Box(Modifier.fillMaxSize()) {
