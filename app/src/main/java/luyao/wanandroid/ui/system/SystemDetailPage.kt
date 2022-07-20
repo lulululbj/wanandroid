@@ -21,7 +21,10 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.ProvideViewModels
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.navigation.Route
+import luyao.wanandroid.navigation.navigateAndArgument
 import luyao.wanandroid.ui.home.floorMod
 import luyao.wanandroid.view.compose.TitleBar
 
@@ -32,7 +35,11 @@ import luyao.wanandroid.view.compose.TitleBar
  */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SystemDetailPage(systemParent: SystemParent,navController: NavController) {
+fun SystemDetailPage(
+    systemParent: SystemParent,
+    navController: NavController,
+    onClickArticle: (Article) -> Unit
+) {
 
     val pages = remember {
         systemParent.children
@@ -101,7 +108,7 @@ fun SystemDetailPage(systemParent: SystemParent,navController: NavController) {
         ) { index ->
             ProvideViewModels {
                 Log.e("pager", "${pageMapper(index)}")
-                SystemChildPage(pages[pageMapper(index)].id)
+                SystemChildPage(pages[pageMapper(index)].id, onClickArticle = onClickArticle)
             }
         }
     }

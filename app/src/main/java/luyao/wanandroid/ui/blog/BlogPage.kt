@@ -20,6 +20,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.ProvideViewModels
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.navigation.BottomNavItem
 import luyao.wanandroid.ui.home.floorMod
 import luyao.wanandroid.ui.project.ProjectDetailPage
@@ -32,7 +33,11 @@ import luyao.wanandroid.ui.project.ProjectViewModel
  */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun BlogPage(type: BottomNavItem, viewModel: ProjectViewModel = hiltViewModel()) {
+fun BlogPage(
+    type: BottomNavItem,
+    viewModel: ProjectViewModel = hiltViewModel(),
+    onClickArticle: (Article) -> Unit
+) {
     val pages by viewModel.systemData.observeAsState()
 
     LaunchedEffect(true) {
@@ -106,9 +111,15 @@ fun BlogPage(type: BottomNavItem, viewModel: ProjectViewModel = hiltViewModel())
             ) { index ->
                 ProvideViewModels {
                     if (type == BottomNavItem.Blog) {
-                        BlogDetailPage(pages!![pageMapper(index)].id)
+                        BlogDetailPage(
+                            pages!![pageMapper(index)].id,
+                            onClickArticle = onClickArticle
+                        )
                     } else if (type == BottomNavItem.Project) {
-                        ProjectDetailPage(pages!![pageMapper(index)].id)
+                        ProjectDetailPage(
+                            pages!![pageMapper(index)].id,
+                            onClickArticle = onClickArticle
+                        )
                     }
                 }
             }

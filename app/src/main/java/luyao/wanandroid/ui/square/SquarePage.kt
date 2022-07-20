@@ -32,24 +32,24 @@ import luyao.wanandroid.ui.hot.TitleText
  * Date: 2022/7/19 15:32
  */
 @Composable
-fun SquarePage(viewModel: SquareViewModel = hiltViewModel()) {
+fun SquarePage(viewModel: SquareViewModel = hiltViewModel(), onClickArticle: (Article) -> Unit) {
     ArticleRefreshList(
         viewModel,
         onRefresh = { viewModel.getSquareArticleList(true) },
         onLoadMore = { viewModel.getSquareArticleList(false) },
         itemContent = { article ->
-            SquareItem(article)
+            SquareItem(article, onClickArticle)
         })
 }
 
 @Composable
-fun SquareItem(article: Article) {
+fun SquareItem(article: Article, onClickArticle: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
             .background(Color.White)
-            .clickable { },
+            .clickable { onClickArticle.invoke(article) },
         shape = RoundedCornerShape(6.dp)
     ) {
         ConstraintLayout(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
@@ -144,5 +144,5 @@ fun QuestionItemPreview() {
         "", "", 1, "Android", 1, true, 1, "", 1, System.currentTimeMillis(), "shareUser",
         "", 1
     )
-    SquareItem(article = article)
+    SquareItem(article = article) {}
 }

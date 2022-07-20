@@ -2,10 +2,7 @@ package luyao.wanandroid.view.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -19,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 
 /**
  * Description:
@@ -59,11 +57,13 @@ fun TitleBar(text: String, showBackButton: Boolean = false, onBack: (() -> Unit)
             text = text,
             fontSize = 18.sp,
             color = Color.White,
+            maxLines = 1,
             modifier = Modifier.constrainAs(title) {
-                start.linkTo(parent.start)
+                start.linkTo(parent.start, 56.dp)
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
             }
         )
     }
@@ -72,5 +72,10 @@ fun TitleBar(text: String, showBackButton: Boolean = false, onBack: (() -> Unit)
 @Preview
 @Composable
 fun TitleBarPreview() {
-    TitleBar(text = "标题", true) {}
+    Column {
+        TitleBar(text = "标题", true) {}
+        Spacer(modifier = Modifier.height(10.dp))
+        TitleBar(text = "标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题", true) {}
+    }
+
 }

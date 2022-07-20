@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.SystemChild
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.navigation.Route
@@ -36,7 +37,11 @@ import luyao.wanandroid.navigation.navigateAndArgument
  */
 
 @Composable
-fun SystemPage(navController: NavController, viewModel: SystemViewModel = hiltViewModel()) {
+fun SystemPage(
+    navController: NavController,
+    viewModel: SystemViewModel = hiltViewModel(),
+    onClickArticle: (Article) -> Unit
+) {
 
     val uiState by viewModel.uiState.observeAsState()
     val listSate =

@@ -42,13 +42,13 @@ import luyao.wanandroid.ui.square.ArticleViewModel
  */
 
 @Composable
-fun HotPage(viewModel: ArticleViewModel = hiltViewModel()) {
+fun HotPage(viewModel: ArticleViewModel = hiltViewModel(),onClickArticle: (Article) -> Unit) {
     ArticleRefreshList(
         viewModel,
         onRefresh = { viewModel.getHomeArticleList(true) },
         onLoadMore = { viewModel.getHomeArticleList(false) },
         itemContent = { article ->
-            ArticleItem(article)
+            ArticleItem(article, onClickArticle = onClickArticle)
         })
 }
 
@@ -98,13 +98,13 @@ fun ArticleRefreshList(
 }
 
 @Composable
-fun ArticleItem(article: Article) {
+fun ArticleItem(article: Article, onClickArticle: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
             .background(Color.White)
-            .clickable { },
+            .clickable { onClickArticle(article) },
         shape = RoundedCornerShape(6.dp)
     ) {
         ConstraintLayout(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
@@ -231,5 +231,5 @@ fun ArticleItemPreview() {
         "", "", 1, "Android", 1, true, 1, "", 1, System.currentTimeMillis(), "shareUser",
         "", 1
     )
-    ArticleItem(article = article)
+    ArticleItem(article = article) {}
 }

@@ -17,23 +17,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
-import androidx.navigation.NavController
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigator
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.blog.BlogPage
 import luyao.wanandroid.ui.home.HomePage
 import luyao.wanandroid.ui.profile.ProfilePage
 import luyao.wanandroid.ui.search.SearchPage
 import luyao.wanandroid.ui.system.SystemDetailPage
+import luyao.wanandroid.ui.web.WebPage
 
 /**
  * Description:
@@ -107,6 +106,11 @@ val tweenDuration = 700
 @Composable
 fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValues) {
 
+    val onClickArticle = { article: Article ->
+        val args = listOf(Pair("url", article.link))
+        navController.navigateAndArgument(Route.Web, args)
+    }
+
     AnimatedNavHost(
         navController = navController, startDestination = BottomNavItem.Home.route,
         modifier = Modifier.padding(innerPadding)
@@ -147,23 +151,27 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
 //                )
 //            }
         ) {
-            HomePage(navController)
+            HomePage(navController, onClickArticle)
         }
         composable(BottomNavItem.Blog.route) {
-            BlogPage(BottomNavItem.Blog)
+            BlogPage(BottomNavItem.Blog, onClickArticle = onClickArticle)
         }
         composable(BottomNavItem.Search.route) {
-            SearchPage()
+            SearchPage(onClickArticle = onClickArticle)
         }
         composable(BottomNavItem.Project.route) {
-            BlogPage(BottomNavItem.Project)
+            BlogPage(BottomNavItem.Project, onClickArticle = onClickArticle)
         }
         composable(BottomNavItem.Profile.route) {
             ProfilePage()
         }
         composable(route = Route.SystemDetail) {
             val data = it.arguments?.get("systemParent") as SystemParent
-            SystemDetailPage(data, navController)
+            SystemDetailPage(data, navController, onClickArticle = onClickArticle)
+        }
+        composable(route = Route.Web) {
+            val url = it.arguments?.getString("url") ?: ""
+            WebPage(url, navController)
         }
     }
 }
@@ -178,6 +186,7 @@ sealed class BottomNavItem(val title: Int, val icon: Int, val route: String) {
 
 object Route {
     val SystemDetail: String = "systemDetail"
+    val Web = "web"
 }
 
 fun NavController.navigateAndArgument(

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.flowlayout.FlowRow
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.hot.ArticleItem
 import luyao.wanandroid.ui.hot.ArticleRefreshList
 import luyao.wanandroid.ui.square.ArticleViewModel
@@ -32,7 +33,8 @@ import luyao.wanandroid.ui.square.ArticleViewModel
 @Composable
 fun SearchPage(
     viewModel: SearchViewModel = hiltViewModel(),
-    articleViewModel: ArticleViewModel = hiltViewModel()
+    articleViewModel: ArticleViewModel = hiltViewModel(),
+    onClickArticle: (Article) -> Unit,
 ) {
 
     LaunchedEffect(true) {
@@ -45,7 +47,7 @@ fun SearchPage(
     val hotState by viewModel.hotState.observeAsState()
     val webState by viewModel.webSite.observeAsState()
 
-    if(textState.value.text.isNotBlank()) {
+    if (textState.value.text.isNotBlank()) {
         viewModel.searchHot(true, key = textState.value.text)
     }
 
@@ -58,7 +60,7 @@ fun SearchPage(
             }, onLoadMore = {
                 articleViewModel.searchArticle(false, textState.value.text)
             }) {
-                ArticleItem(it)
+                ArticleItem(it, onClickArticle)
             }
         } else {
             if (!hotState.isNullOrEmpty()) {

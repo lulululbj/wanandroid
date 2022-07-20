@@ -25,7 +25,6 @@ import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.hot.ArticleRefreshList
 import luyao.wanandroid.ui.hot.ArticleText
 import luyao.wanandroid.ui.hot.TitleText
-import luyao.wanandroid.ui.square.ArticleViewModel
 
 /**
  * Description:
@@ -33,24 +32,27 @@ import luyao.wanandroid.ui.square.ArticleViewModel
  * Date: 2022/7/19 15:32
  */
 @Composable
-fun QuestionPage(viewModel: QuestionViewModel = hiltViewModel()) {
+fun QuestionPage(
+    viewModel: QuestionViewModel = hiltViewModel(),
+    onClickArticle: (Article) -> Unit
+) {
     ArticleRefreshList(
         viewModel,
         onRefresh = { viewModel.getQuestionList(true) },
         onLoadMore = { viewModel.getQuestionList(false) },
         itemContent = { article ->
-            QuestionItem(article)
+            QuestionItem(article, onClickArticle)
         })
 }
 
 @Composable
-fun QuestionItem(article: Article) {
+fun QuestionItem(article: Article, onClickArticle: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
             .background(Color.White)
-            .clickable { },
+            .clickable { onClickArticle(article) },
         shape = RoundedCornerShape(6.dp)
     ) {
         ConstraintLayout(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
@@ -145,5 +147,5 @@ fun QuestionItemPreview() {
         "", "", 1, "Android", 1, true, 1, "", 1, System.currentTimeMillis(), "shareUser",
         "", 1
     )
-    QuestionItem(article = article)
+    QuestionItem(article = article) {}
 }

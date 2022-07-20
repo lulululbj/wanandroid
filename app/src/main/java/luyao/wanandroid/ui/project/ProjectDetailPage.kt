@@ -34,24 +34,27 @@ import luyao.wanandroid.ui.square.ArticleViewModel
  * Date: 2022/7/20 15:48
  */
 @Composable
-fun ProjectDetailPage(cid: Int, viewModel: ArticleViewModel = hiltViewModel()) {
+fun ProjectDetailPage(
+    cid: Int, viewModel: ArticleViewModel = hiltViewModel(),
+    onClickArticle: (Article) -> Unit
+) {
     ArticleRefreshList(
         viewModel,
         onRefresh = { viewModel.getProjectTypeDetailList(true, cid) },
         onLoadMore = { viewModel.getProjectTypeDetailList(false, cid) },
         itemContent = { article ->
-            ProjectItem(article)
+            ProjectItem(article, onClickArticle)
         })
 }
 
 @Composable
-fun ProjectItem(article: Article) {
+fun ProjectItem(article: Article, onClickArticle: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
             .background(Color.White)
-            .clickable { },
+            .clickable { onClickArticle(article) },
         shape = RoundedCornerShape(6.dp)
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
@@ -138,10 +141,36 @@ fun ProjectItem(article: Article) {
 @Composable
 fun ProjectItemPreview() {
     val article = Article(
-        1, 1, "测试标题测试标题测试标题测试标题测试标题测试标题", 1, "Kotlin", "", "", "路遥",
-        "origin", System.currentTimeMillis(), 10, "测试标题测试标题测试标题测试标题测试标题测试标题", 1, "2022-1-1 10:00", "date", 1, false,
-        "", "", 1, "Android", 1, true, 1, "", 1, System.currentTimeMillis(), "shareUser",
-        "", 1
+        1,
+        1,
+        "测试标题测试标题测试标题测试标题测试标题测试标题",
+        1,
+        "Kotlin",
+        "",
+        "",
+        "路遥",
+        "origin",
+        System.currentTimeMillis(),
+        10,
+        "测试标题测试标题测试标题测试标题测试标题测试标题",
+        1,
+        "2022-1-1 10:00",
+        "date",
+        1,
+        false,
+        "",
+        "",
+        1,
+        "Android",
+        1,
+        true,
+        1,
+        "",
+        1,
+        System.currentTimeMillis(),
+        "shareUser",
+        "",
+        1
     )
-    ProjectItem(article = article)
+    ProjectItem(article = article) {}
 }

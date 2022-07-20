@@ -18,6 +18,7 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.hot.HotPage
 import luyao.wanandroid.ui.question.QuestionPage
 import luyao.wanandroid.ui.square.SquarePage
@@ -26,7 +27,7 @@ import luyao.wanandroid.ui.system.SystemPage
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomePage(navController: NavController) {
+fun HomePage(navController: NavController, onClickArticle: (Article) -> Unit) {
 
     val pages = remember {
         listOf("热门", "问答", "广场", "体系")
@@ -89,10 +90,10 @@ fun HomePage(navController: NavController) {
                 .fillMaxWidth()
         ) { index ->
             when (pageMapper(index)) {
-                0 -> HotPage()
-                1 -> QuestionPage()
-                2 -> SquarePage()
-                3 -> SystemPage(navController)
+                0 -> HotPage(onClickArticle = onClickArticle)
+                1 -> QuestionPage(onClickArticle = onClickArticle)
+                2 -> SquarePage(onClickArticle = onClickArticle)
+                3 -> SystemPage(navController,onClickArticle = onClickArticle)
             }
         }
     }
