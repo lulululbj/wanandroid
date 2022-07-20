@@ -3,6 +3,7 @@ package luyao.wanandroid.ui.system
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_system_detail.*
 import luyao.mvvm.core.base.BaseActivity
 import luyao.wanandroid.R
@@ -12,6 +13,7 @@ import luyao.wanandroid.model.bean.SystemParent
  * Created by Lu
  * on 2018/3/27 20:42
  */
+@AndroidEntryPoint
 class SystemTypeNormalActivity : BaseActivity() {
 
     companion object {

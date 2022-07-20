@@ -124,6 +124,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-pager:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.24.13-rc"
+    implementation "com.google.accompanist:accompanist-flowlayout:0.24.13-rc"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03"
     implementation 'com.airbnb.android:lottie-compose:5.2.0'
 //    implementation "com.hi-dhl:binding:1.1.5"

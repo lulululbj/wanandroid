@@ -16,17 +16,19 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.core.os.bundleOf
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import luyao.wanandroid.R
+import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.home.HomePage
 import luyao.wanandroid.ui.profile.ProfilePage
+import luyao.wanandroid.ui.system.SystemDetailPage
 
 /**
  * Description:
@@ -140,7 +142,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
 //                )
 //            }
         ) {
-            HomePage()
+            HomePage(navController)
         }
         composable(BottomNavItem.Blog.route) {
             BlogPage()
@@ -154,6 +156,10 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
         composable(BottomNavItem.Profile.route) {
             ProfilePage()
         }
+        composable(route = Route.SystemDetail) {
+            val data = it.arguments?.get("systemParent") as SystemParent
+            SystemDetailPage(data,navController)
+        }
     }
 }
 
@@ -164,3 +170,29 @@ sealed class BottomNavItem(val title: Int, val icon: Int, val route: String) {
     object Project : BottomNavItem(R.string.project, R.drawable.ic_dashboard_black_24dp, "project")
     object Profile : BottomNavItem(R.string.me, R.drawable.ic_profile, "profile")
 }
+
+object Route {
+    val SystemDetail: String = "systemDetail"
+}
+
+fun NavController.navigateAndArgument(
+    route: String,
+    args: List<Pair<String, Any>>? = null,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null,
+
+    ) {
+    navigate(route = route, navOptions = navOptions, navigatorExtras = navigatorExtras)
+
+    if (args == null && args?.isEmpty() == true) {
+        return
+    }
+
+    val bundle = backQueue.lastOrNull()?.arguments
+    if (bundle != null) {
+        bundle.putAll(bundleOf(*args?.toTypedArray()!!))
+    } else {
+        println("The last argument of NavBackStackEntry is NULL")
+    }
+}
+

@@ -72,7 +72,9 @@ fun ArticleRefreshList(
         onRefresh = onRefresh
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 10.dp),
             state = listSate
         ) {
             uiState?.showSuccess?.let { list ->
@@ -82,7 +84,7 @@ fun ArticleRefreshList(
                     Spacer(modifier = Modifier.height(6.dp))
                 }
                 item {
-                    if (list.isNotEmpty()) {
+                    if (uiState?.showEnd == false) {
                         LoadingItem()
                         LaunchedEffect(Unit) {
                             delay(500)

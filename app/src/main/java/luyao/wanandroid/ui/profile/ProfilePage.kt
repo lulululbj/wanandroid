@@ -42,6 +42,7 @@ import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.util.GITHUB_PAGE
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.compose.Line
+import luyao.wanandroid.view.compose.TitleBar
 
 /**
  * Description:
@@ -98,7 +99,7 @@ fun ProfileScreen(
 ) {
     MdcTheme {
         Column {
-            TitleTv(text = stringResource(R.string.me))
+            TitleBar(text = stringResource(R.string.me))
             LoginMenu(isLogin = isLogin, user, clickLogin = onLogin)
             if (isLogin) {
                 Line()
@@ -146,22 +147,6 @@ fun VersionTv() {
             color = Color.Black,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 20.dp)
-        )
-    }
-}
-
-@Composable
-fun TitleTv(text: String) {
-    Box(
-        contentAlignment = Alignment.Center, modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .background(color = MaterialTheme.colors.primary)
-    ) {
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            color = Color.White
         )
     }
 }

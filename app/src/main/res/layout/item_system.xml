@@ -23,10 +23,10 @@
                 android:id="@+id/systemParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{systemParent.name}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                tools:text="Parent"
-                android:text="@{systemParent.name}"/>
+                tools:text="Parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/systemChild"

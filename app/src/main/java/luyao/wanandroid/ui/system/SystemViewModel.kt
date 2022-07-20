@@ -1,8 +1,10 @@
 package luyao.wanandroid.ui.system
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,13 +19,14 @@ import javax.inject.Inject
  * Created by luyao
  * on 2019/4/8 16:40
  */
+@HiltViewModel
 class SystemViewModel @Inject constructor(
-        private val systemRepository: SystemRepository,
-        private val collectRepository: CollectRepository
+    private val collectRepository: CollectRepository
 ) : BaseViewModel() {
 
-
-    private val _mSystemParentList: MutableLiveData<BaseUiModel<List<SystemParent>>> = MutableLiveData()
+    val listState: LazyListState = LazyListState()
+    private val _mSystemParentList: MutableLiveData<BaseUiModel<List<SystemParent>>> =
+        MutableLiveData()
     val uiState: LiveData<BaseUiModel<List<SystemParent>>>
         get() = _mSystemParentList
 
@@ -31,7 +34,7 @@ class SystemViewModel @Inject constructor(
     fun getSystemTypes() {
         viewModelScope.launch(Dispatchers.Main) {
             emitArticleUiState(showLoading = true)
-            val result = withContext(Dispatchers.IO) { systemRepository.getSystemTypes() }
+            val result = withContext(Dispatchers.IO) { SystemRepository.getSystemTypes() }
             if (result is Result.Success)
                 emitArticleUiState(showLoading = false, showSuccess = result.data)
             else if (result is Result.Error)
@@ -49,9 +52,9 @@ class SystemViewModel @Inject constructor(
     }
 
     private fun emitArticleUiState(
-            showLoading: Boolean = false,
-            showError: String? = null,
-            showSuccess: List<SystemParent>? = null
+        showLoading: Boolean = false,
+        showError: String? = null,
+        showSuccess: List<SystemParent>? = null,
     ) {
         val uiModel = BaseUiModel(showLoading, showError, showSuccess)
         _mSystemParentList.value = uiModel

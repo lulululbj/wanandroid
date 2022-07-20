@@ -11,7 +11,7 @@ import javax.inject.Inject
  * Created by luyao
  * on 2019/4/10 14:34
  */
-class SystemRepository @Inject constructor() : BaseRepository() {
+object SystemRepository : BaseRepository() {
 
     suspend fun getSystemTypeDetail(cid: Int, page: Int): Result<ArticleList> {
         return safeApiCall(call = { requestSystemTypeDetail(cid, page) }, errorMessage = "网络错误")

@@ -36,8 +36,6 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
     @Inject
     lateinit var collectRepository: CollectRepository
 
-    @Inject
-    lateinit var systemRepository: SystemRepository
 
     sealed class ArticleType {
         object Home : ArticleType()                 // 首页
@@ -105,7 +103,7 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
 
     private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false, cid: Int = 0) {
         viewModelScope.launch(Dispatchers.Main) {
-            emitArticleUiState(isRefresh, showSuccess = allArticleList)
+            emitArticleUiState(isRefresh, showSuccess = allArticleList, showEnd = true)
             if (isRefresh) {
                 allArticleList.clear()
                 currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
@@ -121,13 +119,13 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
                     cid
                 )
                 ArticleType.Collection -> collectRepository.getCollectArticles(currentPage)
-                ArticleType.SystemType -> systemRepository.getSystemTypeDetail(cid, currentPage)
-                ArticleType.Blog -> systemRepository.getBlogArticle(cid, currentPage)
+                ArticleType.SystemType -> SystemRepository.getSystemTypeDetail(cid, currentPage)
+                ArticleType.Blog -> SystemRepository.getBlogArticle(cid, currentPage)
             }
 
             if (result is Result.Success) {
                 val articleList = result.data
-                if (articleList.offset >= articleList.total) {
+                if (articleList.offset >= articleList.total || articleList.datas.size == articleList.total) {
                     emitArticleUiState(
                         showLoading = false,
                         showEnd = true,
