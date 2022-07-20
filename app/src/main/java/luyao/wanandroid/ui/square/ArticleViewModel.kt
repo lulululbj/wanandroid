@@ -33,6 +33,9 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
     @Inject
     lateinit var collectRepository: CollectRepository
 
+    @Inject
+    lateinit var searchRepository: SearchRepository
+
 
     sealed class ArticleType {
         object Home : ArticleType()                 // 首页
@@ -43,6 +46,7 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
         object Collection : ArticleType()           // 收藏
         object SystemType : ArticleType()           // 体系分类
         object Blog : ArticleType()                 // 公众号
+        object Search : ArticleType()                 // 搜索
     }
 
     private val _uiState = MutableLiveData<ArticleUiModel>()
@@ -98,7 +102,15 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
-    private fun getArticleList(articleType: ArticleType, isRefresh: Boolean = false, cid: Int = 0) {
+    fun searchArticle(isRefresh: Boolean = false, key: String) =
+        getArticleList(ArticleType.Search, isRefresh, key = key)
+
+    private fun getArticleList(
+        articleType: ArticleType,
+        isRefresh: Boolean = false,
+        cid: Int = 0,
+        key: String = ""
+    ) {
         viewModelScope.launch(Dispatchers.Main) {
             emitArticleUiState(isRefresh, showSuccess = allArticleList, showEnd = true)
             if (isRefresh) {
@@ -118,6 +130,7 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
                 ArticleType.Collection -> collectRepository.getCollectArticles(currentPage)
                 ArticleType.SystemType -> SystemRepository.getSystemTypeDetail(cid, currentPage)
                 ArticleType.Blog -> SystemRepository.getBlogArticle(cid, currentPage)
+                ArticleType.Search -> searchRepository.searchHot(currentPage, key)
             }
 
             if (result is Result.Success) {

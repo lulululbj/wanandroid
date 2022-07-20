@@ -32,6 +32,7 @@ import luyao.wanandroid.model.bean.SystemParent
 import luyao.wanandroid.ui.blog.BlogPage
 import luyao.wanandroid.ui.home.HomePage
 import luyao.wanandroid.ui.profile.ProfilePage
+import luyao.wanandroid.ui.search.SearchPage
 import luyao.wanandroid.ui.system.SystemDetailPage
 
 /**
@@ -152,7 +153,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
             BlogPage(BottomNavItem.Blog)
         }
         composable(BottomNavItem.Search.route) {
-            SearchScreen()
+            SearchPage()
         }
         composable(BottomNavItem.Project.route) {
             BlogPage(BottomNavItem.Project)

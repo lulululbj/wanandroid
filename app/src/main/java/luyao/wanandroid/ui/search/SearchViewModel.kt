@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import luyao.mvvm.core.Result
@@ -20,8 +21,10 @@ import javax.inject.Inject
  * on 2019/4/8 15:29
  */
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository,
-                      private val collectRepository: CollectRepository) : BaseViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchRepository: SearchRepository,
+    private val collectRepository: CollectRepository
+) : BaseViewModel() {
 
     private var currentPage = 0
 
@@ -29,8 +32,17 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     val uiState: LiveData<SearchUiModel>
         get() = _uiState
 
+    private val _hotState = MutableLiveData<List<Hot>>()
+    val hotState: LiveData<List<Hot>>
+        get() = _hotState
+
+    private val _webSiteState = MutableLiveData<List<Hot>>()
+    val webSite: LiveData<List<Hot>>
+        get() = _webSiteState
+
 
     fun searchHot(isRefresh: Boolean = false, key: String) {
+        if (key.isEmpty()) return
         viewModelScope.launch(Dispatchers.Default) {
 
             withContext(Dispatchers.Main) { emitArticleUiState(showLoading = true) }
@@ -45,11 +57,19 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                         if (articleList.offset > 0)
                             emitArticleUiState(showLoading = false, showEnd = true)
                         else
-                            emitArticleUiState(showLoading = false, isRefresh = true,showSuccess = ArticleList(0, 0, 0, 0, 0, false, emptyList()))
+                            emitArticleUiState(
+                                showLoading = false,
+                                isRefresh = true,
+                                showSuccess = ArticleList(0, 0, 0, 0, 0, false, emptyList())
+                            )
                         return@withContext
                     }
                     currentPage++
-                    emitArticleUiState(showLoading = false, showSuccess = articleList, isRefresh = isRefresh)
+                    emitArticleUiState(
+                        showLoading = false,
+                        showSuccess = articleList,
+                        isRefresh = isRefresh
+                    )
 
                 } else if (result is Result.Error) {
                     emitArticleUiState(showLoading = false, showError = result.exception.message)
@@ -64,14 +84,18 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
     fun getWebSites() {
         viewModelScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) { searchRepository.getWebSites() }
-            if (result is Result.Success) emitArticleUiState(showHot = true, showWebSites = result.data)
+            if (result is Result.Success) {
+                _webSiteState.value = result.data
+            }
         }
     }
 
     fun getHotSearch() {
         viewModelScope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) { searchRepository.getHotSearch() }
-            if (result is Result.Success) emitArticleUiState(showHot = true, showHotSearch = result.data)
+            if (result is Result.Success) {
+                _hotState.value = result.data
+            }
         }
     }
 
@@ -86,29 +110,38 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
 
 
     private fun emitArticleUiState(
-            showHot: Boolean = false,
-            showLoading: Boolean = false,
-            showError: String? = null,
-            showSuccess: ArticleList? = null,
-            showEnd: Boolean = false,
-            isRefresh: Boolean = false,
-            showWebSites: List<Hot>? = null,
-            showHotSearch: List<Hot>? = null
+        showHot: Boolean = false,
+        showLoading: Boolean = false,
+        showError: String? = null,
+        showSuccess: ArticleList? = null,
+        showEnd: Boolean = false,
+        isRefresh: Boolean = false,
+        showWebSites: List<Hot>? = null,
+        showHotSearch: List<Hot>? = null
     ) {
-        val uiModel = SearchUiModel(showHot, showLoading, showError, showSuccess, showEnd, isRefresh, showWebSites, showHotSearch)
+        val uiModel = SearchUiModel(
+            showHot,
+            showLoading,
+            showError,
+            showSuccess,
+            showEnd,
+            isRefresh,
+            showWebSites,
+            showHotSearch
+        )
         _uiState.value = uiModel
     }
 
 
     data class SearchUiModel(
-            val showHot: Boolean,
-            val showLoading: Boolean,
-            val showError: String?,
-            val showSuccess: ArticleList?,
-            val showEnd: Boolean, // 加载更多
-            val isRefresh: Boolean, // 刷新
-            val showWebSites: List<Hot>?,
-            val showHotSearch: List<Hot>?
+        val showHot: Boolean,
+        val showLoading: Boolean,
+        val showError: String?,
+        val showSuccess: ArticleList?,
+        val showEnd: Boolean, // 加载更多
+        val isRefresh: Boolean, // 刷新
+        val showWebSites: List<Hot>?,
+        val showHotSearch: List<Hot>?
     )
 
 }

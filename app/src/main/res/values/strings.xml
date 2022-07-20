@@ -53,5 +53,7 @@
 
     <string name="executing_nth_iteration">%1$d / %2$d</string>
     <string name="open_license">开源协议</string>
+    <string name="common_search">大家都在搜</string>
+    <string name="common_website">常用网站</string>
 
 </resources>
