@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.ComposeMainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
             android:theme="@style/Theme_ShareActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".test.ConstraintLayoutTest" />
-        <activity android:name=".ui.ComposeMainActivity" />
+        <activity android:name=".ui.MainActivity" />
     </application>
 
 </manifest>

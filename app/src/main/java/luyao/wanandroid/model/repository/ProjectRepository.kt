@@ -11,7 +11,7 @@ import javax.inject.Inject
  * Created by luyao
  * on 2019/4/10 14:18
  */
-class ProjectRepository  @Inject constructor(): BaseRepository() {
+object ProjectRepository : BaseRepository() {
 
     suspend fun getProjectTypeDetailList(page: Int, cid: Int): Result<ArticleList> {
         return safeApiCall(call = {requestProjectTypeDetailList(page, cid)},errorMessage = "发生未知错误")

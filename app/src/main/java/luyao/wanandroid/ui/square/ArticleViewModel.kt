@@ -31,9 +31,6 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
     lateinit var homeRepository: HomeRepository
 
     @Inject
-    lateinit var projectRepository: ProjectRepository
-
-    @Inject
     lateinit var collectRepository: CollectRepository
 
 
@@ -113,8 +110,8 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
                 ArticleType.Question -> homeRepository.getQuestionList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)
-                ArticleType.LatestProject -> projectRepository.getLastedProject(currentPage)
-                ArticleType.ProjectDetailList -> projectRepository.getProjectTypeDetailList(
+                ArticleType.LatestProject -> ProjectRepository.getLastedProject(currentPage)
+                ArticleType.ProjectDetailList -> ProjectRepository.getProjectTypeDetailList(
                     currentPage,
                     cid
                 )

@@ -1,6 +1,5 @@
 package luyao.wanandroid.ui.blog
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +20,9 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.ProvideViewModels
 import luyao.wanandroid.R
+import luyao.wanandroid.navigation.BottomNavItem
 import luyao.wanandroid.ui.home.floorMod
+import luyao.wanandroid.ui.project.ProjectDetailPage
 import luyao.wanandroid.ui.project.ProjectViewModel
 
 /**
@@ -31,13 +32,15 @@ import luyao.wanandroid.ui.project.ProjectViewModel
  */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun BlogPage(viewModel: ProjectViewModel = hiltViewModel()) {
+fun BlogPage(type: BottomNavItem, viewModel: ProjectViewModel = hiltViewModel()) {
     val pages by viewModel.systemData.observeAsState()
-//    val listSate =
-//        if (uiState.isNullOrEmpty()) LazyListState() else viewModel.listState
 
     LaunchedEffect(true) {
-        viewModel.getBlogType()
+        if (type == BottomNavItem.Blog) {
+            viewModel.getBlogType()
+        } else if (type == BottomNavItem.Project) {
+            viewModel.getProjectTypeList()
+        }
     }
 
     if (!pages.isNullOrEmpty()) {
@@ -102,8 +105,11 @@ fun BlogPage(viewModel: ProjectViewModel = hiltViewModel()) {
                     .fillMaxWidth()
             ) { index ->
                 ProvideViewModels {
-                    Log.e("pager", "${pageMapper(index)}")
-                    BlogDetailPage(pages!![pageMapper(index)].id)
+                    if (type == BottomNavItem.Blog) {
+                        BlogDetailPage(pages!![pageMapper(index)].id)
+                    } else if (type == BottomNavItem.Project) {
+                        ProjectDetailPage(pages!![pageMapper(index)].id)
+                    }
                 }
             }
         }

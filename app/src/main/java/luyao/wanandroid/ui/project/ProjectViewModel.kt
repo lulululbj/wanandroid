@@ -18,7 +18,7 @@ import javax.inject.Inject
  * on 2019/4/8 16:28
  */
 @HiltViewModel
-class ProjectViewModel @Inject constructor(private val repository: ProjectRepository) : BaseViewModel() {
+class ProjectViewModel @Inject constructor() : BaseViewModel() {
 
     private val _mSystemParentList: MutableLiveData<List<SystemParent>> = MutableLiveData()
     val systemData: LiveData<List<SystemParent>>
@@ -26,14 +26,14 @@ class ProjectViewModel @Inject constructor(private val repository: ProjectReposi
 
     fun getProjectTypeList() {
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) { repository.getProjectTypeList() }
+            val result = withContext(Dispatchers.IO) { ProjectRepository.getProjectTypeList() }
             if (result is Result.Success) _mSystemParentList.value = result.data
         }
     }
 
     fun getBlogType() {
         viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) { repository.getBlog() }
+            val result = withContext(Dispatchers.IO) { ProjectRepository.getBlog() }
             if (result is Result.Success) _mSystemParentList.value = result.data
         }
     }

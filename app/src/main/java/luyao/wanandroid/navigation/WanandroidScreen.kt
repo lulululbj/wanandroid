@@ -149,13 +149,13 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
             HomePage(navController)
         }
         composable(BottomNavItem.Blog.route) {
-            BlogPage()
+            BlogPage(BottomNavItem.Blog)
         }
         composable(BottomNavItem.Search.route) {
             SearchScreen()
         }
         composable(BottomNavItem.Project.route) {
-            ProjectScreen()
+            BlogPage(BottomNavItem.Project)
         }
         composable(BottomNavItem.Profile.route) {
             ProfilePage()
