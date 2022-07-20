@@ -1,13 +1,14 @@
 package luyao.wanandroid.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.*
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
@@ -28,7 +29,7 @@ import luyao.wanandroid.ui.system.SystemPage
 fun HomePage(navController: NavController) {
 
     val pages = remember {
-        listOf("热门", "问答", "广场", "体系", "导航")
+        listOf("热门", "问答", "广场", "体系")
     }
 
     Column(
@@ -41,7 +42,7 @@ fun HomePage(navController: NavController) {
 
         val loopingCount = Int.MAX_VALUE
         val startIndex = loopingCount / 2
-        val pagerState = rememberPagerState(initialPage = startIndex,)
+        val pagerState = rememberPagerState(initialPage = startIndex)
 
         fun pageMapper(index: Int): Int {
             return (index - startIndex).floorMod(pages.count())
@@ -87,22 +88,11 @@ fun HomePage(navController: NavController) {
                 .weight(1f)
                 .fillMaxWidth()
         ) { index ->
-            when (val page = pageMapper(index)) {
+            when (pageMapper(index)) {
                 0 -> HotPage()
                 1 -> QuestionPage()
                 2 -> SquarePage()
                 3 -> SystemPage(navController)
-                else -> {
-                    Card {
-                        Box(Modifier.fillMaxSize()) {
-                            Text(
-                                text = "Page: ${pages[page]}",
-                                style = MaterialTheme.typography.h4,
-                                modifier = Modifier.align(Alignment.Center)
-                            )
-                        }
-                    }
-                }
             }
         }
     }

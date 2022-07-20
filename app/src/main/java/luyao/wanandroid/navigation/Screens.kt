@@ -22,24 +22,7 @@ import luyao.wanandroid.R
  */
 
 
-@Composable
-fun BlogPage() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.white))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Blog Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-    }
-}
+
 
 @Composable
 fun SearchScreen() {

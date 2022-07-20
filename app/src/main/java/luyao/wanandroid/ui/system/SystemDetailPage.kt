@@ -101,7 +101,7 @@ fun SystemDetailPage(systemParent: SystemParent,navController: NavController) {
         ) { index ->
             ProvideViewModels {
                 Log.e("pager", "${pageMapper(index)}")
-                SystemChildPage(pages[pageMapper(index)])
+                SystemChildPage(pages[pageMapper(index)].id)
             }
         }
     }

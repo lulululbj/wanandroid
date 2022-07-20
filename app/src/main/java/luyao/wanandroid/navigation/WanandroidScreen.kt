@@ -17,15 +17,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
-import androidx.navigation.*
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.SystemParent
+import luyao.wanandroid.ui.blog.BlogPage
 import luyao.wanandroid.ui.home.HomePage
 import luyao.wanandroid.ui.profile.ProfilePage
 import luyao.wanandroid.ui.system.SystemDetailPage
@@ -158,7 +162,7 @@ fun NavigationGraph(navController: NavHostController, innerPadding: PaddingValue
         }
         composable(route = Route.SystemDetail) {
             val data = it.arguments?.get("systemParent") as SystemParent
-            SystemDetailPage(data,navController)
+            SystemDetailPage(data, navController)
         }
     }
 }
