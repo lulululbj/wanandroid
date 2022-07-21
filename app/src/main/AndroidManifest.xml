@@ -4,10 +4,7 @@
     package="luyao.wanandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".App"
@@ -18,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.ComposeMainActivity"
+        <activity
+            android:name=".ui.ComposeMainActivity"
+            android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,15 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.BrowserActivity" />
-        <activity android:name=".ui.system.SystemTypeNormalActivity" />
-        <activity android:name=".ui.collect.MyCollectActivity" />
-        <activity
-            android:name=".ui.share.ShareActivity"
-            android:theme="@style/Theme_ShareActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".test.ConstraintLayoutTest" />
-        <activity android:name=".ui.MainActivity" />
     </application>
 
 </manifest>

@@ -3,17 +3,16 @@ package luyao.wanandroid.ui.square
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.Result
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Banner
+import luyao.wanandroid.model.bean.Result
 import luyao.wanandroid.model.repository.*
 import javax.inject.Inject
 
@@ -59,12 +58,12 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
     private val allArticleList = arrayListOf<Article>()
 
 
-    val mBanners: LiveData<List<Banner>> = liveData {
-        kotlin.runCatching {
-            val data = homeRepository.getBanners()
-            if (data is Result.Success) emit(data.data)
-        }
-    }
+//    val mBanners: LiveData<List<Banner>> = liveData {
+//        kotlin.runCatching {
+//            val data = homeRepository.getBanners()
+//            if (data is Result.Success) emit(data.data)
+//        }
+//    }
 
 
     val refreshSquare: () -> Unit = { getSquareArticleList(true) }
@@ -118,7 +117,7 @@ open class ArticleViewModel @Inject constructor() : BaseViewModel() {
                 currentPage = if (articleType is ArticleType.ProjectDetailList) 1 else 0
             }
 
-            val result = when (articleType) {
+            val result: Result<ArticleList> = when (articleType) {
                 ArticleType.Home -> homeRepository.getArticleList(currentPage)
                 ArticleType.Question -> homeRepository.getQuestionList(currentPage)
                 ArticleType.Square -> squareRepository.getSquareArticleList(currentPage)

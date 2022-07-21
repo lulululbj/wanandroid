@@ -3,7 +3,8 @@ package luyao.wanandroid.ui.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
+
 import luyao.wanandroid.model.bean.User
 import luyao.wanandroid.model.repository.LoginRepository
 import javax.inject.Inject

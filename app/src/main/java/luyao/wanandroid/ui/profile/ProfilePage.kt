@@ -36,11 +36,8 @@ import com.google.gson.Gson
 import de.psdev.licensesdialog.LicensesDialog
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20
 import de.psdev.licensesdialog.model.Notice
-import luyao.util.ktx.ext.openBrowser
-import luyao.util.ktx.ext.startKtxActivity
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.User
-import luyao.wanandroid.ui.MainActivity
 import luyao.wanandroid.util.GITHUB_PAGE
 import luyao.wanandroid.util.Preference
 import luyao.wanandroid.view.compose.Line
@@ -147,7 +144,6 @@ fun VersionTv() {
     Box(contentAlignment = Alignment.Center, modifier = Modifier
         .fillMaxWidth()
         .clickable {
-            context.startKtxActivity<MainActivity>()
         }) {
         Text(
             text = "V 1.0.0",
@@ -255,4 +251,8 @@ private fun showMe(context: Context) {
             customView(R.layout.dialog_me)
         }
     }
+}
+
+fun Context.openBrowser(url: String) {
+    Intent(Intent.ACTION_VIEW, Uri.parse(url)).run { startActivity(this) }
 }

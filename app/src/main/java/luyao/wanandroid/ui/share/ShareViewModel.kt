@@ -1,6 +1,6 @@
 package luyao.wanandroid.ui.share
 
-import androidx.databinding.ObservableField
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,8 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.Result
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
+import luyao.wanandroid.model.bean.Result
+
 import luyao.wanandroid.model.repository.ShareRepository
 import javax.inject.Inject
 
@@ -20,8 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ShareViewModel @Inject constructor(private val repository: ShareRepository) : BaseViewModel() {
 
-    val title = ObservableField<String>("")
-    val url = ObservableField<String>("")
+//    val title = ObservableField<String>("")
+//    val url = ObservableField<String>("")
 
     private val _uiState = MutableLiveData<ShareUiModel>()
     val uiState: LiveData<ShareUiModel>
@@ -31,7 +32,7 @@ class ShareViewModel @Inject constructor(private val repository: ShareRepository
     val verifyInput: (String) -> Unit = { shareDataChanged() }
 
     private fun shareDataChanged() {
-        enableShare((title.get()?.isNotBlank() ?: false) && (url.get()?.isNotBlank() ?:false))
+//        enableShare((title.get()?.isNotBlank() ?: false) && (url.get()?.isNotBlank() ?:false))
     }
 
     fun shareArticle() {
@@ -39,7 +40,7 @@ class ShareViewModel @Inject constructor(private val repository: ShareRepository
 
             withContext(Dispatchers.Main){ emitUiState(showProgress = true)}
 
-            val result = repository.shareArticle(title.get()?:"", url.get()?:"")
+            val result = repository.shareArticle("", "")
 
 
             withContext(Dispatchers.Main){

@@ -8,10 +8,10 @@ plugins {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'luyao.plugin.classfixer'
-apply from: '../test_dependencies.gradle'
+//apply from: '../test_dependencies.gradle'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -34,18 +34,18 @@ android {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8
         }
-        vectorDrawables.useSupportLibrary = true
+//        vectorDrawables.useSupportLibrary = true
 
         ndk {
             abiFilters 'arm64-v8a'
         }
 
-        packagingOptions {
-            exclude 'META-INF/AL2.0'
-            exclude 'META-INF/LGPL2.1'
-            exclude 'META-INF/INDEX.LIST'
-            exclude 'META-INF/groovy/org.codehaus.groovy.runtime.ExtensionModule'
-        }
+//        packagingOptions {
+//            exclude 'META-INF/AL2.0'
+//            exclude 'META-INF/LGPL2.1'
+//            exclude 'META-INF/INDEX.LIST'
+//            exclude 'META-INF/groovy/org.codehaus.groovy.runtime.ExtensionModule'
+//        }
     }
 
     signingConfigs {
@@ -92,10 +92,10 @@ android {
         }
     }
 
-    buildFeatures {
-        dataBinding true
+//    buildFeatures {
+//        dataBinding true
 //        viewBinding true
-    }
+//    }
     buildFeatures {
         compose true
     }
@@ -108,28 +108,28 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation Deps.appcompat
-    implementation Deps.constraintlayout
+//    implementation Deps.constraintlayout
 //    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 //    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation Deps.retrofit
     implementation Deps.retrofit_converter_gson
     implementation Deps.okhttp_logging_interceptor
-    implementation Deps.swiperefreshlayout
-    implementation Deps.material
-    implementation Deps.circleimageview
+//    implementation Deps.swiperefreshlayout
+//    implementation Deps.material
+//    implementation Deps.circleimageview
 //    debugImplementation Deps.leakCanary
-    implementation Deps.baseRecyclerViewAdapterHelper
-    implementation Deps.banner
-    implementation Deps.glide
-    kapt Deps.glide_compiler
-    implementation Deps.cardView
-    implementation Deps.verticalTabLayout
-    implementation Deps.flowLayout
+//    implementation Deps.baseRecyclerViewAdapterHelper
+//    implementation Deps.banner
+//    implementation Deps.glide
+//    kapt Deps.glide_compiler
+//    implementation Deps.cardView
+//    implementation Deps.verticalTabLayout
+//    implementation Deps.flowLayout
     implementation Deps.persistentCookieJar
     implementation Deps.licensesDialog
     implementation Deps.material_dialogs_input
-    implementation Deps.livedata_ktx
-    implementation Deps.viewPager2
+//    implementation Deps.livedata_ktx
+//    implementation Deps.viewPager2
 
 //    implementation Deps.koin_android
 //    implementation Deps.koin_androidx_scope
@@ -142,8 +142,8 @@ dependencies {
 
     implementation 'com.tencent:mmkv-static:1.2.10'
 
-    implementation project(path: ':ktx')
-    implementation project(path: ':mvvmcore')
+//    implementation project(path: ':ktx')
+//    implementation project(path: ':mvvmcore')
 //    implementation project(path: ':ClassFixer')
 
     // Compose
@@ -168,6 +168,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03"
     implementation "com.google.accompanist:accompanist-webview:0.24.13-rc"
     implementation 'com.airbnb.android:lottie-compose:5.2.0'
+    implementation Deps.coil_compose
+
 //    implementation "com.hi-dhl:binding:1.1.5"
 
     // test

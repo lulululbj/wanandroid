@@ -1,6 +1,7 @@
 package luyao.wanandroid.ui.login
 
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
+
 
 /**
  * Created by luyao

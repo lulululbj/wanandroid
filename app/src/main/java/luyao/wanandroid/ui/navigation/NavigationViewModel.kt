@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
 import luyao.wanandroid.checkSuccess
 import luyao.wanandroid.model.bean.Navigation
 import luyao.wanandroid.model.repository.NavigationRepository

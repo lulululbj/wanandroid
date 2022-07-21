@@ -2,7 +2,7 @@ package luyao.wanandroid.model.api
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
-import luyao.mvvm.core.Result
+import luyao.wanandroid.model.bean.Result
 import luyao.wanandroid.model.bean.WanResponse
 import java.io.IOException
 
@@ -16,7 +16,10 @@ open class BaseRepository {
         return call.invoke()
     }
 
-    suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> {
+    suspend fun <T : Any> safeApiCall(
+        call: suspend () -> Result<T>,
+        errorMessage: String
+    ): Result<T> {
         return try {
             call()
         } catch (e: Exception) {
@@ -25,8 +28,10 @@ open class BaseRepository {
         }
     }
 
-    suspend fun <T : Any> executeResponse(response: WanResponse<T>, successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-                                          errorBlock: (suspend CoroutineScope.() -> Unit)? = null): Result<T> {
+    suspend fun <T : Any> executeResponse(
+        response: WanResponse<T>, successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+        errorBlock: (suspend CoroutineScope.() -> Unit)? = null
+    ): Result<T> {
         return coroutineScope {
             if (response.errorCode == -1) {
                 errorBlock?.let { it() }

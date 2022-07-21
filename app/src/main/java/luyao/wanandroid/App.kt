@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
 import dagger.hilt.android.HiltAndroidApp
-import luyao.mvvm.core.util.Timer
 import luyao.wanandroid.model.bean.User
 import kotlin.properties.Delegates
 
@@ -22,7 +21,6 @@ class App : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        Timer.start(APP_START)
     }
 
     override fun onCreate() {

@@ -1,7 +1,6 @@
 package luyao.wanandroid
 
-import luyao.mvvm.core.Result
-
+import luyao.wanandroid.model.bean.Result
 /**
  * Created by luyao
  * on 2020/3/30 16:19

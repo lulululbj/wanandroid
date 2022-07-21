@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import luyao.mvvm.core.Result
-import luyao.mvvm.core.base.BaseViewModel
+import luyao.wanandroid.base.BaseViewModel
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.Hot
+import luyao.wanandroid.model.bean.Result
 import luyao.wanandroid.model.repository.CollectRepository
 import luyao.wanandroid.model.repository.SearchRepository
 import javax.inject.Inject

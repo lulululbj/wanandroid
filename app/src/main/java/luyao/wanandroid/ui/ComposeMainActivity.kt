@@ -4,11 +4,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
-import luyao.mvvm.core.base.BaseVMActivity
+import luyao.wanandroid.base.BaseVMActivity
 import luyao.wanandroid.navigation.WanandroidPage
 import luyao.wanandroid.ui.splash.SplashPage
 

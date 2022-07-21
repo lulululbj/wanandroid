@@ -1,2 +1,3 @@
-include ':ClassFixer'
-include ':app', ':ktx', ':mvvmcore'
+//include ':ClassFixer'
+include ':app'
+//        ':ktx', ':mvvmcore'

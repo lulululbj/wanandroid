@@ -1,11 +1,10 @@
 package luyao.wanandroid.model.repository
 
-import luyao.mvvm.core.Result
+import luyao.wanandroid.model.bean.Result
 import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
-import javax.inject.Inject
 
 /**
  * Created by luyao
