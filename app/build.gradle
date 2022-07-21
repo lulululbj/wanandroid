@@ -65,9 +65,9 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
@@ -157,13 +157,14 @@ dependencies {
     implementation "com.google.android.material:compose-theme-adapter:1.1.14"
     implementation "androidx.compose.runtime:runtime-livedata:1.1.1"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.24.12-rc"
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.12-rc"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
     implementation "androidx.navigation:navigation-compose:2.5.0"
     implementation "com.google.accompanist:accompanist-navigation-animation:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-pager:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.24.13-rc"
     implementation "com.google.accompanist:accompanist-flowlayout:0.24.13-rc"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.13-rc"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03"
     implementation "com.google.accompanist:accompanist-webview:0.24.13-rc"
     implementation 'com.airbnb.android:lottie-compose:5.2.0'

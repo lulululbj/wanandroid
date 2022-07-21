@@ -1,9 +1,7 @@
 package luyao.wanandroid.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -63,7 +61,8 @@ val items = listOf(
 fun BottomNavigation(navController: NavController) {
     androidx.compose.material.BottomNavigation(
         backgroundColor = colorResource(R.color.colorPrimary),
-        contentColor = Color.White
+        contentColor = colorResource(R.color.white),
+        modifier = Modifier.navigationBarsPadding()
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -76,8 +75,8 @@ fun BottomNavigation(navController: NavController) {
                     )
                 },
                 label = { Text(text = stringResource(item.title), fontSize = 9.sp) },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(0.4f),
+                selectedContentColor = colorResource(R.color.white),
+                unselectedContentColor = colorResource(R.color.white).copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
