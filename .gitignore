@@ -59,3 +59,8 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+app/seeds.txt
+app/mapping.txt
+app/unused.txt
+apk/*

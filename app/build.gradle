@@ -1,6 +1,8 @@
 import luyao.dependencies.Deps
 import luyao.dependencies.Versions
 
+import java.text.SimpleDateFormat
+
 plugins {
     id 'dagger.hilt.android.plugin'
 }
@@ -9,8 +11,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'luyao.plugin.classfixer'
-
 apply from: '../test_dependencies.gradle'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -32,9 +36,9 @@ android {
         }
         vectorDrawables.useSupportLibrary = true
 
-//        ndk {
-//            abiFilters 'armeabi'
-//        }
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
 
         packagingOptions {
             exclude 'META-INF/AL2.0'
@@ -43,13 +47,48 @@ android {
             exclude 'META-INF/groovy/org.codehaus.groovy.runtime.ExtensionModule'
         }
     }
-    buildTypes {
+
+    signingConfigs {
         debug {
-            minifyEnabled false
+            storeFile file(properties.getProperty("storeFile"))
+            storePassword properties.getProperty("storePassword")
+            keyAlias properties.getProperty("keyAlias")
+            keyPassword properties.getProperty("keyPassword")
         }
         release {
-            minifyEnabled false
+            storeFile file(properties.getProperty("storeFile"))
+            storePassword properties.getProperty("storePassword")
+            keyAlias properties.getProperty("keyAlias")
+            keyPassword properties.getProperty("keyPassword")
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name != "debug") {
+            variant.packageApplicationProvider.get().outputDirectory = rootProject.file("apk/${variant.flavorName}")
+        }
+
+        String time = new SimpleDateFormat("yyyyMMddHHmm", Locale.CHINA).format(new Date())
+
+        variant.outputs.each {
+            it.outputFileName = "Wandroid_${variant.flavorName}_${variant.versionName}_" + time + "_" + getGitBranch() + "_" + getGitSHA() + ".apk"
         }
     }
 
@@ -134,11 +173,19 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
-    implementation "com.tencent.tbs.tbssdk:sdk:43697"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+//    implementation "com.tencent.tbs.tbssdk:sdk:43697"
 
 }
 
 kapt {
     correctErrorTypes = true
+}
+
+static def getGitBranch() {
+    return 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+}
+
+static def getGitSHA() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
 }
