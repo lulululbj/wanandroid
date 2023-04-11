@@ -5,7 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.material.composethemeadapter.MdcTheme
+import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import dagger.hilt.android.AndroidEntryPoint
 import luyao.wanandroid.base.BaseVMActivity
 import luyao.wanandroid.navigation.WanandroidPage
@@ -37,7 +37,7 @@ class ComposeMainActivity : BaseVMActivity() {
                 )
             }
 
-            MdcTheme {
+            Mdc3Theme {
                 AppScreen()
             }
         }

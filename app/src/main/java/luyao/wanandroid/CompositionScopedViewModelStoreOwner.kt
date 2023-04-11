@@ -23,9 +23,9 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
  */
 internal class CompositionScopedViewModelStoreOwner : ViewModelStoreOwner, RememberObserver {
 
-    private val viewModelStore = ViewModelStore()
+//    private val viewModelStore = ViewModelStore()
 
-    override fun getViewModelStore(): ViewModelStore = viewModelStore
+//    override fun getViewModelStore(): ViewModelStore = viewModelStore
 
     override fun onAbandoned() {
         viewModelStore.clear()
@@ -38,6 +38,9 @@ internal class CompositionScopedViewModelStoreOwner : ViewModelStoreOwner, Remem
     override fun onRemembered() {
         // Nothing to do here
     }
+
+    override val viewModelStore: ViewModelStore
+        get() = ViewModelStore()
 }
 
 /*

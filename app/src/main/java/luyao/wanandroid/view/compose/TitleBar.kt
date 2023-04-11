@@ -3,6 +3,7 @@ package luyao.wanandroid.view.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -75,6 +76,7 @@ fun TitleBarPreview() {
     Column {
         TitleBar(text = "标题", true) {}
         Spacer(modifier = Modifier.height(10.dp))
+        Divider()
         TitleBar(text = "标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题", true) {}
     }
 
