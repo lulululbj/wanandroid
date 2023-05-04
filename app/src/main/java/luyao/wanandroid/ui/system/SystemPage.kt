@@ -8,22 +8,25 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.SystemChild
 import luyao.wanandroid.model.bean.SystemParent
@@ -36,6 +39,7 @@ import luyao.wanandroid.navigation.navigateAndArgument
  * Date: 2022/7/19 22:33
  */
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SystemPage(
     navController: NavController,
@@ -46,15 +50,16 @@ fun SystemPage(
     val uiState by viewModel.uiState.observeAsState()
     val listSate =
         if (uiState?.showSuccess.isNullOrEmpty()) LazyListState() else viewModel.listState
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = uiState?.showLoading ?: false,
+        onRefresh = { viewModel.getSystemTypes() }
+    )
 
     LaunchedEffect(true) {
         viewModel.getSystemTypes()
     }
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = uiState?.showLoading ?: false),
-        onRefresh = { viewModel.getSystemTypes() }
-    ) {
+    Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -72,6 +77,10 @@ fun SystemPage(
                 }
             }
         }
+        PullRefreshIndicator(
+            refreshing = uiState?.showLoading ?: false, state = pullRefreshState,
+            Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 

@@ -11,7 +11,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
@@ -42,7 +44,7 @@ import luyao.wanandroid.ui.square.ArticleViewModel
  */
 
 @Composable
-fun HotPage(viewModel: ArticleViewModel = hiltViewModel(),onClickArticle: (Article) -> Unit) {
+fun HotPage(viewModel: ArticleViewModel = hiltViewModel(), onClickArticle: (Article) -> Unit) {
     ArticleRefreshList(
         viewModel,
         onRefresh = { viewModel.getHomeArticleList(true) },
@@ -52,6 +54,7 @@ fun HotPage(viewModel: ArticleViewModel = hiltViewModel(),onClickArticle: (Artic
         })
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ArticleRefreshList(
     viewModel: ArticleViewModel,
@@ -62,15 +65,15 @@ fun ArticleRefreshList(
     val uiState by viewModel.uiState.observeAsState()
     val listSate =
         if (uiState?.showSuccess.isNullOrEmpty()) LazyListState() else viewModel.lazyListState
-
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = uiState?.showLoading ?: false,
+        onRefresh = onRefresh
+    )
     LaunchedEffect(true) {
         onRefresh()
     }
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing = uiState?.showLoading ?: false),
-        onRefresh = onRefresh
-    ) {
+    Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -94,6 +97,10 @@ fun ArticleRefreshList(
                 }
             }
         }
+        PullRefreshIndicator(
+            refreshing = uiState?.showLoading ?: false, state = pullRefreshState,
+            Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
