@@ -1,6 +1,7 @@
 package luyao.wanandroid.ui
 
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
@@ -64,15 +65,14 @@ fun AppScreen() {
         }
     } else {
         val systemUiController = rememberSystemUiController()
-        val useDarkIcons = MaterialTheme.colors.isLight
+        val useDarkIcons = !isSystemInDarkTheme()
 
-        SideEffect {
-            // Update all of the system bar colors to be transparent, and use
-            // dark icons if we're in light theme
+        DisposableEffect(systemUiController, useDarkIcons) {
             systemUiController.setSystemBarsColor(
                 color = colorPrimary,
                 darkIcons = useDarkIcons
             )
+            onDispose { }
         }
         WanandroidPage()
     }

@@ -3,6 +3,7 @@ package luyao.wanandroid.navigation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -57,7 +58,7 @@ val items = listOf(
 @Composable
 fun BottomNavigation(navController: NavController) {
     androidx.compose.material.BottomNavigation(
-        backgroundColor = colorResource(R.color.colorPrimary),
+        backgroundColor = MaterialTheme.colors.primary,
         contentColor = colorResource(R.color.white),
         modifier = Modifier.navigationBarsPadding()
     ) {
