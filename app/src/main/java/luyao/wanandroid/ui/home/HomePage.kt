@@ -1,9 +1,12 @@
 package luyao.wanandroid.ui.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
@@ -12,10 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
@@ -25,7 +25,7 @@ import luyao.wanandroid.ui.square.SquarePage
 import luyao.wanandroid.ui.system.SystemPage
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomePage(navController: NavController, onClickArticle: (Article) -> Unit) {
 
@@ -84,7 +84,7 @@ fun HomePage(navController: NavController, onClickArticle: (Article) -> Unit) {
         }
 
         HorizontalPager(
-            count = loopingCount, state = pagerState,
+            pageCount = loopingCount, state = pagerState,
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()

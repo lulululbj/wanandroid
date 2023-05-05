@@ -1,9 +1,12 @@
 package luyao.wanandroid.ui.blog
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
@@ -13,10 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import luyao.wanandroid.ProvideViewModels
 import luyao.wanandroid.R
@@ -31,7 +31,7 @@ import luyao.wanandroid.ui.project.ProjectViewModel
  * Author: luyao
  * Date: 2022/7/20 15:19
  */
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BlogPage(
     type: BottomNavItem,
@@ -103,7 +103,7 @@ fun BlogPage(
             }
 
             HorizontalPager(
-                count = loopingCount, state = pagerState,
+                pageCount = loopingCount, state = pagerState,
                 key = { page: Int -> page },
                 modifier = Modifier
                     .weight(1f)

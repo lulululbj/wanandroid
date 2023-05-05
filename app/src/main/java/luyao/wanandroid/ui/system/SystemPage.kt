@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.google.accompanist.flowlayout.FlowRow
 
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.model.bean.SystemChild
@@ -84,6 +83,7 @@ fun SystemPage(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SystemItem(item: SystemParent, itemClick: (SystemParent) -> Unit) {
     Card(

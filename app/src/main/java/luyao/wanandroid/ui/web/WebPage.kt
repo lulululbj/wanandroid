@@ -31,7 +31,8 @@ fun WebPage(url: String, navController: NavController) {
             client = object : AccompanistWebViewClient() {
             },
             chromeClient = object : AccompanistWebChromeClient() {
-                override fun onReceivedTitle(view: WebView?, title: String?) {
+
+                override fun onReceivedTitle(view: WebView, title: String?) {
                     super.onReceivedTitle(view, title)
                     titleState = title ?: ""
                 }

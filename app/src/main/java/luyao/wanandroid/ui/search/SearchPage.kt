@@ -3,6 +3,8 @@ package luyao.wanandroid.ui.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.flowlayout.FlowRow
 import luyao.wanandroid.R
 import luyao.wanandroid.model.bean.Article
 import luyao.wanandroid.ui.hot.ArticleItem
@@ -30,6 +31,7 @@ import luyao.wanandroid.ui.square.ArticleViewModel
  * Author: luyao
  * Date: 2022/7/20 18:55
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SearchPage(
     viewModel: SearchViewModel = hiltViewModel(),

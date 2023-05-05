@@ -96,27 +96,25 @@ fun ProfileScreen(
     showLicenseDialog: () -> Unit,
     showMe: () -> Unit
 ) {
-    MdcTheme {
-        Column {
-            TitleBar(text = stringResource(R.string.me))
-            LoginMenu(isLogin = isLogin, user, clickLogin = onLogin)
-            if (isLogin) {
-                Line()
-                Menu(stringResource(R.string.my_collect), showMyCollect)
-            }
+    Column {
+//        TitleBar(text = stringResource(R.string.me))
+        LoginMenu(isLogin = isLogin, user, clickLogin = onLogin)
+        if (isLogin) {
             Line()
-            Menu(stringResource(R.string.open_license), showOwnLicense)
-            Line()
-            Menu(stringResource(R.string.source_url), browserGithub)
-            Line()
-            Menu(stringResource(R.string.feedback), showFeedBack)
-            Line()
-            Menu(stringResource(R.string.third_lib), showLicenseDialog)
-            Line()
-            Menu(stringResource(R.string.developer), showMe)
-            Line()
-            VersionTv()
+            Menu(stringResource(R.string.my_collect), showMyCollect)
         }
+        Line()
+        Menu(stringResource(R.string.open_license), showOwnLicense)
+        Line()
+        Menu(stringResource(R.string.source_url), browserGithub)
+        Line()
+        Menu(stringResource(R.string.feedback), showFeedBack)
+        Line()
+        Menu(stringResource(R.string.third_lib), showLicenseDialog)
+        Line()
+        Menu(stringResource(R.string.developer), showMe)
+        Line()
+        VersionTv()
     }
 }
 
