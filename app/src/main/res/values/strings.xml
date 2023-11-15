@@ -1,25 +1,7 @@
 <resources>
     <string name="app_name">Wanandroid</string>
-
-    <string name="home">首页</string>
-    <string name="project">项目</string>
-
-    <string name="is_loading">正在加载...</string>
-    <string name="search">搜索</string>
-    <string name="login">登录</string>
-    <string name="my_collect">我的收藏</string>
-    <string name="sendto">mailto:sunluyao1993x@gmail.com</string>
-    <string name="mail_topic">Wanandroid 反馈</string>
-    <string name="source_url">源代码地址</string>
-    <string name="feedback">意见反馈</string>
-    <string name="third_lib">第三方库</string>
-    <string name="developer">开发者</string>
-    <string name="blog">公众号</string>
-    <string name="net_error">网络异常 !</string>
-    <string name="me">我</string>
-
-    <string name="open_license">开源协议</string>
-    <string name="common_search">大家都在搜</string>
-    <string name="common_website">常用网站</string>
-
+    <string name="app_name_debug">Wanandroid-Debug</string>
+    <string name="app_name_release">Wanandroid</string>
+    <string name="package_name_debug">luyao.wanandroid.debug</string>
+    <string name="package_name_release">luyao.wanandroid</string>
 </resources>

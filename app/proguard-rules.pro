@@ -19,13 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
-# seeds.txt文件列出未混淆的类和成员
--printseeds seeds.txt
-# usage.txt文件列出从apk中删除的代码
--printusage unused.txt
-# mapping.txt文件列出混淆前后的映射
--printmapping mapping.txt
-
-# bean
--keep class luyao.wanandroid.model.bean.** { *; }
