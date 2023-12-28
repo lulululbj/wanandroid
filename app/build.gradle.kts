@@ -103,6 +103,9 @@ dependencies {
 
     implementation(project(":luyao_ktx"))
 
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.airbnb.android:lottie-compose:5.2.0")
+
     val composeBom = platform("androidx.compose:compose-bom:2023.08.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -115,6 +118,7 @@ dependencies {
 
     val accompanistVersion = "0.32.0"
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
+
 
 
 //    val roomVersion = "2.6.0"
