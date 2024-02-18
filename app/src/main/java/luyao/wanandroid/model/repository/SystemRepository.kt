@@ -5,6 +5,7 @@ import luyao.wanandroid.model.api.BaseRepository
 import luyao.wanandroid.model.api.WanRetrofitClient
 import luyao.wanandroid.model.bean.ArticleList
 import luyao.wanandroid.model.bean.SystemParent
+import java.io.IOException
 
 /**
  * Created by luyao
@@ -23,7 +24,9 @@ class SystemRepository : BaseRepository() {
     suspend fun getBlogArticle(cid: Int, page: Int): Result<ArticleList> {
         return safeApiCall(call = {requestBlogArticle(cid, page)},errorMessage = "网络错误")
     }
-
+    suspend fun getTextInfo(cid: Int, page: Int): Result<ArticleList> {
+        return safeApiCall(call = {textInfo( )},errorMessage = "网络错误")
+    }
     private suspend fun requestSystemTypes(): Result<List<SystemParent>> =
             executeResponse(WanRetrofitClient.service.getSystemType())
 
@@ -32,4 +35,8 @@ class SystemRepository : BaseRepository() {
 
     private suspend fun requestBlogArticle(cid: Int,page: Int): Result<ArticleList> =
             executeResponse(WanRetrofitClient.service.getSystemTypeDetail(page, cid) )
+    private suspend fun  textInfo() :Result<ArticleList>{
+        var resultInfo: Result<ArticleList> = Result.Error(IOException(""))
+        return   resultInfo
+    }
 }

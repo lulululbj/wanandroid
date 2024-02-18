@@ -18,6 +18,7 @@ object Timer {
         if (!tagMap.containsKey(tag)) return
         val cost = System.currentTimeMillis() - (tagMap[tag] ?: 0)
         tagMap.remove(tag)
+//        记录启动时长
         Log.e("timer", "$tag cost : $cost")
     }
 }

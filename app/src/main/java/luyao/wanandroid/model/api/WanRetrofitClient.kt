@@ -37,12 +37,14 @@ object WanRetrofitClient : BaseRetrofitClient() {
                     }
                     val response = chain.proceed(request)
                     if (!NetWorkUtils.isNetworkAvailable(App.CONTEXT)) {
+//                        无网络缓存
                         val maxAge = 60 * 60
                         response.newBuilder()
                                 .removeHeader("Pragma")
                                 .header("Cache-Control", "public, max-age=$maxAge")
                                 .build()
                     } else {
+//                        有网络缓存
                         val maxStale = 60 * 60 * 24 * 28 // tolerate 4-weeks stale
                         response.newBuilder()
                                 .removeHeader("Pragma")

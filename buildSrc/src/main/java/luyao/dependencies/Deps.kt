@@ -67,7 +67,7 @@ object Deps {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit_converter_gson}"
     const val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp_logging_interceptor}"
-    const val persistentCookieJar = "com.github.franmontiel:PersistentCookieJar:${Versions.persistentCookieJar}"
+    const val persistentCookieJar = "com.github.franmontiel:PersistentCookieJar:${Versions.persistentCookieJar}"//   webview  cookie持久化(可删除)
 
     // third
     const val circleimageview = "de.hdodenhof:circleimageview:${Versions.circleImageview}"
@@ -77,11 +77,11 @@ object Deps {
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glide_compiler}"
     const val cardView = "androidx.cardview:cardview:${Versions.cardView}"
-    const val verticalTabLayout = "q.rorbin:VerticalTabLayout:${Versions.verticalTabLayout}"
+    const val verticalTabLayout = "q.rorbin:VerticalTabLayout:${Versions.verticalTabLayout}" //  垂直 tablayout 已废弃
     const val flowLayout = "com.hyman:flowlayout-lib:${Versions.flowLayout}"
-    const val licensesDialog = "de.psdev.licensesdialog:licensesdialog:${Versions.licensesDialog}"
-    const val material_dialogs_core = "com.afollestad.material-dialogs:core:${Versions.material_dialogs}"
-    const val material_dialogs_input = "com.afollestad.material-dialogs:input:${Versions.material_dialogs}"
+    const val licensesDialog = "de.psdev.licensesdialog:licensesdialog:${Versions.licensesDialog}" // 开源协议 弹框 (可删除)
+    const val material_dialogs_core = "com.afollestad.material-dialogs:core:${Versions.material_dialogs}"//   弹框库(可删除)
+    const val material_dialogs_input = "com.afollestad.material-dialogs:input:${Versions.material_dialogs}"//   弹框库(可删除)
     const val koin_android = "org.koin:koin-android:${Versions.koin}"
     const val koin_androidx_scope = "org.koin:koin-androidx-scope:${Versions.koin}"
     const val koin_androidx_viewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"

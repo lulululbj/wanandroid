@@ -36,5 +36,6 @@ fun Activity.onNetError(e: Throwable, func: (e: Throwable) -> Unit) {
 fun WanResponse<Any>.isSuccess(): Boolean = this.errorCode == 0
 
 fun transFormSystemChild(children: List<SystemChild>): String {
+//用于将集合（或数组）的元素连接成一个字符串。
     return children.joinToString("     ", transform = { child -> child.name })
 }
